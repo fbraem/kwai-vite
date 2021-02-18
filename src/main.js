@@ -11,7 +11,6 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import { router } from '/src/common/useRouter.js';
 import routes from './routes.js';
-console.log(routes);
 routes.forEach(route => router.addRoute(route));
 
 app.use(router);
