@@ -9,12 +9,10 @@ app.use(abilitiesPlugin, ability);
 import './index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-import { createRouter, createWebHashHistory } from 'vue-router';
-import routes from './router.js';
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes
-});
+import { router } from '/src/common/useRouter.js';
+import routes from './routes.js';
+console.log(routes);
+routes.forEach(route => router.addRoute(route));
 
 app.use(router);
 app.mount('#app');
