@@ -1,4 +1,4 @@
-import IndexApp from '/theme/kwai/index/App.vue';
+import IndexApp from '/@theme/index/App.vue';
 import LoginPage from '/src/pages/Login.vue';
 
 export default [
