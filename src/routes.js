@@ -1,18 +1,42 @@
-import IndexApp from '/@theme/index/App.vue';
+import HomePage from '/@theme/index/Home.vue';
+import Page from '/@theme/Page.vue';
 import LoginPage from '/src/pages/Login.vue';
+import NewsPage from '/src/pages/News.vue';
+import SiteNavigation from '/@theme/index/SiteNavigation.vue';
+import Footer from '/@theme/index/Footer.vue';
+import SimpleNavigation from '/@theme/index/SimpleNavigation.vue';
 
 export default [
   {
     name: 'home',
     path: '/',
-    component: IndexApp,
-    meta: {
-    }
+    components: {
+      navigation: SiteNavigation,
+      default: Page,
+      footer: Footer
+    },
+    children: [
+      {
+        path: '',
+        component: HomePage
+      },
+      {
+        name: 'news',
+        path: '/news',
+        component: NewsPage,
+        meta: {
+          title: 'Nieuws'
+        }
+      }
+    ],
   },
   {
     name: 'login',
     path: '/login',
-    component: LoginPage,
+    components: {
+      navigation: SimpleNavigation,
+      default: LoginPage
+    },
     meta: {
       title: 'Login'
     }

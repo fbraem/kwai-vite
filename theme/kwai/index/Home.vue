@@ -1,13 +1,5 @@
 <template>
     <Layout :image="'/@theme/index/assets/hero.jpg'">
-        <template #navigation>
-          <Navigation
-              :title="title"
-              :url="url"
-              :right-menu="rightMenu"
-          >
-          </Navigation>
-        </template>
         <template #title>
             <Hero/>
         </template>
@@ -134,9 +126,6 @@
             </div>
           </div>
         </AngledSection>
-        <template #footer>
-            <Footer/>
-        </template>
     </Layout>
 </template>
 
@@ -145,12 +134,8 @@ import Layout from '/@theme/layouts/LandingLayout.vue';
 import AngledSection from '/src/components/AngledSection.vue';
 import Card from '/src/components/Card.vue';
 
-import Navigation from '/@theme/components/Navigation.vue';
 import useSWRV from 'swrv';
-import { useRouter } from 'vue-router';
-import useAuthentication from '../../../src/common/useAuthentication.js';
 import Hero from './components/Hero.vue';
-import Footer from './components/Footer.vue';
 import ApplicationSection from './components/ApplicationSection.vue';
 import ApplicationCard from './components/ApplicationCard.vue';
 import Promotion from './components/Promotion.vue';
@@ -164,7 +149,6 @@ import config from '/src/config/config.yaml';
 
 export default {
     components: {
-        Navigation,
         Highlight,
         Promotion,
         ApplicationCard,
@@ -172,7 +156,6 @@ export default {
         AngledSection,
         Layout,
         Hero,
-        Footer,
         Card
     },
     setup () {
@@ -204,51 +187,12 @@ export default {
         const newsService = useNewsService();
         const { data: news } = useSWRV('/index/promoted', newsService.load);
 
-        const router = useRouter();
-        const { isLoggedIn, logout } = useAuthentication();
-        const rightMenu = computed(() => {
-          const rightMenu = [
-            {
-              name: 'facebook',
-              title: 'Facebook',
-              url: config.contact.facebook,
-              icon: 'fab fa-facebook'
-            }
-          ];
-          if (isLoggedIn.value) {
-            rightMenu.push({
-              name: 'logout',
-              title: 'Logout',
-              icon: 'fas fa-unlock',
-              method: () => {
-                logout();
-                router.push({
-                  name: 'home'
-                });
-              }
-            });
-          } else {
-            rightMenu.push({
-              name: 'login',
-              title: 'Login',
-              icon: 'fas fa-lock',
-              route: {
-                name: 'login'
-              }
-            });
-          }
-          return rightMenu;
-        });
-
         return {
           newsApplication,
           clubApplication,
           trainingsApplication,
           news,
-          information_boards: config.website.information_boards,
-          title: config.website.title,
-          url: config.contact.website.url + '/#',
-          rightMenu
+          information_boards: config.website.information_boards
         };
     }
 };

@@ -1,12 +1,5 @@
 <template>
   <div>
-    <slot name="navigation">
-      <Navigation
-          :title="title"
-          :url="url"
-      >
-      </Navigation>
-    </slot>
     <main>
       <section class="absolute w-full h-full">
         <div
@@ -44,13 +37,11 @@
 </template>
 
 <script>
-import config from '/src/config/config.yaml';
 import { ref, onErrorCaptured } from 'vue';
-import Alert from '../../../src/components/Alert.vue';
-import Navigation from '../components/Navigation.vue';
+import Alert from '/src/components/Alert.vue';
 
 export default {
-  components: { Alert, Navigation },
+  components: { Alert },
   props: {
     image: {
       type: String,
@@ -65,8 +56,6 @@ export default {
     );
 
     return {
-      title: config.website.title,
-      url: config.contact.website.url + '/#',
       error
     }
   }

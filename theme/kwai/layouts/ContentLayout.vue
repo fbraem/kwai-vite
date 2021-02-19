@@ -24,12 +24,15 @@
   </div>
 </template>
 
+<style scoped>
+</style>
+
 <script>
 export default {
   props: {
     image: {
       type: String
-    },
+    }
   }
 }
 </script>
