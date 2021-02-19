@@ -21,13 +21,17 @@ function toModel(json) {
     });
 }
 
-const load = () =>
-    useHttp
-        .url('/news/stories')
-        .query({ 'filter[promoted]': true})
-        .get()
-        .json((json) => toModel(json))
-;
+const load = ({ promoted = false, offset = 0, limit = 10 }) => {
+    let api = useHttp.url('/news/stories');
+    if (offset > 0) {
+        api = api.query({ 'page[offset]': offset });
+    }
+    api = api.query({ 'page[limit]': limit });
+    if (promoted) {
+        api = api.query({ 'filter[promoted]': true });
+    }
+    return api.get().json((json) => toModel(json));
+}
 
 export const useNewsService = () => ({
     load
