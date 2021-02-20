@@ -1,5 +1,5 @@
 <template>
-  <DialogPageLayout>
+  <div>
     <div class="rounded-t mb-0 p-6">
       <div class="text-center mb-3">
         <h6 class="text-gray-600 text-2xl font-bold">
@@ -50,11 +50,10 @@
         Email onbekend of verkeerd paswoord.
       </Alert>
     </div>
-  </DialogPageLayout>
+  </div>
 </template>
 
 <script>
-import DialogPageLayout from '/@theme/layouts/DialogPageLayout.vue';
 import SubmitButton from '/src/components/form/SubmitButton.vue';
 import { useAbility } from '@casl/vue';
 import { useField, useForm } from 'vee-validate';
@@ -63,14 +62,13 @@ import { useRoute, useRouter } from 'vue-router';
 import * as yup from 'yup';
 import InputField from '/src/components/form/InputField.vue';
 import useAuthentication from '/src/common/useAuthentication.js';
-import Alert from '../components/Alert.vue';
+import Alert from '/src/components/Alert.vue';
 
 export default {
   components: {
     Alert,
     InputField,
-    SubmitButton,
-    DialogPageLayout
+    SubmitButton
   },
   setup() {
     const { handleSubmit, isSubmitting } = useForm();

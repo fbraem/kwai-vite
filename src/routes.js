@@ -1,6 +1,6 @@
 import HomePage from '/@theme/index/Home.vue';
 import Page from '/@theme/Page.vue';
-import LoginPage from '/src/pages/Login.vue';
+import LoginPage from '/@theme/index/pages/LoginPage.vue';
 import NewsPage from '/src/pages/News.vue';
 import SiteNavigation from '/@theme/index/SiteNavigation.vue';
 import Footer from '/@theme/index/Footer.vue';
