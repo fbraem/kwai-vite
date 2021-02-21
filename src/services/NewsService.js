@@ -21,7 +21,7 @@ function toModel(json) {
     });
 }
 
-const load = ({ promoted = false, offset = 0, limit = 10 }) => {
+const load = ({ promoted = false, offset = 0, limit = 10 } = {}) => {
     let api = useHttp.url('/news/stories');
     if (offset > 0) {
         api = api.query({ 'page[offset]': offset });
@@ -33,6 +33,12 @@ const load = ({ promoted = false, offset = 0, limit = 10 }) => {
     return api.get().json((json) => toModel(json));
 }
 
+const archive = () => {
+    let api = useHttp.url('/news/archive')
+    return api.get().json();
+}
+
 export const useNewsService = () => ({
-    load
+    load,
+    archive
 });
