@@ -6,6 +6,8 @@ import timezone from 'dayjs/plugin/timezone';
 dayjs.extend(timezone);
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 dayjs.extend(localizedFormat);
+import localeData from 'dayjs/plugin/localeData';
+dayjs.extend(localeData);
 
 // dayjs.utc();
 
