@@ -20,3 +20,4 @@ export const dateToTimezone = (datetime, timezone) => dayjs.tz(datetime, timezon
 export const formatDate = (date, format) => date.format(format ?? 'L LTS');
 export const setUTCMode = () => dayjs.utc();
 export const setLocalMode = () => dayjs.local();
+export const months = () => dayjs.months();
