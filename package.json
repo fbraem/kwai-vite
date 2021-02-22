@@ -17,7 +17,6 @@
     "tailwindcss": "^2.0.2",
     "vee-validate": "^4.1.17",
     "vue": "^3.0.5",
-    "vue-i18n": "^9.0.0-rc.5",
     "vue-router": "^4.0.3",
     "wretch": "^1.7.4",
     "yup": "^0.32.8"
