@@ -159,41 +159,41 @@ export default {
         Card
     },
     setup () {
-        const applicationService = useApplicationService();
-        const { data: applicationResponse } = useSWRV('/index/applications/', applicationService.load);
+      const applicationService = useApplicationService();
+      const { data: applicationResponse } = useSWRV('/index/applications/', applicationService.load);
 
-        const newsApplication = computed(() => {
-            if (applicationResponse.value) {
-                return applicationResponse.value.find(
-                    (d) => { return d.name === 'news'; }
-                );
-            }
-        });
-        const clubApplication = computed(() => {
-            if (applicationResponse.value) {
-                return applicationResponse.value.find(
-                    (d) => d.name === 'club'
-                );
-            }
-        });
-        const trainingsApplication = computed(() => {
-            if (applicationResponse.value) {
-                return applicationResponse.value.find(
-                    (d) => d.name === 'trainings'
-                );
-            }
-        });
+      const newsApplication = computed(() => {
+        if (applicationResponse.value) {
+          return applicationResponse.value.find(
+              (d) => { return d.name === 'news'; }
+          );
+        }
+      });
+      const clubApplication = computed(() => {
+        if (applicationResponse.value) {
+          return applicationResponse.value.find(
+              (d) => d.name === 'club'
+          );
+        }
+      });
+      const trainingsApplication = computed(() => {
+        if (applicationResponse.value) {
+          return applicationResponse.value.find(
+              (d) => d.name === 'trainings'
+          );
+        }
+      });
 
-        const newsService = useNewsService();
-        const { data: news } = useSWRV('/index/promoted', newsService.load);
+      const newsService = useNewsService();
+      const { data: news } = useSWRV('/index/promoted', newsService.load);
 
-        return {
-          newsApplication,
-          clubApplication,
-          trainingsApplication,
-          news,
-          information_boards: config.website.information_boards
-        };
+      return {
+        newsApplication,
+        clubApplication,
+        trainingsApplication,
+        news,
+        information_boards: config.website.information_boards
+      };
     }
 };
 </script>
