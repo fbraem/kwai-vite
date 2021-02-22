@@ -7,7 +7,7 @@
       <slot name="year" :year="year">
         <h4 class="text-xl mb-2">{{ year }}</h4>
       </slot>
-      <ul class="mb-2">
+      <ul class="mb-2 divide-y divide-gray-300">
         <li v-for="month in archive[year]">
           <slot name="month" :archive="archive[year]">
             <div class="relative flex justify-between leading-6">
@@ -15,7 +15,7 @@
                 {{ month.name }} {{ month.year }}
               </div>
               <div class="flex-none">
-                <Badge class="bg-red-600 text-white">{{ month.count }}</Badge>
+                <Badge class="bg-red-600 text-white align-middle">{{ month.count }}</Badge>
               </div>
             </div>
           </slot>
