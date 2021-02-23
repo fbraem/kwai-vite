@@ -3,8 +3,7 @@ import { useHttp } from '/src/common/useHttp';
 import { dateToTimezone, formatDate } from '/src/common/useDayJS';
 
 function toModel(json) {
-    return json.data.map(d =>
-    {
+    const map = d => {
         const application = json.included.find((included) => included.type === 'applications' && included.id === d.relationships.application.data.id);
         return {
             id: d.id,
@@ -12,13 +11,29 @@ function toModel(json) {
             summary: d.attributes.contents[0].html_summary,
             publish_date: formatDate(dateToTimezone(d.attributes.publish_date, d.attributes.timezone), 'D MMMM, YYYY'),
             has_more: d.attributes.contents[0].html_content.length > 0,
+            content: d.attributes.contents[0].html_content,
             application: {
                 id: application.id,
                 name: application.attributes.name,
                 title: application.attributes.title
             }
         };
-    });
+    }
+    if (Array.isArray(json.data)) {
+        return json.data.map(map);
+    } else {
+        return map(json.data);
+    }
+}
+
+const archive = () => {
+    let api = useHttp.url('/news/archive')
+    return api.get().json();
+}
+
+const get = (id) => {
+    let api = useHttp.url( `/news/stories/${id}`);
+    return api.get().json((json) => toModel(json));
 }
 
 const load = ({ promoted = false, offset = 0, limit = 10 } = {}) => {
@@ -33,12 +48,8 @@ const load = ({ promoted = false, offset = 0, limit = 10 } = {}) => {
     return api.get().json((json) => toModel(json));
 }
 
-const archive = () => {
-    let api = useHttp.url('/news/archive')
-    return api.get().json();
-}
-
 export const useNewsService = () => ({
-    load,
-    archive
+    archive,
+    get,
+    load
 });
