@@ -1,4 +1,4 @@
-import HomePage from '/@theme/index/Home.vue';
+import HomePage from '/@theme/index/pages/HomePage.vue';
 import Page from '/@theme/Page.vue';
 import LoginPage from '/@theme/index/pages/LoginPage.vue';
 import NewsPage from '/@theme/index/pages/NewsPage.vue';

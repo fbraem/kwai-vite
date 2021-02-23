@@ -135,11 +135,11 @@ import AngledSection from '/src/components/AngledSection.vue';
 import Card from '/src/components/Card.vue';
 
 import useSWRV from 'swrv';
-import Hero from './components/Hero.vue';
-import ApplicationSection from './components/ApplicationSection.vue';
-import ApplicationCard from './components/ApplicationCard.vue';
-import Promotion from './components/Promotion.vue';
-import Highlight from './components/Highlight.vue';
+import Hero from '/@theme/index/components/Hero.vue';
+import ApplicationSection from '/@theme/index/components/ApplicationSection.vue';
+import ApplicationCard from '/@theme/index/components/ApplicationCard.vue';
+import Promotion from '/@theme/index/components/Promotion.vue';
+import Highlight from '/@theme/index/components/Highlight.vue';
 
 import { computed } from 'vue';
 import { useApplicationService } from '/src/services/ApplicationService';
