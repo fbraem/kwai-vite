@@ -2,6 +2,7 @@ import HomePage from '/@theme/index/pages/HomePage.vue';
 import Page from '/@theme/Page.vue';
 import LoginPage from '/@theme/index/pages/LoginPage.vue';
 import NewsPage from '/@theme/index/pages/NewsPage.vue';
+import StoryPage from '/@theme/index/pages/StoryPage.vue';
 import SiteNavigation from '/@theme/index/SiteNavigation.vue';
 import Footer from '/@theme/index/Footer.vue';
 import SimpleNavigation from '/@theme/index/SimpleNavigation.vue';
@@ -24,6 +25,15 @@ export default [
         name: 'news',
         path: '/news',
         component: NewsPage,
+        meta: {
+          title: 'Nieuws'
+        }
+      },
+      {
+        name: 'news.story',
+        path: '/news/:id(\\d+)',
+        props: true,
+        component: StoryPage,
         meta: {
           title: 'Nieuws'
         }
