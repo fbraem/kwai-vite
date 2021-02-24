@@ -14,7 +14,7 @@ import { computed } from 'vue';
 export default {
   props: {
     route: {
-      type: String
+      type: Object
     },
     method: {
       type: Function
