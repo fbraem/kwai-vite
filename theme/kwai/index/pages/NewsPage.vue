@@ -1,8 +1,5 @@
 <template>
-  <Layout
-      image="/@theme/index/assets/news.jpg"
-      size="5"
-  >
+  <Layout image="/@theme/index/assets/news.jpg">
     <template #title>
       <h1 class="text-white font-semibold text-4xl mb-2">
         Nieuws
@@ -39,9 +36,12 @@
                   v-html="story.summary"
               >
               </p>
-              <button class="bg-red-700 text-white background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1" type="button">
+              <ButtonLink
+                  class="bg-red-700 text-white"
+                  :route="{ name: 'news.story', params: { id: story.id }}"
+              >
                 <i class="fas fa-angle-right"></i> Lees verder ...
-              </button>
+              </ButtonLink>
             </template>
           </OriginalNewsPage>
         </div>
@@ -62,9 +62,11 @@ import OriginalNewsPage from '/src/pages/NewsPage.vue';
 import NewsArchive from '/src/pages/NewsArchive.vue';
 import AngledSection from '/src/components/AngledSection.vue';
 import Badge from '/src/components/Badge.vue';
+import ButtonLink from '/src/components/ButtonLink.vue';
 
 export default {
   components: {
+    ButtonLink,
     Badge,
     AngledSection,
     Layout,
