@@ -160,8 +160,6 @@ export default {
         Card
     },
     setup () {
-      console.log(config);
-
       const applicationService = useApplicationService();
       const { data: applicationResponse } = useSWRV('/index/applications/', applicationService.load);
 
