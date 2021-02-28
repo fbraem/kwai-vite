@@ -1,5 +1,8 @@
 <template>
-  <Layout image="/@theme/index/assets/news.jpg">
+  <Layout
+    image="/@theme/index/assets/news.jpg"
+    :big="false"
+  >
     <template #title>
       <h1 class="text-white font-semibold text-4xl mb-2">
         Nieuws

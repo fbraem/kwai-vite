@@ -1,5 +1,8 @@
 <template>
-    <Layout :image="'/@theme/index/assets/hero.jpg'">
+    <Layout
+      :image="'/@theme/index/assets/hero.jpg'"
+      :big="true"
+    >
         <template #title>
             <Hero/>
         </template>
