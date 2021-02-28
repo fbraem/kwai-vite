@@ -3,6 +3,14 @@ import { website } from '/src/config/config.toml';
 
 export const router = createRouter({
   history: createWebHashHistory(),
+  scrollBehavior(to, from, savePosition) {
+    if (savePosition) {
+      return savePosition;
+    }
+    return {
+      top: 0
+    };
+  },
   routes: []
 });
 
