@@ -15,13 +15,13 @@
 </template>
 
 <script>
-import config from '/src/config/config.yaml';
+import { website } from '/src/config/config.toml';
 
 export default {
     setup() {
         return {
-            title: config.website.title,
-            text: config.website.hero
+            title: website.title,
+            text: website.hero
         }
     }
 }

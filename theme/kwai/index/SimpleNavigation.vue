@@ -8,7 +8,7 @@
 
 <script>
 import Navigation from '/@theme/components/Navigation.vue';
-import config from '/src/config/config.yaml';
+import config from '/src/config/config.toml';
 
 export default {
   components: { Navigation },

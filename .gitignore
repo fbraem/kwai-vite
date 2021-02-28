@@ -1,4 +1,4 @@
 /node_modules
 /public
-/src/config/config.yaml
+/src/config/config.toml
 /dist/

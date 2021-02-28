@@ -22,7 +22,7 @@
     "yup": "^0.32.8"
   },
   "devDependencies": {
-    "@rollup/plugin-yaml": "^3.0.0",
+    "@fbraem/rollup-plugin-toml": "file:../rollup-plugin-toml",
     "@vitejs/plugin-vue": "^1.1.2",
     "@vue/compiler-sfc": "^3.0.5",
     "autoprefixer": "^10.2.4",

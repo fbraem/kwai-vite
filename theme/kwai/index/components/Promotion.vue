@@ -11,13 +11,13 @@
 </template>
 
 <script>
-import config from '/src/config/config.yaml';
+import { website } from '/src/config/config.toml';
 
 export default {
     setup() {
         return {
-            title: config.website.promotion.title,
-            text: config.website.promotion.text
+            title: website.promotion.title,
+            text: website.promotion.text
         }
     }
 }

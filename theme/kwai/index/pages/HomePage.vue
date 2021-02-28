@@ -145,7 +145,7 @@ import { computed } from 'vue';
 import { useApplicationService } from '/src/services/ApplicationService';
 import { useNewsService } from '/src/services/NewsService';
 
-import config from '/src/config/config.yaml';
+import config from '/src/config/config.toml';
 
 export default {
     components: {
@@ -159,6 +159,8 @@ export default {
         Card
     },
     setup () {
+      console.log(config);
+
       const applicationService = useApplicationService();
       const { data: applicationResponse } = useSWRV('/index/applications/', applicationService.load);
 

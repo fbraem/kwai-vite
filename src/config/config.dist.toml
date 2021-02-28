@@ -1,0 +1,39 @@
+# TOML is used for configuration: https://toml.io/
+api = "http://" # The url to kwai api
+
+[contact] # Contact information
+title = "" # The title of the contact
+mail = "" # The mail address of the contact
+facebook = "" # A link to the facebook group/page of the club
+location = "" # A link to the location of the club
+
+[contact.website] # Website contact information
+url = "" # The URL of the website
+mail = "" # The mail address of the webmaster
+webmaster = "" # The name of the webmaster
+
+[contact.address] # Club address
+street = "" # The street of the address
+city = "" # The city of the club
+tel = "" # The telephone of the club
+
+[website] # Website information
+title = "" # The title of the website
+hero = "" # The text for the hero section on the home page
+
+[website.promotion] # Promotion card
+title = "" # Title of the prompotion card
+text = "" # Text of the promotion card
+
+[[website.information_boards]] # Information boards on the home page (repeat this for multiple boards)
+title = "" # The title of the information board
+text = "" # The text for the information board
+image = ""  # Put the image in the public directory (or a sub directory of public)
+# The public directory is treated as a root directory for the link.
+# For example: if image.jpg is stored in public, the link is /image.jpg
+bg-color = "" # The background color of the board (tailwindcss class)
+text-color = "" # The text color of the board (tailwindcss class)
+
+[[links]] # Links on the home page (repeat this for multiple links)
+title = "" # Title of the link
+url = "" # The link

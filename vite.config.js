@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import yaml from '@rollup/plugin-yaml';
+import toml from '@fbraem/rollup-plugin-toml';
 const { resolve } = require('path');
 
 export default defineConfig({
@@ -9,7 +9,7 @@ export default defineConfig({
     },
     plugins: [
         vue(),
-        yaml()
+        toml()
     ],
     build: {
         rollupOptions: {

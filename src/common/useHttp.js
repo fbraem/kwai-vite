@@ -1,11 +1,11 @@
 import wretch from 'wretch';
-import config from '/src/config/config.yaml';
+import { api } from '/src/config/config.toml';
 import useAuthentication from './useAuthentication.js';
 
 /**
  * The base implementation for calling an API.
  */
-export const useHttp = wretch(config.api, {
+export const useHttp = wretch(api, {
     options: {
         credentials: 'include',
         mode: 'cors'
