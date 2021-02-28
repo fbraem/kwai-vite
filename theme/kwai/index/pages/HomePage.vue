@@ -24,6 +24,7 @@
                             class="bg-white"
                             v-if="newsApplication"
                             :application="newsApplication"
+                            :route="{ name: 'news' }"
                             icon="fas fa-newspaper"
                             icon-bg-color="bg-red-700"
                         >
