@@ -56,9 +56,6 @@
   </Layout>
 </template>
 
-<style scoped>
-</style>
-
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import OriginalNewsPage from '/src/pages/NewsPage.vue';
