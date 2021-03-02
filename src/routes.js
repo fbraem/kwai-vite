@@ -30,6 +30,15 @@ export default [
         }
       },
       {
+        name: 'news.archive',
+        path: '/news/archive/:year(\\d+)/:month(\\d+)',
+        props: route => ({
+          year: parseInt(route.params.year),
+          month: parseInt(route.params.month)
+        }),
+        component: NewsPage
+      },
+      {
         name: 'news.story',
         path: '/news/:id(\\d+)',
         props: true,
@@ -37,7 +46,7 @@ export default [
         meta: {
           title: 'Nieuws'
         }
-      }
+      },
     ],
   },
   {
