@@ -8,9 +8,11 @@
         <h4 class="text-xl mb-2">{{ year }}</h4>
       </slot>
       <ul class="mb-2 divide-y divide-gray-300">
-        <li v-for="month in archive[year]">
+        <li class="py-1" v-for="month in archive[year]">
           <slot name="month" :archive="archive[year]">
             <div class="relative flex justify-between leading-6">
+              <CoverLink :route="{ name: 'news.archive', params: { year, month: month.month }}">
+              </CoverLink>
               <div class="text-blue-600 flex-grow">
                 {{ month.name }} {{ month.year }}
               </div>
@@ -31,10 +33,11 @@ import { months } from '/src/common/useDayJS.js';
 import useSWRV from 'swrv';
 import { computed } from 'vue';
 
+import CoverLink from '/src/components/CoverLink.vue';
 import Badge from '/src/components/Badge.vue';
 
 export default {
-  components: { Badge },
+  components: { CoverLink, Badge },
   setup() {
     const newsService = useNewsService();
     const { data, isValidating: loading } = useSWRV('/news/archive', newsService.archive);
