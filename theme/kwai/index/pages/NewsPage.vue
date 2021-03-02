@@ -15,12 +15,17 @@
     <AngledSection bg-color="bg-white" text-color="text-white">
       <div class="flex flex-wrap">
         <div class="w-full md:w-5/12 px-4 mr-auto ml-auto">
-          <OriginalNewsPage>
+          <OriginalNewsPage v-bind="$attrs">
+            <template #archive="{ archive }">
+              <h1 class="text-2xl md:text-4xl font-extrabold">
+                Archief van {{ archive.month }} {{ archive.year }}
+              </h1>
+            </template>
             <template #default="{ story }">
               <p class="pt-6 mb-3 text-sm font-normal text-gray-500">
                 {{ story.publish_date }}
               </p>
-              <h2 class="mb-2 text-xl font-extrabold leading-snug tracking-tight text-gray-800 md:text-3xl">
+              <h2 class="mb-2 text-xl font-extrabold leading-snug tracking-tight text-gray-800 md:text-2xl">
                 <a
                     v-if="story.has_more"
                     href="#" class="text-gray-900"
@@ -64,6 +69,8 @@ import AngledSection from '/src/components/AngledSection.vue';
 import Badge from '/src/components/Badge.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
 
+// Note: Instead of defining properties here and passing them one by one
+// to the original page, properties are bind with $attrs
 export default {
   components: {
     ButtonLink,
