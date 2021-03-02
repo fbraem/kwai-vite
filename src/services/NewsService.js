@@ -36,7 +36,14 @@ const get = (id) => {
     return api.get().json((json) => toModel(json));
 }
 
-const load = ({ promoted = false, year = 0, month = 0, offset = 0, limit = 10 } = {}) => {
+const load = ({
+  promoted = false,
+  year = 0,
+  month = 0,
+  offset = 0,
+  limit = 10,
+  application = 0
+  } = {}) => {
     let api = useHttp.url('/news/stories');
     if (offset > 0) {
         api = api.query({ 'page[offset]': offset });
@@ -50,6 +57,9 @@ const load = ({ promoted = false, year = 0, month = 0, offset = 0, limit = 10 } 
         if (month !== 0) {
             api = api.query({ 'filter[month]': month});
         }
+    }
+    if (application !== 0) {
+        api = api.query({ 'filter[application]': application});
     }
     return api.get().json((json) => toModel(json));
 }
