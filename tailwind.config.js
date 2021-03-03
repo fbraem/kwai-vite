@@ -14,7 +14,8 @@ module.exports = {
   variants: {
     extend: {
       margin: [ 'hover' ],
-      cursor: [ 'hover', 'focus' ]
+      cursor: [ 'hover', 'focus' ],
+      borderRadius: [ 'hover', 'focus' ]
     },
   },
   plugins: [
