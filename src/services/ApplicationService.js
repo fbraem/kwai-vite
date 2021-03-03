@@ -2,6 +2,7 @@ import { useHttp } from '/src/common/useHttp';
 
 function toModel(json) {
   const map = d => ({
+    id: d.id,
     title: d.attributes.title,
     name: d.attributes.name,
     short_description: d.attributes.short_description
@@ -16,14 +17,9 @@ const load = () =>
   useHttp
     .url('/portal/applications')
     .get()
-    .json((json) => toModel(json));
-
-const get = (id) => {
-  let api = useHttp.url(`/application/${id}`);
-  return api.get().json(json => toModel(json));
-}
+    .json((json) => toModel(json))
+;
 
 export const useApplicationService = () => ({
-  load,
-  get
+  load
 });
