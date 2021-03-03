@@ -13,7 +13,8 @@ module.exports = {
   },
   variants: {
     extend: {
-      margin: [ 'hover' ]
+      margin: [ 'hover' ],
+      cursor: [ 'hover', 'focus' ]
     },
   },
   plugins: [
