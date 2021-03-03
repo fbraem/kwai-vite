@@ -1,6 +1,10 @@
 <template>
   <div>
     <Spinner v-if="loading"></Spinner>
+    <slot v-if="application" name="application" :application="application">
+      <h2 class="font-semibold text-3xl">{{ application.title }}</h2>
+      <p class="text-sm text-gray-500"> Alle nieuwsberichten van deze categorie</p>
+    </slot>
     <slot v-if="archive" name="archive" :archive="archive">
       <h2>{{ archive.year }} {{ archive.month }}</h2>
     </slot>
@@ -13,6 +17,7 @@
 
 <script>
 import { useNewsService } from '/src/services/NewsService.js';
+import { useApplicationService } from '/src/services/ApplicationService.js';
 import Spinner from '/src/components/Spinner.vue';
 import useSWRV from 'swrv';
 import { computed, ref } from 'vue';
@@ -26,6 +31,9 @@ export default {
     },
     month: {
       type: Number
+    },
+    app: {
+      type: String
     }
   },
   setup(props) {
@@ -38,13 +46,20 @@ export default {
     });
 
     const { data: news, isValidating: loading } = useSWRV(
-      // the cache key is news_<offset>_<limit>[_<year>][_<month]
-      () => [ 'news', paginator.value.offset, paginator.value.limit, props.year, props.month ].filter(e => e !== undefined).join('_'),
+      // the cache key: news_<offset>_<limit>[_<year>][_<month>][_<application>]
+      () => [
+          'news',
+          paginator.value.offset,
+          paginator.value.limit,
+          props.year, props.month,
+          props.app
+        ].filter(e => e !== undefined).join('_'),
       () => newsService.load({
         year: props.year,
         month: props.month,
         offset: paginator.value.offset,
-        limit: paginator.value.limit
+        limit: paginator.value.limit,
+        application: props.app
       })
     );
 
@@ -58,11 +73,23 @@ export default {
       return null;
     });
 
+    const applicationService = useApplicationService();
+    const { data: applications } = useSWRV(
+      `/applications`,
+      () => applicationService.load()
+    );
+    const application = computed(() => {
+      if (applications.value) {
+        return applications.value.find(e => e.id === props.app);
+      }
+    });
+
     return {
       news,
       loading,
       archive,
-      paginator
+      paginator,
+      application
     }
   }
 };

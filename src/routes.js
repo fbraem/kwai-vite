@@ -39,6 +39,12 @@ export default [
         component: NewsPage
       },
       {
+        name: 'news.application',
+        path: '/news/application/:app(\\d+)',
+        props: true,
+        component: NewsPage
+      },
+      {
         name: 'news.story',
         path: '/news/:id(\\d+)',
         props: true,
