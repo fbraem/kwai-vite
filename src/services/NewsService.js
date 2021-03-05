@@ -20,10 +20,12 @@ function toModel(json) {
         };
     }
     if (Array.isArray(json.data)) {
-        return json.data.map(map);
-    } else {
-        return map(json.data);
+      return {
+        items: json.data.map(map),
+        meta: json.meta
+      };
     }
+    return map(json.data);
 }
 
 const archive = () => {
