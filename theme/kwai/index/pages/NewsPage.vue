@@ -13,13 +13,22 @@
       </p>
     </template>
     <AngledSection bg-color="bg-white" text-color="text-white">
-      <div class="flex flex-wrap">
-        <div class="w-full md:w-5/12 px-4 mr-auto ml-auto">
+      <div class="w-full">
+        <div class="hidden sm:block float-right bg-gray-200 m-3 p-3 w-1/3 rounded-lg">
+          <NewsArchive></NewsArchive>
+        </div>
+        <div class="mx-auto w-full">
           <OriginalNewsPage v-bind="$attrs">
             <template #archive="{ archive }">
-              <h1 class="text-2xl md:text-4xl font-extrabold">
+              <h1 class="text-2xl md:text-4xl pt-3 font-extrabold">
                 Archief van {{ archive.month }} {{ archive.year }}
               </h1>
+              <router-link :to="{ name: 'news' }">
+                <span class="text-sm text-blue-600">
+                  <i class="far fa-arrow-alt-circle-left"></i>
+                  Terug naar het nieuws van de dag
+                </span>
+              </router-link>
             </template>
             <template #default="{ story }">
               <p class="pt-6 mb-3 text-sm font-normal text-gray-500">
@@ -53,9 +62,11 @@
             </template>
           </OriginalNewsPage>
         </div>
-        <div class="w-full md:w-4/12 px-4 mx-auto">
+        <div class="sm:hidden bg-gray-200 p-3 mt-5 w-full rounded-lg">
           <NewsArchive></NewsArchive>
         </div>
+      </div>
+      <div class="hidden sm:block clear-both">
       </div>
     </AngledSection>
   </Layout>
