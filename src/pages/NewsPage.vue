@@ -7,12 +7,15 @@
     <slot v-if="archive" name="archive" :archive="archive">
       <h2>{{ archive.year }} {{ archive.month }}</h2>
     </slot>
-    <template v-if="news">
+    <div
+        v-if="news"
+        class="space-y-6 divide-y divide-gray-300"
+    >
       <div v-for="story in news.items">
         <slot :story="story">
         </slot>
       </div>
-    </template>
+    </div>
     <Paginator
         class="mt-10"
         :limit="limit"
