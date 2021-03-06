@@ -1,6 +1,6 @@
 <template>
     <Layout
-      image="/@theme/index/assets/hero.jpg"
+      image="/@theme/portal/assets/hero.jpg"
       :big="true"
     >
         <template #title>
@@ -48,7 +48,7 @@
                     <Promotion class="w-full lg:w-5/12"/>
                     <Highlight
                         title="10de tornooi Judokwai Kemzeke"
-                        image="/@theme/index/assets/hero.jpg"
+                        image="/@theme/portal/assets/hero.jpg"
                         bg-color="bg-red-700"
                         text-color="text-white"
                         class="w-full mt-4 lg:w-4/12"
@@ -115,14 +115,14 @@
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import AngledSection from '/src/components/AngledSection.vue';
 import Card from '/src/components/Card.vue';
-import StoryListItem from '/@theme/index/components/StoryListItem.vue';
+import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
 
 import useSWRV from 'swrv';
-import Hero from '/@theme/index/components/Hero.vue';
-import ApplicationSection from '/@theme/index/components/ApplicationSection.vue';
-import ApplicationCard from '/@theme/index/components/ApplicationCard.vue';
-import Promotion from '/@theme/index/components/Promotion.vue';
-import Highlight from '/@theme/index/components/Highlight.vue';
+import Hero from '/@theme/portal/components/Hero.vue';
+import ApplicationSection from '/@theme/portal/components/ApplicationSection.vue';
+import ApplicationCard from '/@theme/portal/components/ApplicationCard.vue';
+import Promotion from '/@theme/portal/components/Promotion.vue';
+import Highlight from '/@theme/portal/components/Highlight.vue';
 
 import { computed } from 'vue';
 import { useApplicationService } from '/src/apps/portal/services/ApplicationService';
@@ -144,7 +144,7 @@ export default {
     },
     setup () {
       const applicationService = useApplicationService();
-      const { data: applicationResponse } = useSWRV('/index/applications/', applicationService.load);
+      const { data: applicationResponse } = useSWRV('/portal/applications/', applicationService.load);
 
       const newsApplication = computed(() => {
         if (applicationResponse.value) {
@@ -169,7 +169,7 @@ export default {
       });
 
       const newsService = useNewsService();
-      const { data: news } = useSWRV('/index/promoted', newsService.load);
+      const { data: news } = useSWRV('/portal/promoted', newsService.load);
 
       return {
         newsApplication,

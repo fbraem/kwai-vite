@@ -1,6 +1,6 @@
 <template>
   <Layout
-    image="/@theme/index/assets/news.jpg"
+    image="/@theme/portal/assets/news.jpg"
     :big="false"
   >
     <template #title>
@@ -65,7 +65,7 @@ import NewsArchive from '/src/apps/portal/pages/NewsArchive.vue';
 import AngledSection from '/src/components/AngledSection.vue';
 import Badge from '/src/components/Badge.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
-import StoryListItem from '/@theme/index/components/StoryListItem.vue';
+import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
 
 // Note: Instead of defining properties here and passing them one by one
 // to the original page, properties are bind with $attrs

@@ -46,7 +46,7 @@ export default {
     image: {
       type: String,
       required: true,
-      default: '/@theme/index/assets/hero.jpg'
+      default: '/@theme/portal/assets/hero.jpg'
     }
   },
   setup() {

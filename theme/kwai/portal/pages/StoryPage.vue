@@ -1,6 +1,6 @@
 <template>
   <ContentLayout
-      image="/@theme/index/assets/news.jpg"
+      image="/@theme/portal/assets/news.jpg"
   >
     <template #title>
       <h1 class="text-white font-semibold text-4xl mb-2">

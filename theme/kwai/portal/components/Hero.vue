@@ -4,7 +4,7 @@
         {{ title }}
     </h1>
     <img
-        src="/@theme/index/assets/logo2.png"
+        src="/@theme/portal/assets/logo2.png"
         class="w-24 mx-auto mt-3"
         alt="logo"
     />
