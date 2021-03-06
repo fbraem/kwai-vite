@@ -3,7 +3,6 @@
     <Spinner v-if="loading"></Spinner>
     <slot v-if="application" name="application" :application="application">
       <h2 class="font-semibold text-3xl">{{ application.title }}</h2>
-      <p class="text-sm text-gray-500"> Alle nieuwsberichten van deze categorie</p>
     </slot>
     <slot v-if="archive" name="archive" :archive="archive">
       <h2>{{ archive.year }} {{ archive.month }}</h2>
