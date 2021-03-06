@@ -63,46 +63,24 @@
             </div>
         </AngledSection>
         <AngledSection text-color="text-white" bg-color="bg-white">
-            <div class="pt-6 text-left md:text-center lg:mx-36">
-                <h2 class="mb-2 text-3xl font-extrabold leading-tight text-gray-900">
-                  Nieuws
-                </h2>
-                <p class="text-lg text-gray-500">
-                  Het belangrijkste nieuws van onze club op een rijtje.
-                </p>
+          <div class="lg:mx-36">
+            <div class="pt-6 text-left md:text-center">
+              <h2 class="mb-2 text-3xl font-extrabold leading-tight text-gray-900">
+                Nieuws
+              </h2>
+              <p class="text-lg text-gray-500">
+                Het belangrijkste nieuws van onze club op een rijtje.
+              </p>
             </div>
             <div
                 v-if="news"
-                class="flex flex-col space-y-6 divide-y divide-gray-300 lg:mx-36"
+                class="flex flex-col space-y-6 divide-y divide-gray-300"
             >
-                <div v-for="story in news.items">
-                    <p class="pt-6 mb-3 text-sm font-normal text-gray-500">
-                        {{ story.publish_date }}
-                    </p>
-                    <h2 class="mb-2 text-xl font-extrabold leading-snug tracking-tight text-gray-800 md:text-3xl">
-                        <a
-                            v-if="story.has_more"
-                            href="#" class="text-gray-900 hover:text-blue-600"
-                        >
-                            {{ story.title }}
-                        </a>
-                        <span
-                            v-else
-                            class="text-gray-900"
-                        >
-                            {{ story.title }}
-                        </span>
-                    </h2>
-                    <p
-                        class="mb-4 text-base font-normal text-gray-600"
-                        v-html="story.summary"
-                    >
-                    </p>
-                    <button class="bg-red-700 text-white background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1" type="button">
-                        <i class="fas fa-angle-right"></i> Lees verder ...
-                    </button>
-                </div>
+              <div v-for="story in news.items">
+                <StoryListItem :story="story" />
+              </div>
             </div>
+          </div>
         </AngledSection>
         <AngledSection
             text-color="text-gray-700"
@@ -137,6 +115,7 @@
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import AngledSection from '/src/components/AngledSection.vue';
 import Card from '/src/components/Card.vue';
+import StoryListItem from '/@theme/index/components/StoryListItem.vue';
 
 import useSWRV from 'swrv';
 import Hero from '/@theme/index/components/Hero.vue';
@@ -153,6 +132,7 @@ import config from '/src/config/config.toml';
 
 export default {
     components: {
+      StoryListItem,
         Highlight,
         Promotion,
         ApplicationCard,

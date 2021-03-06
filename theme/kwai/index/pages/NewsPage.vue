@@ -44,41 +44,7 @@
               </router-link>
             </template>
             <template #default="{ story }">
-              <h2 class="pt-6 mb-2 text-xl font-extrabold leading-snug tracking-tight text-gray-800 md:text-2xl">
-                <a
-                    v-if="story.has_more"
-                    href="#" class="text-gray-900"
-                >
-                  {{ story.title }}
-                </a>
-                <span
-                    v-else
-                    class="text-gray-900"
-                >
-                  {{ story.title }}
-                </span>
-              </h2>
-              <p class="mb-3 text-sm font-normal text-gray-500">
-                {{ story.publish_date }} &nbsp;&bull;&nbsp;
-                <router-link
-                    class="text-sm text-blue-600"
-                    :to="{ name: 'news.application', params: { app: story.application.id }}"
-                >
-                  {{ story.application.title }}
-                  <i class="ml-1 fas fa-tag"></i>
-                </router-link>
-              </p>
-              <p
-                  class="mb-4 text-base font-normal text-gray-600"
-                  v-html="story.summary"
-              >
-              </p>
-              <ButtonLink
-                  class="bg-red-700 text-white"
-                  :route="{ name: 'news.story', params: { id: story.id }}"
-              >
-                <i class="fas fa-angle-right"></i> Lees verder ...
-              </ButtonLink>
+              <StoryListItem :story="story" />
             </template>
           </OriginalNewsPage>
         </div>
@@ -99,11 +65,13 @@ import NewsArchive from '/src/pages/NewsArchive.vue';
 import AngledSection from '/src/components/AngledSection.vue';
 import Badge from '/src/components/Badge.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
+import StoryListItem from '/@theme/index/components/StoryListItem.vue';
 
 // Note: Instead of defining properties here and passing them one by one
 // to the original page, properties are bind with $attrs
 export default {
   components: {
+    StoryListItem,
     ButtonLink,
     Badge,
     AngledSection,
