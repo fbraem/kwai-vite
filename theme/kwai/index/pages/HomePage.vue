@@ -75,7 +75,7 @@
                 v-if="news"
                 class="flex flex-col space-y-6 divide-y divide-gray-300 lg:mx-36"
             >
-                <div v-for="story in news">
+                <div v-for="story in news.items">
                     <p class="pt-6 mb-3 text-sm font-normal text-gray-500">
                         {{ story.publish_date }}
                     </p>
