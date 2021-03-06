@@ -1,4 +1,4 @@
-import { useHttp } from '/src/common/useHttp';
+import { useHttp } from '/src/common/useHttp.js';
 
 import { dateToTimezone, formatDate } from '/src/common/useDayJS';
 

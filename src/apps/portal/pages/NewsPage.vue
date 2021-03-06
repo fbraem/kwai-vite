@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import { useNewsService } from '/src/services/NewsService.js';
-import { useApplicationService } from '/src/services/ApplicationService.js';
+import { useNewsService } from '/src/apps/portal/services/NewsService.js';
+import { useApplicationService } from '/src/apps/portal/services/ApplicationService.js';
 import Spinner from '/src/components/Spinner.vue';
 import Paginator from '/src/components/Paginator.vue';
 import useSWRV from 'swrv';

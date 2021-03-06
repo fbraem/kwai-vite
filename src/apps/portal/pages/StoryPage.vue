@@ -11,7 +11,7 @@
 
 <script>
 import Spinner from '/src/components/Spinner.vue';
-import { useNewsService } from '/src/services/NewsService.js';
+import { useNewsService } from '/src/apps/portal/services/NewsService.js';
 import useSWRV from 'swrv';
 
 export default {

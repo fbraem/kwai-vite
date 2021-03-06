@@ -6,7 +6,7 @@
 
 <script>
 import DialogPageLayout from '/@theme/layouts/DialogPageLayout.vue';
-import OriginalLoginPage from '/src/pages/LoginPage.vue';
+import OriginalLoginPage from '/src/apps/portal/pages/LoginPage.vue';
 
 export default {
   components: {

@@ -125,8 +125,8 @@ import Promotion from '/@theme/index/components/Promotion.vue';
 import Highlight from '/@theme/index/components/Highlight.vue';
 
 import { computed } from 'vue';
-import { useApplicationService } from '/src/services/ApplicationService';
-import { useNewsService } from '/src/services/NewsService';
+import { useApplicationService } from '/src/apps/portal/services/ApplicationService';
+import { useNewsService } from '/src/apps/portal/services/NewsService';
 
 import config from '/src/config/config.toml';
 

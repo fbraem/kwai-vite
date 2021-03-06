@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { useNewsService } from '/src/services/NewsService.js';
+import { useNewsService } from '/src/apps/portal/services/NewsService.js';
 import { months } from '/src/common/useDayJS.js';
 import IconLink from '/src/components/IconLink.vue';
 import useSWRV from 'swrv';

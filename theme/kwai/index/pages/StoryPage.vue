@@ -80,7 +80,7 @@
 </style>
 
 <script>
-import OriginalStoryPage from '/src/pages/StoryPage.vue';
+import OriginalStoryPage from '/src/apps/portal/pages/StoryPage.vue';
 import ContentLayout from '/@theme/layouts/ContentLayout.vue';
 import AngledSection from '/src/components/AngledSection.vue';
 

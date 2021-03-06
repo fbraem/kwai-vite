@@ -1,4 +1,4 @@
-import { useHttpAuth } from '../common/useHttp.js';
+import { useHttpAuth } from '/src/common/useHttp.js';
 
 function toRuleModel(data) {
   return {

@@ -1,7 +1,7 @@
 import { Ability } from '@casl/ability';
 import Lockr from 'lockr';
 import { computed, ref } from 'vue';
-import { useUserService } from '/src/services/UserService.js';
+import { useUserService } from '/src/apps/portal/services/UserService.js';
 import { useHttp, useHttpAuth } from './useHttp.js';
 
 const USER_KEY = 'user';

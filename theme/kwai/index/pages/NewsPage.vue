@@ -60,8 +60,8 @@
 
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
-import OriginalNewsPage from '/src/pages/NewsPage.vue';
-import NewsArchive from '/src/pages/NewsArchive.vue';
+import OriginalNewsPage from '/src/apps/portal/pages/NewsPage.vue';
+import NewsArchive from '/src/apps/portal/pages/NewsArchive.vue';
 import AngledSection from '/src/components/AngledSection.vue';
 import Badge from '/src/components/Badge.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';

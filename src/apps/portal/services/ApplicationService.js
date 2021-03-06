@@ -1,4 +1,4 @@
-import { useHttp } from '/src/common/useHttp';
+import { useHttp } from '/src/common/useHttp.js';
 
 function toModel(json) {
   const map = d => ({
