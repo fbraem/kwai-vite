@@ -8,7 +8,7 @@
     <slot v-if="archive" name="archive" :archive="archive">
       <h2>{{ archive.year }} {{ archive.month }}</h2>
     </slot>
-    <template v-if="news && news.items">
+    <template v-if="news">
       <div v-for="story in news.items">
         <slot :story="story">
         </slot>
