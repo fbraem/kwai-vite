@@ -19,22 +19,32 @@
         </div>
         <div class="mx-auto w-full">
           <OriginalNewsPage v-bind="$attrs">
+            <template #application="{ application }">
+              <h1 class="text-2xl md:text-4xl pt-3 font-extrabold">
+                {{ application.title }}
+              </h1>
+              <router-link
+                  class="text-sm text-blue-600"
+                  :to="{ name: 'news' }"
+              >
+                <i class="far fa-arrow-alt-circle-left"></i>
+                Terug naar het nieuws van de dag
+              </router-link>
+            </template>
             <template #archive="{ archive }">
               <h1 class="text-2xl md:text-4xl pt-3 font-extrabold">
                 Archief van {{ archive.month }} {{ archive.year }}
               </h1>
-              <router-link :to="{ name: 'news' }">
-                <span class="text-sm text-blue-600">
-                  <i class="far fa-arrow-alt-circle-left"></i>
-                  Terug naar het nieuws van de dag
-                </span>
+              <router-link
+                  class="text-sm text-blue-600"
+                  :to="{ name: 'news' }"
+              >
+                <i class="far fa-arrow-alt-circle-left"></i>
+                Terug naar het nieuws van de dag
               </router-link>
             </template>
             <template #default="{ story }">
-              <p class="pt-6 mb-3 text-sm font-normal text-gray-500">
-                {{ story.publish_date }}
-              </p>
-              <h2 class="mb-2 text-xl font-extrabold leading-snug tracking-tight text-gray-800 md:text-2xl">
+              <h2 class="pt-6 mb-2 text-xl font-extrabold leading-snug tracking-tight text-gray-800 md:text-2xl">
                 <a
                     v-if="story.has_more"
                     href="#" class="text-gray-900"
@@ -48,6 +58,16 @@
                   {{ story.title }}
                 </span>
               </h2>
+              <p class="mb-3 text-sm font-normal text-gray-500">
+                {{ story.publish_date }} &nbsp;&bull;&nbsp;
+                <router-link
+                    class="text-sm text-blue-600"
+                    :to="{ name: 'news.application', params: { app: story.application.id }}"
+                >
+                  {{ story.application.title }}
+                  <i class="ml-1 fas fa-tag"></i>
+                </router-link>
+              </p>
               <p
                   class="mb-4 text-base font-normal text-gray-600"
                   v-html="story.summary"
