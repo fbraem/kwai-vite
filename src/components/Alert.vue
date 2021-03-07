@@ -11,7 +11,7 @@
       >
         {{ title }}
       </h3>
-      <div class="flex">
+      <div class="flex items-center">
         <i
             v-if="icon"
             class="mr-4"
