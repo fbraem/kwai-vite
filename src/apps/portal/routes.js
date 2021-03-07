@@ -6,6 +6,7 @@ import StoryPage from '/@theme/portal/pages/StoryPage.vue';
 import SiteNavigation from '/@theme/portal/SiteNavigation.vue';
 import Footer from '/@theme/portal/Footer.vue';
 import SimpleNavigation from '/@theme/portal/SimpleNavigation.vue';
+import TrainingsPage from '/@theme/portal/pages/TrainingsPage.vue';
 
 export default [
   {
@@ -53,6 +54,14 @@ export default [
           title: 'Nieuws'
         }
       },
+      {
+        name: 'trainings',
+        path: '/trainings',
+        component: TrainingsPage,
+        meta: {
+          title: 'Trainingen'
+        }
+      }
     ],
   },
   {
