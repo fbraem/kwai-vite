@@ -83,9 +83,8 @@ export default {
         application: props.app
       })
     );
-    const count = computed(() => { return news.value?.meta.count ?? 0; });
+    const count = computed(() => news.value?.meta.count ?? 0);
     const setOffset = (newOffset) => {
-      console.log(newOffset);
       offset.value = newOffset;
     }
 

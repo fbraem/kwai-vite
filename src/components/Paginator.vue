@@ -5,7 +5,6 @@
   -->
   <!-- eslint-disable max-len -->
   <div
-      v-if="pageCount > 1"
       class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
   >
     <div class="flex-1 flex justify-between sm:hidden">
@@ -96,7 +95,8 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import usePagination from '/src/composables/usePagination.js';
+import { watch } from 'vue';
 
 export default {
   props: {
@@ -113,52 +113,17 @@ export default {
     }
   },
   setup(props, { emit }) {
-    const pageCount = computed(() => Math.ceil(props.count / props.limit));
-
-    const currentPage = computed(() => {
-      let current = 1;
-      for (let offset = 0; offset < props.offset; current++) {
-        offset += props.limit;
-      }
-      return current;
+    const pagination = usePagination({
+      limit: props.limit,
+      count: props.count,
+      setOffset: (offset) => emit('page', offset)
     });
 
-    const pages = computed(() => {
-      const delta = 3;
-
-      let range = [];
-      for (let i = Math.max(2, currentPage.value - delta);
-          i <= Math.min(pageCount.value - 1,
-              currentPage.value + delta); i++) {
-        range.push(i);
-      }
-      if (currentPage.value - delta > 2) {
-        range.unshift('...');
-      }
-      if (currentPage.value + delta < pageCount.value - 1) {
-        range.push('...');
-      }
-
-      range.unshift(1);
-      range.push(pageCount.value);
-
-      return range;
-    });
-
-    const triggerPage = (newPage) => {
-      let offset = 0;
-      for (let page = 1; page < newPage; page++) {
-        offset += props.limit;
-      }
-      emit('page', offset);
-    };
+    watch(() => props.count, () => { pagination.count.value = props.count; });
 
     return {
-      pageCount,
-      currentPage,
-      pages,
-      triggerPage
-    };
+      ...pagination
+    }
   }
 };
 </script>
