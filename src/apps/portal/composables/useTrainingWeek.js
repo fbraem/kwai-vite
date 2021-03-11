@@ -8,7 +8,6 @@ import { useTrainingService } from '/src/apps/portal/services/TrainingService.js
 const service = useTrainingService();
 
 export default function useTrainingWeek(options= {}) {
-  const start = ref(options.start ?? now());
   const current = ref(options.start ?? now());
   const end = computed(() => current.value.add(7, 'day'));
 
