@@ -50,7 +50,9 @@ const load = ({
     if (offset > 0) {
         api = api.query({ 'page[offset]': offset });
     }
-    api = api.query({ 'page[limit]': limit });
+    if (limit) {
+      api = api.query({ 'page[limit]': limit });
+    }
     if (promoted) {
         api = api.query({ 'filter[promoted]': true });
     }
