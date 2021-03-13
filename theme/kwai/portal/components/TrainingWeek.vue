@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-5">
-      <Header>Trainingen</Header>
+      <Header>Trainingen <Spinner v-if="loading"></Spinner></Header>
       <p class="text-sm text-gray-600">
         Trainingen van
         <span class="font-semibold">{{ current }}</span>
@@ -44,11 +44,12 @@
 <script>
 import useTrainingWeek from '/src/apps/portal/composables/useTrainingWeek.js';
 import Alert from '/src/components/Alert.vue';
+import Spinner from '/src/components/Spinner.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
 import Header from '/@theme/components/Header.vue';
 
 export default {
-  components: { Header, ButtonLink, Alert },
+  components: { Header, ButtonLink, Alert, Spinner },
   setup() {
     return {
       ... useTrainingWeek()
