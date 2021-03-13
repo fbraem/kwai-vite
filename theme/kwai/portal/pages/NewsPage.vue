@@ -76,7 +76,6 @@
 
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
-import OriginalNewsPage from '/src/apps/portal/pages/NewsPage.vue';
 import NewsArchive from '/@theme/portal/components/NewsArchive.vue';
 import AngledSection from '/src/components/AngledSection.vue';
 import Badge from '/src/components/Badge.vue';
@@ -95,7 +94,6 @@ export default {
     Badge,
     AngledSection,
     Layout,
-    OriginalNewsPage,
     NewsArchive,
     Paginator
   },
