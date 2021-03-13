@@ -4,32 +4,32 @@
   >
     <template #title>
       <h1 class="text-white font-semibold text-4xl mb-2">
-        Nieuws
+        Nieuws <Spinner v-if="loading"></Spinner>
       </h1>
     </template>
-    <OriginalStoryPage :id="id">
-      <template #default="{ story }">
-        <div class="text-center my-2">
-          <h3 class="text-4xl font-semibold leading-normal text-gray-800">
-            {{ story.title }}
-          </h3>
-          <p class="mb-3 text-sm font-normal text-gray-500">
-            {{ story.publish_date }}
-          </p>
-          <p
-              class="text-gray-500"
-              v-html="story.summary"
-          >
-          </p>
-        </div>
-        <div
-            class="mt-10 py-6 border-t border-gray-300 markdown"
-            v-if="story.has_more"
-            v-html="story.content"
+    <div v-if="!loading && story">
+      <div
+          class="text-center my-2"
+      >
+        <h3 class="text-4xl font-semibold leading-normal text-gray-800">
+          {{ story.title }}
+        </h3>
+        <p class="mb-3 text-sm font-normal text-gray-500">
+          {{ story.publish_date }}
+        </p>
+        <p
+            class="text-gray-500"
+            v-html="story.summary"
         >
-        </div>
-      </template>
-    </OriginalStoryPage>
+        </p>
+      </div>
+      <div
+          class="mt-10 py-6 border-t border-gray-300 markdown"
+          v-if="story.has_more"
+          v-html="story.content"
+      >
+      </div>
+    </div>
   </ContentLayout>
 </template>
 
@@ -80,9 +80,11 @@
 </style>
 
 <script>
-import OriginalStoryPage from '/src/apps/portal/pages/StoryPage.vue';
 import ContentLayout from '/@theme/layouts/ContentLayout.vue';
 import AngledSection from '/src/components/AngledSection.vue';
+import Spinner from '/src/components/Spinner.vue';
+
+import useNewsStory from '/src/apps/portal/composables/useNewsStory.js';
 
 export default {
   props: {
@@ -94,7 +96,16 @@ export default {
   components: {
     AngledSection,
     ContentLayout,
-    OriginalStoryPage
+    Spinner
+  },
+  setup(props) {
+    const { story, loading, error } = useNewsStory(props.id);
+
+    return {
+      story,
+      loading,
+      error
+    };
   }
 }
 </script>
