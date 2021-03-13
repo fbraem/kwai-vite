@@ -38,6 +38,7 @@
                             class="bg-white"
                             v-if="trainingsApplication"
                             :application="trainingsApplication"
+                            :route="{ name: 'trainings' }"
                             icon="fas fa-university"
                             icon-bg-color="bg-red-700"
                         >
