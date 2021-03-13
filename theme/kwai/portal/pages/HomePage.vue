@@ -76,7 +76,7 @@
                 v-if="news"
                 class="flex flex-col space-y-6 divide-y divide-gray-300"
             >
-              <div v-for="story in news.items">
+              <div v-for="story in news">
                 <StoryListItem :story="story" />
               </div>
             </div>
@@ -116,17 +116,14 @@ import Layout from '/@theme/layouts/LandingLayout.vue';
 import AngledSection from '/src/components/AngledSection.vue';
 import Card from '/src/components/Card.vue';
 import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
-
-import useSWRV from 'swrv';
 import Hero from '/@theme/portal/components/Hero.vue';
 import ApplicationSection from '/@theme/portal/components/ApplicationSection.vue';
 import ApplicationCard from '/@theme/portal/components/ApplicationCard.vue';
 import Promotion from '/@theme/portal/components/Promotion.vue';
 import Highlight from '/@theme/portal/components/Highlight.vue';
 
-import { computed } from 'vue';
-import { useApplicationService } from '/src/apps/portal/services/ApplicationService';
-import { useNewsService } from '/src/apps/portal/services/NewsService';
+import useApplication from '/src/apps/portal/composables/useApplication.js';
+import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 
 import config from '/src/config/config.toml';
 
@@ -143,33 +140,11 @@ export default {
         Card
     },
     setup () {
-      const applicationService = useApplicationService();
-      const { data: applicationResponse } = useSWRV('/portal/applications/', applicationService.load);
+      const { application: newsApplication } = useApplication('news');
+      const { application: clubApplication } = useApplication('club');
+      const { application: trainingsApplication } = useApplication('trainings');
 
-      const newsApplication = computed(() => {
-        if (applicationResponse.value) {
-          return applicationResponse.value.find(
-              (d) => { return d.name === 'news'; }
-          );
-        }
-      });
-      const clubApplication = computed(() => {
-        if (applicationResponse.value) {
-          return applicationResponse.value.find(
-              (d) => d.name === 'club'
-          );
-        }
-      });
-      const trainingsApplication = computed(() => {
-        if (applicationResponse.value) {
-          return applicationResponse.value.find(
-              (d) => d.name === 'trainings'
-          );
-        }
-      });
-
-      const newsService = useNewsService();
-      const { data: news } = useSWRV('/portal/promoted', newsService.load);
+      const { news } = usePromotedNews();
 
       return {
         newsApplication,
