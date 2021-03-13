@@ -9,23 +9,23 @@
   >
     <div class="flex-1 flex justify-between sm:hidden">
       <button
-         @click="triggerPage(currentPage - 1)"
+         @click="prev"
          class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500"
          :disabled="currentPage === 1"
       >
-        {{ previous }}
+        {{ previous_text }}
       </button>
       <button
-         @click="triggerPage(currentPage + 1)"
+         @click="next"
          class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500"
          :disabled="currentPage === pageCount"
       >
-        {{ next }}
+        {{ next_text }}
       </button>
     </div>
     <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
       <div>
-        <slot name="showing" :data="{ from: offset + 1, to: offset + limit, count }">
+        <slot name="showing" :from="offset + 1" :to="offset + limit" :count="count">
           <p class="text-sm text-gray-700">
             Showing
             <span class="font-medium">{{ offset + 1 }}</span>
@@ -47,7 +47,7 @@
           </span>
           <a
               v-else
-              @click="triggerPage(currentPage - 1)"
+              @click="prev"
               class="cursor-pointer relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
               aria-label="Previous"
           >
@@ -68,7 +68,7 @@
             </span>
             <a
                 v-else
-                @click="triggerPage(page)"
+                @click="currentPage = page"
                 class="cursor-pointer -ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
             >
               {{ page }}
@@ -82,7 +82,7 @@
           </span>
           <a
               v-else
-              @click="triggerPage(currentPage + 1)"
+              @click="next"
               class="cursor-pointer -ml-px relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
               aria-label="Next"
           >
@@ -95,35 +95,29 @@
 </template>
 
 <script>
-import usePagination from '/src/composables/usePagination.js';
-import { watch } from 'vue';
-
 export default {
   props: {
-    limit: Number,
-    offset: Number,
-    count: Number,
-    previous: {
+    pagination: Object,
+    previous_text: {
       type: String,
       default: 'Previous'
     },
-    next: {
+    next_text: {
       type: String,
       default: 'Next'
     }
   },
-  setup(props, { emit }) {
-    const pagination = usePagination({
-      limit: props.limit,
-      count: props.count,
-      setOffset: (offset) => emit('page', offset)
-    });
-
-    watch(() => props.count, () => { pagination.count.value = props.count; });
-
+  setup(props) {
     return {
-      ...pagination
-    }
+      currentPage: props.pagination.currentPage,
+      limit: props.pagination.limit,
+      next: props.pagination.next,
+      prev: props.pagination.prev,
+      pages: props.pagination.pages,
+      count: props.pagination.count,
+      pageCount: props.pagination.pageCount,
+      offset: props.pagination.offset
+    };
   }
 };
 </script>

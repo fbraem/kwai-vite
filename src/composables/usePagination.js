@@ -1,20 +1,37 @@
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
-export default function usePagination(options) {
-  const limit = ref(options.limit ?? 10);
-  const count = ref(options.count ?? 0);
-  const delta = ref(options.delta ?? 3);
-  const offset = ref(0);
+export default function usePagination({
+  limit= ref(10),
+  count = ref(0),
+  delta = ref(3),
+} = {} ) {
+  const _offset = ref(0);
+  const _currentPage = ref(1);
+
+  const offset = computed({
+    get() { return _offset.value; },
+    set(v) { _offset.value = Math.min(v, count.value); }
+  });
+
   const pageCount = computed(
-    () => count.value > 0 ? Math.ceil(count.value / limit.value) : 0
+    () => {
+      return count.value > 0 ? Math.ceil(count.value / limit.value) : 0
+    }
   );
 
-  const currentPage = computed(() => {
-    let current = 1;
-    for (let o = 0; o < offset.value; current++) {
-      o += limit.value;
+  const currentPage = computed({
+    get() { return _currentPage.value; },
+    set(v) {
+      _currentPage.value = Math.min(v, Math.min(v, count.value));
+      if (v < 1) {
+        _currentPage.value = 1;
+      } else if (v > pageCount.value) {
+          _currentPage.value = pageCount.value;
+      } else {
+        _currentPage.value = v;
+      }
+      offset.value = (_currentPage.value - 1) * limit.value;
     }
-    return current;
   });
 
   const pages = computed(() => {
@@ -37,20 +54,31 @@ export default function usePagination(options) {
     return range;
   });
 
-  const triggerPage = (newPage) => {
-    let newOffset = 0;
-    for (let page = 1; page < newPage; page++) {
-      newOffset += limit.value;
-    }
-    offset.value = newOffset;
-    options.setOffset(newOffset);
-  };
+  watch(
+    [count, limit],
+    _ => {
+      if (currentPage.value > pageCount.value) {
+        currentPage.value = pageCount.value;
+      }
+    },
+    { immediate: false } // no need to run on first render
+  );
+
+  const prev = () => --currentPage.value;
+  const next = () => ++currentPage.value;
+  const first = () => { currentPage.value = 1; }
+  const last = () => { currentPage.value = pageCount.value; }
 
   return {
+    limit,
     count,
-    pageCount,
     currentPage,
+    offset,
+    pageCount,
     pages,
-    triggerPage
+    next,
+    prev,
+    first,
+    last
   };
 };
