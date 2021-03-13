@@ -54,13 +54,13 @@ const load = ({
     if (promoted) {
         api = api.query({ 'filter[promoted]': true });
     }
-    if (year !== 0) {
+    if (year) {
         api = api.query({ 'filter[year]': year});
-        if (month !== 0) {
+        if (month) {
             api = api.query({ 'filter[month]': month});
         }
     }
-    if (application !== 0) {
+    if (application) {
         api = api.query({ 'filter[application]': application});
     }
     return api.get().json((json) => toModel(json));
