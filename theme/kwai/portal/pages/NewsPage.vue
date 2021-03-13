@@ -5,7 +5,7 @@
   >
     <template #title>
       <h1 class="text-white font-semibold text-4xl mb-2">
-        Nieuws
+        Nieuws <Spinner v-if="loading"></Spinner>
       </h1>
       <p class="mt-4 text-lg text-gray-100">
         Op deze pagina vind je alle nieuwsberichten van onze club. Kom hier
@@ -82,10 +82,11 @@ import Badge from '/src/components/Badge.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
 import Paginator from '/src/components/Paginator.vue';
 import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
+import Spinner from '/src/components/Spinner.vue';
 import useNews from '/src/apps/portal/composables/useNews.js';
-import { months } from '/src/common/useDayJS.js';
 import usePagination from '/src/composables/usePagination.js';
-import { computed, ref, toRefs } from 'vue';
+import { months } from '/src/common/useDayJS.js';
+import { computed, ref } from 'vue';
 
 export default {
   components: {
@@ -95,7 +96,8 @@ export default {
     AngledSection,
     Layout,
     NewsArchive,
-    Paginator
+    Paginator,
+    Spinner
   },
   props: {
     year: {
