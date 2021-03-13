@@ -47,11 +47,9 @@
 </template>
 
 <script>
-import { useNewsService } from '/src/apps/portal/services/NewsService.js';
-import { months } from '/src/common/useDayJS.js';
 import IconLink from '/src/components/IconLink.vue';
-import useSWRV from 'swrv';
-import { computed, ref } from 'vue';
+import useNewsArchive from '/src/apps/portal/composables/useNewsArchive.js';
+import { ref, watch } from 'vue';
 
 import CoverLink from '/src/components/CoverLink.vue';
 import Badge from '/src/components/Badge.vue';
@@ -59,57 +57,25 @@ import Badge from '/src/components/Badge.vue';
 export default {
   components: { IconLink, CoverLink, Badge },
   setup() {
-    const newsService = useNewsService();
-    const { data } = useSWRV(
-      '/news/archive',
-      newsService.archive,
-      {
-        revalidateOnFocus: false
-      }
-    );
+    const { archive, years } = useNewsArchive();
 
-    const archive = computed(() => {
-      if ( data.value ) {
-        return data.value.reduce(
-            (result, value) => {
-              if (! result[value.year]) {
-                result[value.year] = [];
-              }
-              result[value.year].push({
-                name: months()[value.month - 1],
-                month: value.month,
-                year: value.year,
-                count: value.count
-              });
-              return result;
-            },
-            {}
-        )
-      } else {
-        return {};
-      }
-    });
-
-    // All years found in the archive
     const showYears = ref({});
-    const years = computed(() => {
-      const reversedYears = Object.keys(archive.value).reverse();
-
-      showYears.value = reversedYears.reduce(
-        (a, c) => {
-          a[c] = false;
-          return a;
-        },
-        {}
-      );
-      showYears.value[reversedYears[0]] = true;
-      if (reversedYears.length > 1) {
-        showYears.value[reversedYears[1]] = true;
-      }
-
-      return reversedYears;
-    });
-
+    watch(
+        years,
+        (nv, ov) => {
+          showYears.value = nv.reduce(
+              (a, year) => {
+                a[year] = false;
+                return a;
+              },
+              {}
+          );
+          showYears.value[years.value[0]] = true;
+          if (years.value.length > 1) {
+            showYears.value[years.value[1]] = true;
+          }
+        }
+    );
     const toggleYear = (year) => {
       showYears.value[year] = !showYears.value[year];
     };
