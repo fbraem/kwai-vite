@@ -1,7 +1,7 @@
 import { useNewsService } from '/src/apps/portal/services/NewsService.js';
 import { months } from '/src/common/useDayJS.js';
 import useSWRV from 'swrv';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 const newsService = useNewsService();
 
