@@ -1,5 +1,5 @@
 <template>
-    <div class="px-4 mr-auto ml-auto">
+    <div>
         <div
             class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg"
             :class="bgColor"
