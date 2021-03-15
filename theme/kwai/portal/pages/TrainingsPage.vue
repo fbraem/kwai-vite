@@ -13,16 +13,17 @@
     </template>
     <AngledSection bg-color="bg-gray-300" text-color="text-gray-300">
       <div class="container mx-auto px-4 pt-6">
-        <div class="flex flex-wrap flex-col lg:flex-row">
-          <TrainingWeek class="w-full md:1/2 lg:w-5/12">
+        <div class="flex flex-wrap md:flex-row">
+          <TrainingWeek class="w-full md:w-1/2">
           </TrainingWeek>
-          <Highlight
-              title="Onze coaches"
-              image="/@theme/portal/assets/hero.jpg"
-              class="w-full mt-4 md:1/2 lg:w-1/3"
-          >
-            <CoachList />
-          </Highlight>
+          <div class="w-full mt-4 md:w-1/2 md:pl-10 lg:w-5/12">
+            <Highlight
+                title="Onze coaches"
+                image="/@theme/portal/assets/hero.jpg"
+            >
+              <CoachList />
+            </Highlight>
+          </div>
         </div>
       </div>
     </AngledSection>
