@@ -37,7 +37,25 @@
     >
       Er zijn geen trainingen gepland voor deze periode.
     </Alert>
-    {{ trainings }}
+    <table
+        v-if="count > 0"
+        class="divide-y divide-gray-400 w-full"
+    >
+      <thead>
+        <tr>
+          <th class="w-1/3 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Datum
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Informatie
+          </th>
+        </tr>
+      </thead>
+      <template v-for="(trainings, day) in trainingDays">
+        <TrainingDay :day="day" :trainings="trainings">
+        </TrainingDay>
+      </template>
+    </table>
   </div>
 </template>
 
@@ -47,9 +65,10 @@ import Alert from '/src/components/Alert.vue';
 import Spinner from '/src/components/Spinner.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
 import Header from '/@theme/components/Header.vue';
+import TrainingDay from '/@theme/portal/components/TrainingDay.vue';
 
 export default {
-  components: { Header, ButtonLink, Alert, Spinner },
+  components: { Header, ButtonLink, Alert, Spinner, TrainingDay },
   setup() {
     return {
       ... useTrainingWeek()
