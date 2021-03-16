@@ -22,13 +22,28 @@ export default function useTrainingWeek(options= {}) {
     () => service.load({ start: current.value, end: end.value})
   );
 
+  const trainingDays = computed(() => {
+    const days = {};
+    if (trainings.value?.items) {
+      trainings.value.items.forEach((t) => {
+        const date = formatDate(t.start_date, 'YYYY-MM-DD');
+        if (! days[date]) {
+          days[date] = [];
+        }
+        days[date].push(t);
+      });
+    }
+    return days;
+  });
+
   const next = () => { current.value = current.value.add(7, 'day') };
   const reset = () => { current.value = options.start ?? now() };
   const prev = () => { current.value = current.value.subtract(7, 'day') };
 
   return {
-    trainings: computed(() => trainings.value?.items),
-    count: computed(() => trainings.value?.meta.count),
+    trainings: computed(() => trainings.value?.items ?? []),
+    trainingDays,
+    count: computed(() => trainings.value?.meta.count ?? 0),
     loading,
     error,
     current: computed(() => format(current.value)),
