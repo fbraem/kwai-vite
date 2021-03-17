@@ -4,7 +4,8 @@
     :big="false"
   >
     <template
-        v-if="application" #title
+      v-if="application"
+      #title
     >
       <h1 class="text-white font-semibold text-4xl mb-2">
         {{ application.title }}
@@ -13,26 +14,31 @@
         {{ application.short_description }}
       </p>
     </template>
-    <AngledSection bg-color="bg-gray-300" text-color="text-gray-300">
+    <AngledSection
+      bg-color="bg-gray-300"
+      text-color="text-gray-300"
+    >
       <div class="container mx-auto px-4 pt-6">
         <div class="flex flex-wrap md:flex-row">
           <div class="w-full md:w-1/2">
-            <TrainingWeek>
-            </TrainingWeek>
+            <TrainingWeek />
             <div
-                v-if="count > 0"
-                class="mt-6"
+              v-if="count > 0"
+              class="mt-6"
             >
               <Header>Belangrijk Nieuws</Header>
-              <div v-for="story in news">
-                <StoryListItem :story="story"></StoryListItem>
-              </div>
+              <template
+                v-for="story in news"
+                :key="story.id"
+              >
+                <StoryListItem :story="story" />
+              </template>
             </div>
           </div>
           <div class="w-full mt-4 md:w-1/2 md:pl-10 lg:w-5/12">
             <Highlight
-                title="Onze coaches"
-                image="/@theme/portal/assets/hero.jpg"
+              title="Onze coaches"
+              image="/@theme/portal/assets/hero.jpg"
             >
               <CoachList />
             </Highlight>
@@ -48,10 +54,8 @@
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import AngledSection from '/src/components/AngledSection.vue';
 import Header from '/@theme/components/Header.vue';
-import Alert from '/src/components/Alert.vue';
 import Highlight from '/@theme/portal/components/Highlight.vue';
 import CoachList from '/@theme/portal/components/CoachList.vue';
-import ButtonLink from '/src/components/ButtonLink.vue';
 import TrainingWeek from '/@theme/portal/components/TrainingWeek.vue';
 import useApplication from '/src/apps/portal/composables/useApplication.js';
 import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
@@ -62,10 +66,8 @@ export default {
   components: {
     StoryListItem,
     TrainingWeek,
-    ButtonLink,
     CoachList,
     Highlight,
-    Alert,
     Header,
     Layout,
     AngledSection
