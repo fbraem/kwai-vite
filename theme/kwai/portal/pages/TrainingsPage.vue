@@ -56,7 +56,7 @@ import TrainingWeek from '/@theme/portal/components/TrainingWeek.vue';
 import useApplication from '/src/apps/portal/composables/useApplication.js';
 import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
 export default {
   components: {
