@@ -3,19 +3,32 @@
     image="/@theme/portal/assets/training.jpg"
     :big="false"
   >
-    <template #title>
+    <template
+        v-if="application" #title
+    >
       <h1 class="text-white font-semibold text-4xl mb-2">
-        Trainingen
+        {{ application.title }}
       </h1>
       <p class="mt-4 text-lg text-gray-100">
-        Wanneer trainen we? Waar trainen we? Waar kan je nog trainen?
+        {{ application.short_description }}
       </p>
     </template>
     <AngledSection bg-color="bg-gray-300" text-color="text-gray-300">
       <div class="container mx-auto px-4 pt-6">
         <div class="flex flex-wrap md:flex-row">
-          <TrainingWeek class="w-full md:w-1/2">
-          </TrainingWeek>
+          <div class="w-full md:w-1/2">
+            <TrainingWeek>
+            </TrainingWeek>
+            <div
+                v-if="count > 0"
+                class="mt-6"
+            >
+              <Header>Belangrijk Nieuws</Header>
+              <div v-for="story in news">
+                <StoryListItem :story="story"></StoryListItem>
+              </div>
+            </div>
+          </div>
           <div class="w-full mt-4 md:w-1/2 md:pl-10 lg:w-5/12">
             <Highlight
                 title="Onze coaches"
@@ -40,9 +53,14 @@ import Highlight from '/@theme/portal/components/Highlight.vue';
 import CoachList from '/@theme/portal/components/CoachList.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
 import TrainingWeek from '/@theme/portal/components/TrainingWeek.vue';
+import useApplication from '/src/apps/portal/composables/useApplication.js';
+import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
+import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
+import { ref, watch } from 'vue';
 
 export default {
   components: {
+    StoryListItem,
     TrainingWeek,
     ButtonLink,
     CoachList,
@@ -51,6 +69,17 @@ export default {
     Header,
     Layout,
     AngledSection
+  },
+  setup() {
+    const { application } = useApplication('trainings');
+    const count = ref(0);
+    const { news } = usePromotedNews({ count, application });
+
+    return {
+      application,
+      news,
+      count
+    };
   }
 }
 </script>
