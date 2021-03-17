@@ -5,19 +5,26 @@ import { computed, ref, watch } from 'vue';
 const service = useNewsService();
 
 export default function usePromotedNews({
-  offset = ref(0),
   limit = ref(null),
-  count = ref(0)
+  count = ref(0),
+  application
   } = {}
 ) {
     const { data: news, isValidating: loading, error } = useSWRV(
       // the cache key: news_<offset>[_<year>][_<month>][_<app>]
-      '/news/promoted',
-      () => service.load({
+      () => {
+        return application === undefined ?
+          '/news/promoted' :
+          application.value.id && `/news/promoted/${application.value.id}`;
+      },
+      () => {
+        return service.load({
           promoted: true,
-          limit: limit.value
-        })
-      );
+          limit: limit.value,
+          application: application?.value.id
+          });
+      }
+    );
 
     watch(
       news,
@@ -25,7 +32,7 @@ export default function usePromotedNews({
     )
 
     return {
-      news: computed(() => news.value?.items),
+      news: computed(() => news.value?.items || []),
       count,
       error,
       loading
