@@ -1,11 +1,10 @@
 module.exports = {
   extends: [
-    // add more generic rule sets here, such as:
-    // 'eslint:recommended',
+    'standard',
+    'standard-jsx',
     'plugin:vue/vue3-recommended'
   ],
   rules: {
-    // override/add rules settings here, such as:
-    // 'vue/no-unused-vars': 'error'
+    'import/no-absolute-path': 'off'
   }
 }
