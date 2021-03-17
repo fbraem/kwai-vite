@@ -39,7 +39,7 @@
     </Alert>
     <table
         v-if="count > 0"
-        class="divide-y divide-gray-400 w-full"
+        class="divide-y divide-gray-400 w-full bg-gray-200 rounded-lg"
     >
       <thead>
         <tr>
