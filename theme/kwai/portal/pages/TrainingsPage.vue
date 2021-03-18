@@ -50,7 +50,6 @@
 </template>
 
 <script>
-
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import AngledSection from '/src/components/AngledSection.vue';
 import Header from '/@theme/components/Header.vue';
@@ -83,5 +82,5 @@ export default {
       count
     };
   }
-}
+};
 </script>
