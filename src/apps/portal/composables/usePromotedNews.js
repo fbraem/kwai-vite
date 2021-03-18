@@ -14,7 +14,7 @@ export default function usePromotedNews({
     // the cache key: news_<offset>[_<year>][_<month>][_<app>]
     () => application === undefined
       ? '/news/promoted'
-      : application.value.id && `/news/promoted/${application.value.id}`
+      : application.value?.id && `/news/promoted/${application.value.id}`
     ,
     () => {
       return service.load({
