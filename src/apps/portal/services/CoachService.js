@@ -21,13 +21,15 @@ function toModel(json) {
 }
 
 const load = () => {
-  let api = useHttp.url('/coaches');
-  return api.get().json((json) => toModel(json));
+  return useHttp
+    .url('/coaches')
+    .get()
+    .json((json) => toModel(json))
+  ;
 };
-
 
 export const useCoachesService = () => {
   return {
     load
-  }
-}
+  };
+};

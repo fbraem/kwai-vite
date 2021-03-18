@@ -7,7 +7,7 @@ function toModel(json) {
     name: d.attributes.name,
     short_description: d.attributes.short_description
   });
-  if ( Array.isArray(json.data)) {
+  if (Array.isArray(json.data)) {
     return json.data.map(map);
   }
   return map(json.data);

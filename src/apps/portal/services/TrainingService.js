@@ -5,7 +5,11 @@ const toModel = (json) => {
   const map = (d) => {
     let teams = [];
     if (d.relationships?.teams) {
-      teams = d.relationships.teams.data.map(({id}) => json.included.find((included) => included.type === 'teams' && included.id === id));
+      teams = d.relationships.teams.data.map(
+        ({ id }) => json.included.find(
+          included => included.type === 'teams' && included.id === id
+        )
+      );
     }
     return {
       id: d.id,
@@ -21,7 +25,7 @@ const toModel = (json) => {
         name: team.attributes.name
       }))
     };
-  }
+  };
 
   if (Array.isArray(json.data)) {
     return {
@@ -31,7 +35,7 @@ const toModel = (json) => {
   }
 
   return map(json.data);
-}
+};
 
 const load = ({ start, end } = {}) => {
   let api = useHttp.url('/trainings');
