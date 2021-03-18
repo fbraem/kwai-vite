@@ -5,7 +5,7 @@ import { computed } from 'vue';
 
 const newsService = useNewsService();
 
-export default function useNewsArchive(options = {}) {
+export default function useNewsArchive() {
   const { data } = useSWRV(
     '/news/archive',
     newsService.archive,
@@ -15,10 +15,10 @@ export default function useNewsArchive(options = {}) {
   );
 
   const archive = computed(() => {
-    if ( data.value ) {
+    if (data.value) {
       return data.value.reduce(
         (result, value) => {
-          if (! result[value.year]) {
+          if (!result[value.year]) {
             result[value.year] = [];
           }
           result[value.year].push({
@@ -30,7 +30,7 @@ export default function useNewsArchive(options = {}) {
           return result;
         },
         {}
-      )
+      );
     }
     return {};
   });
@@ -41,5 +41,5 @@ export default function useNewsArchive(options = {}) {
   return {
     archive,
     years
-  }
+  };
 }
