@@ -5,6 +5,7 @@ module.exports = {
     'plugin:vue/vue3-recommended'
   ],
   rules: {
-    'import/no-absolute-path': 'off'
+    'import/no-absolute-path': 'off',
+    semi: ['error', 'always']
   }
-}
+};
