@@ -6,6 +6,7 @@ module.exports = {
   ],
   rules: {
     'import/no-absolute-path': 'off',
-    semi: ['error', 'always']
+    semi: ['error', 'always'],
+    'space-before-function-paren': ['error', 'never']
   }
 };
