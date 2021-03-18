@@ -16,5 +16,5 @@ export default function useApplication(name) {
 
   return {
     application
-  }
+  };
 }
