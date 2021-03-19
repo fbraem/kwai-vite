@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="mb-5">
-      <Header>Trainingen <Spinner v-if="loading"></Spinner></Header>
+      <Header>
+        Trainingen
+        <Spinner v-if="loading" />
+      </Header>
       <p class="text-sm text-gray-600">
         Trainingen van
         <span class="font-semibold">{{ current }}</span>
@@ -10,36 +13,36 @@
       </p>
       <div class="flex justify-between mt-4">
         <ButtonLink
-            class="bg-red-700 text-white"
-            :method="prev"
+          class="bg-red-700 text-white"
+          :method="prev"
         >
-          <i class="mr-1 fas fa-angle-left"></i> Vorige Periode
+          <i class="mr-1 fas fa-angle-left" /> Vorige Periode
         </ButtonLink>
         <ButtonLink
-            class="bg-red-700 text-white"
-            :method="reset"
+          class="bg-red-700 text-white"
+          :method="reset"
         >
           Vandaag
         </ButtonLink>
         <ButtonLink
-            class="bg-red-700 text-white"
-            :method="next"
+          class="bg-red-700 text-white"
+          :method="next"
         >
-          Volgende Periode <i class="ml-1 fas fa-angle-right"></i>
+          Volgende Periode <i class="ml-1 fas fa-angle-right" />
         </ButtonLink>
       </div>
     </div>
     <Alert
-        v-if="count === 0"
-        type="info"
-        icon="fas fa-info"
-        class="mb-5"
+      v-if="count === 0"
+      type="info"
+      icon="fas fa-info"
+      class="mb-5"
     >
       Er zijn geen trainingen gepland voor deze periode.
     </Alert>
     <table
-        v-if="count > 0"
-        class="divide-y divide-gray-400 w-full bg-gray-200 rounded-lg"
+      v-if="count > 0"
+      class="divide-y divide-gray-400 w-full bg-gray-200 rounded-lg"
     >
       <thead>
         <tr>
@@ -51,9 +54,14 @@
           </th>
         </tr>
       </thead>
-      <template v-for="(trainings, day) in trainingDays">
-        <TrainingDay :day="day" :trainings="trainings">
-        </TrainingDay>
+      <template
+        v-for="(trainings, day) in trainingDays"
+        :key="day"
+      >
+        <TrainingDay
+          :day="day"
+          :trainings="trainings"
+        />
       </template>
     </table>
   </div>
@@ -71,8 +79,8 @@ export default {
   components: { Header, ButtonLink, Alert, Spinner, TrainingDay },
   setup() {
     return {
-      ... useTrainingWeek()
+      ...useTrainingWeek()
     };
   }
-}
+};
 </script>
