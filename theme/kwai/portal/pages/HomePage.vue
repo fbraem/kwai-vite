@@ -75,9 +75,13 @@
             </div>
             <div
                 v-if="news"
-                class="flex flex-col space-y-6 divide-y divide-gray-300"
+                class="flex flex-col divide-y divide-gray-300"
             >
-              <div v-for="story in news">
+              <div
+                  v-for="story in news"
+                  :key="story.id"
+                  class="p-6"
+              >
                 <StoryListItem :story="story" />
               </div>
             </div>
