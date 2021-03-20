@@ -46,6 +46,20 @@
         </div>
       </div>
     </AngledSection>
+    <AngledSection
+      v-if="pageCount > 0"
+      bg-color="bg-white"
+      text-color="text-white"
+    >
+      <div class="divide-y space-y-8 divide-gray-300">
+        <template
+          v-for="page in pages"
+          :key="page.id"
+        >
+          <Article :article="page" />
+        </template>
+      </div>
+    </AngledSection>
   </Layout>
 </template>
 
@@ -59,10 +73,13 @@ import TrainingWeek from '/@theme/portal/components/TrainingWeek.vue';
 import useApplication from '/src/apps/portal/composables/useApplication.js';
 import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
+import usePages from '/src/apps/portal/composables/usePages.js';
+import Article from '/@theme/portal/components/Article.vue';
 import { ref } from 'vue';
 
 export default {
   components: {
+    Article,
     StoryListItem,
     TrainingWeek,
     CoachList,
@@ -76,10 +93,14 @@ export default {
     const count = ref(0);
     const { news } = usePromotedNews({ count, application });
 
+    const { pages, count: pageCount } = usePages(application);
+
     return {
       application,
       news,
-      count
+      count,
+      pages,
+      pageCount
     };
   }
 };
