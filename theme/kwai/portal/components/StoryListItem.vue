@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="pt-6 mb-2 text-xl font-extrabold leading-snug tracking-tight text-gray-800 md:text-2xl">
+    <h2 class="mb-2 text-xl font-extrabold leading-snug tracking-tight text-gray-800 md:text-2xl">
     <a
         v-if="story.has_more"
         href="#" class="text-gray-900"
