@@ -7,6 +7,7 @@ import SiteNavigation from '/@theme/portal/SiteNavigation.vue';
 import Footer from '/@theme/portal/Footer.vue';
 import SimpleNavigation from '/@theme/portal/SimpleNavigation.vue';
 import TrainingsPage from '/@theme/portal/pages/TrainingsPage.vue';
+import ClubPage from '/@theme/portal/pages/ClubPage.vue';
 
 export default [
   {
@@ -61,8 +62,16 @@ export default [
         meta: {
           title: 'Trainingen'
         }
+      },
+      {
+        name: 'club',
+        path: '/club',
+        component: ClubPage,
+        meta: {
+          title: 'Club'
+        }
       }
-    ],
+    ]
   },
   {
     name: 'login',

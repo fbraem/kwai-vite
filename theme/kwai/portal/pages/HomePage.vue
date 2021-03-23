@@ -18,6 +18,7 @@
               v-if="clubApplication"
               class="bg-white"
               :application="clubApplication"
+              :route="{ name: 'club' }"
               icon="fas fa-users"
               icon-bg-color="bg-red-700"
             />

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header class="pt-6">
+    <Header>
       {{ article.title }}
     </Header>
     <div
