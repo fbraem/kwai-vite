@@ -1,6 +1,6 @@
 <template>
   <Layout
-    image="/@theme/portal/assets/club.jpg"
+    :image="image"
     :big="true"
   >
     <template
@@ -13,11 +13,6 @@
       <h2 class="text-white font-semibold text-2xl mb-2">
         {{ application.title }}
       </h2>
-      <img
-        src="/@theme/portal/assets/logo2.png"
-        class="w-24 mx-auto mt-3"
-        alt="logo"
-      />
       <p class="mt-4 text-lg text-gray-100">
         {{ application.short_description }}
       </p>
@@ -27,8 +22,8 @@
       bg-color="bg-white"
       text-color="text-white"
     >
-      <div class="flex pt-6 divide-x divide-gray-300">
-        <div class="w-1/3 pr-6">
+      <div class="flex flex-wrap pt-6 sm:divide-x sm:divide-gray-300">
+        <div class="w-full sm:w-1/3 pr-6 sm:pr-0">
           <Header class="text-4xl">
             Alle informatie
           </Header>
@@ -51,8 +46,24 @@
               <i class="fas fa-angle-right"></i> Lees verder ...
             </ButtonLink>
           </div>
+          <div
+            v-if="newsCount > 0"
+            class="mt-6"
+          >
+            <Header>Belangrijk Nieuws</Header>
+            <div
+              v-for="story in news"
+              :key="story.id"
+              class="mt-6"
+            >
+              <StoryListItem :story="story" />
+            </div>
+          </div>
         </div>
-        <div class="w-2/3 pl-6">
+        <div
+          id="article"
+          class="w-full sm:w-2/3 pt-6 sm:pt-0 pl-0 sm:pl-6"
+        >
           <Article
             v-if="currentArticle"
             :article="currentArticle"
@@ -68,28 +79,45 @@ import Layout from '/@theme/layouts/LandingLayout.vue';
 import AngledSection from '/src/components/AngledSection.vue';
 import Article from '/@theme/portal/components/Article.vue';
 import Header from '/@theme/components/Header.vue';
+import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
+import ButtonLink from '/src/components/ButtonLink.vue';
+
 import useApplication from '/src/apps/portal/composables/useApplication.js';
 import usePages from '/src/apps/portal/composables/usePages.js';
+import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 
 import { website } from '/src/config/config.toml';
-import ButtonLink from '/src/components/ButtonLink.vue';
+
 import { computed, ref } from 'vue';
 
 export default {
   components: {
+    StoryListItem,
     ButtonLink,
     Layout,
     AngledSection,
     Article,
     Header
   },
-  setup() {
-    const { application } = useApplication('club');
+  props: {
+    name: {
+      type: String,
+      required: true
+    },
+    image: {
+      type: String,
+      required: true
+    }
+  },
+  setup(props) {
+    const { application } = useApplication({ name: props.name });
     const { pages, count: pageCount } = usePages(application);
 
     const currentArticleId = ref(null);
     const showArticle = (id) => {
       currentArticleId.value = id;
+      const el = document.querySelector('#article');
+      el.scrollIntoView();
     };
 
     const currentArticle = computed(() => {
@@ -98,10 +126,12 @@ export default {
           return pages.value[0];
         }
       } else {
-        console.log(currentArticleId.value);
         return pages.value.find(p => p.id === currentArticleId.value);
       }
     });
+
+    const newsCount = ref(0);
+    const { news } = usePromotedNews({ count: newsCount, application });
 
     return {
       title: website.title,
@@ -109,7 +139,9 @@ export default {
       pages,
       pageCount,
       showArticle,
-      currentArticle
+      currentArticle,
+      newsCount,
+      news
     };
   }
 };
