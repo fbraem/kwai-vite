@@ -1,6 +1,6 @@
 <template>
   <Layout
-    image="/@theme/portal/assets/hero.jpg"
+    image="/assets/portal/hero.jpg"
     :big="true"
   >
     <template #title>
@@ -47,17 +47,18 @@
         <div class="flex flex-wrap flex-col lg:flex-row items-center mt-8">
           <Promotion class="w-full lg:w-5/12" />
           <Highlight
-            title="10de tornooi Judokwai Kemzeke"
-            image="/@theme/portal/assets/hero.jpg"
+            v-if="highlight"
+            :title="highlight.title"
+            :image="highlight.image"
             bg-color="bg-red-700"
             text-color="text-white"
             class="w-full mt-4 lg:w-4/12"
           >
-            <p class="text-md font-light mt-2 text-white">
-              In het weekend van 5-6 oktober organiseert onze club
-              de U11-U13 ontmoeting op zaterdag en de
-              kapoenenontmoeting voor U9 op zondag.
-            </p>
+            <div
+              class="text-md font-light mt-2 text-white"
+              v-html="highlight.text"
+            >
+            </div>
           </Highlight>
         </div>
       </div>
@@ -151,9 +152,9 @@ export default {
     Card
   },
   setup() {
-    const { application: newsApplication } = useApplication('news');
-    const { application: clubApplication } = useApplication('club');
-    const { application: trainingsApplication } = useApplication('trainings');
+    const { application: newsApplication } = useApplication({ name: 'news' });
+    const { application: clubApplication } = useApplication({ name: 'club' });
+    const { application: trainingsApplication } = useApplication({ name: 'trainings' });
 
     const { news } = usePromotedNews();
 
@@ -162,7 +163,8 @@ export default {
       clubApplication,
       trainingsApplication,
       news,
-      information_boards: config.website.information_boards
+      information_boards: config.website.information_boards,
+      highlight: config.website.highlight
     };
   }
 };
