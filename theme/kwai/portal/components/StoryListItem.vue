@@ -18,7 +18,7 @@
       {{ story.publish_date }} &nbsp;&bull;&nbsp;
       <router-link
           class="text-sm text-blue-600"
-          :to="{ name: 'news.application', params: { app: story.application.id }}"
+          :to="{ name: 'news.application', params: { application_id: story.application.id }}"
       >
         {{ story.application.title }}
         <i class="ml-1 fas fa-tag"></i>
