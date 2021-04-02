@@ -7,7 +7,8 @@ import SiteNavigation from '/@theme/portal/SiteNavigation.vue';
 import Footer from '/@theme/portal/Footer.vue';
 import SimpleNavigation from '/@theme/portal/SimpleNavigation.vue';
 import TrainingsPage from '/@theme/portal/pages/TrainingsPage.vue';
-import ClubPage from '/@theme/portal/pages/ClubPage.vue';
+
+import extraRoutes from '/@theme/portal/routes.js';
 
 export default [
   {
@@ -42,8 +43,10 @@ export default [
       },
       {
         name: 'news.application',
-        path: '/news/application/:app(\\d+)',
-        props: true,
+        path: '/news/application/:application_id(\\d+)',
+        props: route => ({
+          application_id: parseInt(route.params.application_id)
+        }),
         component: NewsPage
       },
       {
@@ -63,14 +66,7 @@ export default [
           title: 'Trainingen'
         }
       },
-      {
-        name: 'club',
-        path: '/club',
-        component: ClubPage,
-        meta: {
-          title: 'Club'
-        }
-      }
+      ...extraRoutes
     ]
   },
   {
