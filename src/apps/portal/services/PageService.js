@@ -19,6 +19,14 @@ function toModel(json) {
   return map(json.data);
 }
 
+const get = id => {
+  return useHttp
+    .url(`/pages/${id}`)
+    .get()
+    .json((json) => toModel(json))
+  ;
+};
+
 const load = ({
   offset = 0,
   limit = 0,
@@ -42,5 +50,6 @@ const load = ({
 };
 
 export const usePageService = () => ({
+  get,
   load
 });
