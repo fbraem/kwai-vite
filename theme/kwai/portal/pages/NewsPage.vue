@@ -1,57 +1,75 @@
 <template>
   <Layout
-    image="/@theme/portal/assets/news.jpg"
+    image="/assets/portal/news.jpg"
     :big="false"
   >
     <template #title>
       <h1 class="text-white font-semibold text-4xl mb-2">
-        Nieuws <Spinner v-if="loading"></Spinner>
+        Nieuws
+        <Spinner v-if="loading" />
       </h1>
       <p class="mt-4 text-lg text-gray-100">
         Op deze pagina vind je alle nieuwsberichten van onze club. Kom hier
         regelmatig eens kijken om op de hoogte te blijven!
       </p>
     </template>
-    <AngledSection bg-color="bg-white" text-color="text-white">
-      <div class="w-full">
+    <AngledSection
+      bg-color="bg-white"
+      text-color="text-white"
+    >
+      <div class="w-full pt-6">
         <div class="hidden sm:block float-right bg-gray-200 m-3 p-3 w-1/3 rounded-lg">
           <NewsArchive></NewsArchive>
         </div>
         <div class="mx-auto w-full">
-<!--
-          <template v-if="application">
-            <h1 class="text-2xl md:text-4xl pt-3 font-extrabold">
+          <div
+            v-if="application_id && application"
+            class="mb-5"
+          >
+            <h1
+                class="text-2xl md:text-4xl pt-3 font-extrabold mb-2"
+            >
               {{ application.title }}
             </h1>
+            <h2 class="text-sm italic mb-2">
+              Alle nieuwsberichten gepubliceerd voor "{{ application.title }}"
+            </h2>
             <router-link
                 class="text-sm text-blue-600"
                 :to="{ name: 'news' }"
             >
-              <i class="far fa-arrow-alt-circle-left"></i>
+              <i class="far fa-arrow-alt-circle-left" />
               Terug naar het nieuws van de dag
             </router-link>
-          </template>
--->
-          <template v-if="archive">
+          </div>
+          <div
+            v-if="archive"
+            class="mb-4"
+          >
             <h1 class="text-2xl md:text-4xl pt-3 font-extrabold">
               Archief van {{ archive.month }} {{ archive.year }}
             </h1>
             <router-link
-                class="text-sm text-blue-600"
-                :to="{ name: 'news' }"
+              class="text-sm text-blue-600"
+              :to="{ name: 'news' }"
             >
-              <i class="far fa-arrow-alt-circle-left"></i>
+              <i class="far fa-arrow-alt-circle-left" />
               Terug naar het nieuws van de dag
             </router-link>
-          </template>
-          <div v-for="story in news">
+          </div>
+          <div
+            v-for="story in news"
+            :key="story.id"
+            class="mb-10"
+          >
             <StoryListItem :story="story" />
           </div>
           <Paginator
-              class="mt-10"
-              :pagination="pagination"
-              previous_text="Vorige"
-              next_text="Volgende"
+            v-if="pagination.pageCount > 0"
+            class="mt-10"
+            :pagination="pagination"
+            previous_text="Vorige"
+            next_text="Volgende"
           >
             <template #showing="{ from, to, count }">
               <p class="text-sm text-gray-700">
@@ -78,21 +96,18 @@
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import NewsArchive from '/@theme/portal/components/NewsArchive.vue';
 import AngledSection from '/src/components/AngledSection.vue';
-import Badge from '/src/components/Badge.vue';
-import ButtonLink from '/src/components/ButtonLink.vue';
 import Paginator from '/src/components/Paginator.vue';
 import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
 import Spinner from '/src/components/Spinner.vue';
 import useNews from '/src/apps/portal/composables/useNews.js';
 import usePagination from '/src/composables/usePagination.js';
 import { months } from '/src/common/useDayJS.js';
-import { computed, ref } from 'vue';
+import useApplication from '/src/apps/portal/composables/useApplication.js';
+import { computed, ref, toRefs } from 'vue';
 
 export default {
   components: {
     StoryListItem,
-    ButtonLink,
-    Badge,
     AngledSection,
     Layout,
     NewsArchive,
@@ -101,13 +116,16 @@ export default {
   },
   props: {
     year: {
-      type: Number
+      type: Number,
+      default: 0,
     },
     month: {
-      type: Number
+      type: Number,
+      default: 0
     },
-    app: {
-      type: String
+    application_id: {
+      type: Number,
+      default: null
     }
   },
   setup(props) {
@@ -115,16 +133,19 @@ export default {
       limit: ref(10)
     });
 
+    const input = toRefs(props);
     const { news, error, loading } = useNews({
-      ...props,
+      ...input,
       ...pagination
     });
+
+    const { application } = useApplication({ id: input.application_id });
 
     const archive = computed(() => {
       if (props.year) {
         return {
           year: props.year,
-          month: months()[props.month -1]
+          month: months()[props.month - 1]
         };
       }
       return null;
@@ -135,8 +156,9 @@ export default {
       error,
       loading,
       archive,
-      pagination
-    }
+      pagination,
+      application
+    };
   }
-}
+};
 </script>
