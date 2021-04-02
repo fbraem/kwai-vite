@@ -25,6 +25,11 @@ hero = "" # The text for the hero section on the home page
 title = "" # Title of the prompotion card
 text = "" # Text of the promotion card
 
+[website.highlight] # Highlight card
+title = "" # Title of the highlight card
+text = "" # Text of the highlight
+image = "" # Image to use for the card
+
 [[website.information_boards]] # Information boards on the home page (repeat this for multiple boards)
 title = "" # The title of the information board
 text = "" # The text for the information board
