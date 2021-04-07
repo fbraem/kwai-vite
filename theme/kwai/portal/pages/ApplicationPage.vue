@@ -23,7 +23,7 @@
       text-color="text-white"
     >
       <div class="flex flex-wrap pt-6 sm:divide-x sm:divide-gray-300">
-        <div class="w-full sm:w-1/3 pr-6 sm:pr-0">
+        <div class="w-full sm:w-1/3 pr-6">
           <Header class="text-4xl">
             Alle informatie
           </Header>
@@ -41,7 +41,12 @@
             />
             <ButtonLink
               class="bg-red-700 text-white mt-6"
-              :method="() => showArticle(page.id)"
+              :route="{
+                name: application.name + '.articles',
+                params: {
+                  id: page.id
+                }
+              }"
             >
               <i class="fas fa-angle-right"></i> Lees verder ...
             </ButtonLink>
@@ -64,10 +69,7 @@
           id="article"
           class="w-full sm:w-2/3 pt-6 sm:pt-0 pl-0 sm:pl-6"
         >
-          <Article
-            v-if="currentArticle"
-            :article="currentArticle"
-          />
+          <router-view></router-view>
         </div>
       </div>
     </AngledSection>
@@ -77,7 +79,6 @@
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import AngledSection from '/src/components/AngledSection.vue';
-import Article from '/@theme/portal/components/Article.vue';
 import Header from '/@theme/components/Header.vue';
 import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
@@ -88,7 +89,8 @@ import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 
 import { website } from '/src/config/config.toml';
 
-import { computed, ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   components: {
@@ -96,7 +98,6 @@ export default {
     ButtonLink,
     Layout,
     AngledSection,
-    Article,
     Header
   },
   props: {
@@ -113,33 +114,35 @@ export default {
     const { application } = useApplication({ name: props.name });
     const { pages, count: pageCount } = usePages(application);
 
-    const currentArticleId = ref(null);
-    const showArticle = (id) => {
-      currentArticleId.value = id;
-      const el = document.querySelector('#article');
-      el.scrollIntoView();
-    };
-
-    const currentArticle = computed(() => {
-      if (currentArticleId.value === null) {
-        if (pageCount.value > 0) {
-          return pages.value[0];
-        }
-      } else {
-        return pages.value.find(p => p.id === currentArticleId.value);
-      }
-    });
-
     const newsCount = ref(0);
     const { news } = usePromotedNews({ count: newsCount, application });
+
+    const route = useRoute();
+    const router = useRouter();
+
+    // By default use the first available page as default
+    watch(
+      pages,
+      async(nv) => {
+        if (nv && nv.length > 0) {
+          const pathParts = route.path.split('/');
+          if (pathParts.length === 2) {
+            await router.push({
+              name: pathParts[1] + '.articles',
+              params: {
+                id: nv[0].id
+              }
+            });
+          }
+        }
+      }
+    );
 
     return {
       title: website.title,
       application,
       pages,
       pageCount,
-      showArticle,
-      currentArticle,
       newsCount,
       news
     };

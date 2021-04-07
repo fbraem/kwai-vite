@@ -1,6 +1,6 @@
 // Routes for applications on the portal
 import ApplicationPage from '/@theme/portal/pages/ApplicationPage.vue';
-
+import ArticlePage from '/@theme/portal/pages/ArticlePage.vue';
 import judoImage from '/assets/portal/judo.jpg';
 import clubImage from '/assets/portal/club.jpg';
 import tournamentsImage from '/assets/portal/tournaments.jpg';
@@ -15,6 +15,14 @@ export default [
       name: 'club',
       image: clubImage
     },
+    children: [
+      {
+        name: 'club.articles',
+        path: ':id(\\d+)',
+        props: true,
+        component: ArticlePage
+      }
+    ],
     meta: {
       title: 'Club'
     }
