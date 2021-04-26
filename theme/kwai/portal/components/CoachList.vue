@@ -6,7 +6,7 @@
           class="px-2 py-2 w-full xl:w-1/2 flex flex-row items-center"
       >
         <div class="flex-shrink-0 h-10 w-10">
-          <img class="h-10 w-10 rounded-full" src="/assets/no_avatar.png" alt="">
+          <img class="h-10 w-10 rounded-full" src="/assets/portal/no_avatar.png" alt="">
         </div>
         <div class="ml-4">
           <div class="text-sm font-medium text-gray-900">
