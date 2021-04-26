@@ -1,4 +1,5 @@
 /node_modules
 /public
-/src/config/config.toml
+/src/config/config.development.toml
+/src/config/config.production.toml
 /dist/

@@ -138,7 +138,7 @@ import Highlight from '/@theme/portal/components/Highlight.vue';
 import useApplication from '/src/apps/portal/composables/useApplication.js';
 import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 
-import config from '/src/config/config.toml';
+import config from '/@config';
 
 export default {
   components: {

@@ -87,7 +87,7 @@ import useApplication from '/src/apps/portal/composables/useApplication.js';
 import usePages from '/src/apps/portal/composables/usePages.js';
 import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 
-import { website } from '/src/config/config.toml';
+import { website } from '/@config';
 
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';

@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { contact, links } from '/src/config/config.toml';
+import { contact, links } from '/@config';
 import AngledSection from '/src/components/AngledSection.vue';
 
 export default {

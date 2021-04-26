@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { website } from '/src/config/config.toml';
+import { website } from '/@config';
 
 export default {
     setup() {

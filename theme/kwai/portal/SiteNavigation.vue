@@ -13,7 +13,7 @@
 <script>
 import Navigation from '/@theme/components/Navigation.vue';
 import useAuthentication from '/src/common/useAuthentication.js';
-import config from '/src/config/config.toml';
+import config from '/@config';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 

@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import { website } from '/src/config/config.toml';
+import { website } from '/@config';
 
 export const router = createRouter({
   history: createWebHashHistory(),

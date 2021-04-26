@@ -1,5 +1,5 @@
 import wretch from 'wretch';
-import { api } from '/src/config/config.toml';
+import { api } from '/@config';
 import useAuthentication from './useAuthentication.js';
 
 /**
