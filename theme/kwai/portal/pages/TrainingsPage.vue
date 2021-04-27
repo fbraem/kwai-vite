@@ -1,6 +1,6 @@
 <template>
   <Layout
-    image="/@theme/portal/assets/training.jpg"
+    image="/assets/portal/training.jpg"
     :big="false"
   >
     <template
@@ -38,7 +38,7 @@
           <div class="w-full mt-4 md:w-1/2 md:pl-10 lg:w-5/12">
             <Highlight
               title="Onze coaches"
-              image="/@theme/portal/assets/hero.jpg"
+              image="/assets/portal/hero.jpg"
             >
               <CoachList />
             </Highlight>
