@@ -89,7 +89,7 @@ export default {
     AngledSection
   },
   setup() {
-    const { application } = useApplication('trainings');
+    const { application } = useApplication({ name: 'trainings' });
     const count = ref(0);
     const { news } = usePromotedNews({ count, application });
 
