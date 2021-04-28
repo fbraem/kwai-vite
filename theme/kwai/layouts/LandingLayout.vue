@@ -2,8 +2,7 @@
   <div>
     <main>
       <div
-          class="relative pt-16 pb-32 flex content-center items-center justify-center min-h-1/2"
-          :class="{ 'md:min-h-3/4': big }"
+          class="relative pt-16 pb-24 flex content-center items-center justify-center"
       >
         <div
             class="absolute top-0 w-full h-full bg-center md:bg-top bg-cover"
@@ -29,10 +28,6 @@ export default {
   props: {
     image: {
       type: String
-    },
-    big: {
-      type: Boolean,
-      default: false
     }
   }
 }
