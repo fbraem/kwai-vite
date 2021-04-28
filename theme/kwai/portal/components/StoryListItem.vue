@@ -33,7 +33,7 @@
         class="bg-red-700 text-white"
         :route="{ name: 'news.story', params: { id: story.id }}"
     >
-      <i class="fas fa-angle-right"></i> Lees verder ...
+      <i class="fas fa-angle-right mr-2"></i>Lees verder
     </ButtonLink>
   </div>
 </template>

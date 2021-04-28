@@ -48,7 +48,7 @@
                 }
               }"
             >
-              <i class="fas fa-angle-right"></i> Lees verder ...
+              <i class="fas fa-angle-right mr-2"></i>Lees verder
             </ButtonLink>
           </div>
           <div
