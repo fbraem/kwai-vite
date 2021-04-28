@@ -1,8 +1,5 @@
 <template>
-  <Layout
-    image="/assets/portal/training.jpg"
-    :big="false"
-  >
+  <Layout image="/assets/portal/training.jpg">
     <template
       v-if="application"
       #title
