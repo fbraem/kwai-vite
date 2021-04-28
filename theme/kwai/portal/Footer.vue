@@ -1,9 +1,6 @@
 <template>
   <footer>
-    <AngledSection
-        bg-color="bg-gray-300"
-        text-color="text-gray-300"
-    >
+    <section class="bg-gray-300">
       <div class="container grid grid-rows-3 lg:grid-cols-3 lg:grid-rows-1 justify-items-center py-8">
         <div class="w-full p-4 text-center lg:text-left">
           <div>
@@ -66,16 +63,14 @@
           </div>
         </div>
       </div>
-    </AngledSection>
+    </section>
   </footer>
 </template>
 
 <script>
 import { contact, links } from '/@config';
-import AngledSection from '/src/components/AngledSection.vue';
 
 export default {
-  components: { AngledSection },
   setup() {
     return {
       contact,

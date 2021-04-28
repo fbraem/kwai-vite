@@ -1,7 +1,6 @@
 <template>
   <Layout
     image="/assets/portal/news.jpg"
-    :big="false"
   >
     <template #title>
       <h1 class="text-white font-semibold text-4xl mb-2">
@@ -13,10 +12,7 @@
         regelmatig eens kijken om op de hoogte te blijven!
       </p>
     </template>
-    <AngledSection
-      bg-color="bg-white"
-      text-color="text-white"
-    >
+    <section class="container mx-auto py-8">
       <div class="w-full pt-6">
         <div class="hidden sm:block float-right bg-gray-200 m-3 p-3 w-1/3 rounded-lg">
           <NewsArchive></NewsArchive>
@@ -88,14 +84,13 @@
       </div>
       <div class="hidden sm:block clear-both">
       </div>
-    </AngledSection>
+    </section>
   </Layout>
 </template>
 
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import NewsArchive from '/@theme/portal/components/NewsArchive.vue';
-import AngledSection from '/src/components/AngledSection.vue';
 import Paginator from '/src/components/Paginator.vue';
 import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
 import Spinner from '/src/components/Spinner.vue';
@@ -108,7 +103,6 @@ import { computed, ref, toRefs } from 'vue';
 export default {
   components: {
     StoryListItem,
-    AngledSection,
     Layout,
     NewsArchive,
     Paginator,

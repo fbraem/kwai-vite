@@ -17,10 +17,9 @@
         {{ application.short_description }}
       </p>
     </template>
-    <AngledSection
+    <section
       v-if="pageCount > 0"
-      bg-color="bg-white"
-      text-color="text-white"
+      class="bg-white container mx-auto py-8"
     >
       <div class="flex flex-wrap pt-6 sm:divide-x sm:divide-gray-300">
         <div class="w-full sm:w-1/3 pr-6">
@@ -72,13 +71,12 @@
           <router-view></router-view>
         </div>
       </div>
-    </AngledSection>
+    </section>
   </Layout>
 </template>
 
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
-import AngledSection from '/src/components/AngledSection.vue';
 import Header from '/@theme/components/Header.vue';
 import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
@@ -97,7 +95,6 @@ export default {
     StoryListItem,
     ButtonLink,
     Layout,
-    AngledSection,
     Header
   },
   props: {
@@ -127,7 +124,7 @@ export default {
         if (nv && nv.length > 0) {
           const pathParts = route.path.split('/');
           if (pathParts.length === 2) {
-            await router.push({
+            await router.replace({
               name: pathParts[1] + '.articles',
               params: {
                 id: nv[0].id

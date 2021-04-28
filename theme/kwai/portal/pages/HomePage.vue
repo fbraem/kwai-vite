@@ -6,11 +6,7 @@
     <template #title>
       <Hero />
     </template>
-    <AngledSection
-      bg-color="bg-gray-300"
-      text-color="text-gray-300"
-      class="relative pb-20"
-    >
+    <section class="bg-gray-300 relative py-8">
       <div class="container mx-auto px-4">
         <div class="flex flex-wrap">
           <div class="lg:pt-12 pt-6 w-full md:w-4/12 px-4 text-center -mt-32">
@@ -62,11 +58,8 @@
           </Highlight>
         </div>
       </div>
-    </AngledSection>
-    <AngledSection
-      text-color="text-white"
-      bg-color="bg-white"
-    >
+    </section>
+    <section class="bg-white py-8">
       <div class="lg:mx-36">
         <div class="pt-6 text-left md:text-center">
           <h2 class="mb-2 text-3xl font-extrabold leading-tight text-gray-900">
@@ -89,11 +82,8 @@
           </div>
         </div>
       </div>
-    </AngledSection>
-    <AngledSection
-      text-color="text-gray-700"
-      bg-color="bg-gray-700"
-    >
+    </section>
+    <section class="bg-gray-700 py-8">
       <div class="flex flex-wrap items-center pt-16 mx-auto">
         <div
           class="w-full lg:w-1/2 grid grid-cols-1 lg:grid-cols-2 gap-10 mx-auto"
@@ -108,26 +98,27 @@
               :title="board.title"
               :class="board['bg-color'] + ' ' + (board['text-color'] ?? 'text-white')"
             >
-              <img
-                v-if="board.image"
-                :alt="board.title"
-                :src="board.image"
-                class="max-w-full w-32 mx-auto p-1 bg-white shadow-md rounded-full"
-              />
-              <div class="mt-5 text-opacity-70">
-                <div v-html="board.text"></div>
+              <div class="flex flex-col justify-center h-full">
+                <img
+                    v-if="board.image"
+                    :alt="board.title"
+                    :src="board.image"
+                    class="max-w-full w-32 mx-auto p-1 bg-white shadow-md rounded-full"
+                />
+                <div class="mt-5 text-opacity-70">
+                  <div v-html="board.text"></div>
+                </div>
               </div>
             </Card>
           </div>
         </div>
       </div>
-    </AngledSection>
+    </section>
   </Layout>
 </template>
 
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
-import AngledSection from '/src/components/AngledSection.vue';
 import Card from '/src/components/Card.vue';
 import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
 import Hero from '/@theme/portal/components/Hero.vue';
@@ -146,7 +137,6 @@ export default {
     Highlight,
     Promotion,
     ApplicationCard,
-    AngledSection,
     Layout,
     Hero,
     Card

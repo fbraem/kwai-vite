@@ -14,10 +14,7 @@
         {{ application.short_description }}
       </p>
     </template>
-    <AngledSection
-      bg-color="bg-gray-300"
-      text-color="text-gray-300"
-    >
+    <section class="bg-gray-300 text-gray-300">
       <div class="container mx-auto px-4 pt-6">
         <div class="flex flex-wrap md:flex-row">
           <div class="w-full md:w-1/2">
@@ -45,11 +42,10 @@
           </div>
         </div>
       </div>
-    </AngledSection>
-    <AngledSection
+    </section>
+    <section
       v-if="pageCount > 0"
-      bg-color="bg-white"
-      text-color="text-white"
+      class="bg-white container mx-auto py-8"
     >
       <div class="divide-y space-y-8 divide-gray-300">
         <template
@@ -59,13 +55,12 @@
           <Article :article="page" />
         </template>
       </div>
-    </AngledSection>
+    </section>
   </Layout>
 </template>
 
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
-import AngledSection from '/src/components/AngledSection.vue';
 import Header from '/@theme/components/Header.vue';
 import Highlight from '/@theme/portal/components/Highlight.vue';
 import CoachList from '/@theme/portal/components/CoachList.vue';
@@ -85,8 +80,7 @@ export default {
     CoachList,
     Highlight,
     Header,
-    Layout,
-    AngledSection
+    Layout
   },
   setup() {
     const { application } = useApplication({ name: 'trainings' });

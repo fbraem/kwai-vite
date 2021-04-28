@@ -81,7 +81,6 @@
 
 <script>
 import ContentLayout from '/@theme/layouts/ContentLayout.vue';
-import AngledSection from '/src/components/AngledSection.vue';
 import Spinner from '/src/components/Spinner.vue';
 
 import useNewsStory from '/src/apps/portal/composables/useNewsStory.js';
@@ -94,7 +93,6 @@ export default {
     }
   },
   components: {
-    AngledSection,
     ContentLayout,
     Spinner
   },
