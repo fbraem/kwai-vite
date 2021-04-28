@@ -2,7 +2,7 @@
   <div>
     <main>
       <div
-          class="relative pt-16 pb-24 flex content-center items-center justify-center"
+          class="relative pt-16 pb-24 xl:pb-32 2xl:pb-64 flex content-center items-center justify-center"
       >
         <div
             class="absolute top-0 w-full h-full bg-center md:bg-top bg-cover"
