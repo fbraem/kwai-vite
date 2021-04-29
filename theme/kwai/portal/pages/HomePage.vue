@@ -6,7 +6,7 @@
     <template #title>
       <Hero />
     </template>
-    <section class="bg-gray-300 relative py-8">
+    <section class="bg-gray-300 relative pt-16">
       <div class="container mx-auto px-4">
         <div class="flex flex-wrap">
           <div class="lg:pt-12 pt-6 w-full md:w-4/12 px-4 text-center -mt-32">
@@ -84,7 +84,7 @@
       </div>
     </section>
     <section class="bg-gray-700 py-8">
-      <div class="flex flex-wrap items-center pt-16 mx-auto">
+      <div class="flex flex-wrap items-center mx-auto">
         <div
           class="w-full lg:w-1/2 grid grid-cols-1 lg:grid-cols-2 gap-10 mx-auto"
           style="grid-auto-rows: 1fr;"
