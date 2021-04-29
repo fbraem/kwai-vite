@@ -1,10 +1,11 @@
 <template>
-  <component :is="tag"
-      class="background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1"
-      @[click]="method"
-      :[to]="route"
+  <component
+    :is="tag"
+    class="background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1"
+    :[to]="route"
+    @[click]="method"
   >
-    <slot></slot>
+    <slot />
   </component>
 </template>
 
@@ -14,10 +15,12 @@ import { computed } from 'vue';
 export default {
   props: {
     route: {
-      type: Object
+      type: Object,
+      default: null
     },
     method: {
-      type: Function
+      type: Function,
+      default: null
     }
   },
   setup(props) {
@@ -29,7 +32,7 @@ export default {
       tag,
       to,
       click
-    }
+    };
   }
-}
+};
 </script>

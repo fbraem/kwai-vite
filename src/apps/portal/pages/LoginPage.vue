@@ -6,46 +6,46 @@
           Login
         </h6>
       </div>
-      <hr class="mt-6 border-b-1 border-gray-400" />
+      <hr class="mt-6 border-b-1 border-gray-400">
     </div>
     <div class="flex-auto p-4 lg:px-10 pt-0">
       <form>
         <InputField
-            :error="emailError"
-            v-model="email"
-            placeholder="Email"
-            id="login_email"
-            type="email"
-            label="Email"
-            left-icon="fas fa-envelope"
+          id="login_email"
+          v-model="email"
+          :error="emailError"
+          placeholder="Email"
+          type="email"
+          label="Email"
+          left-icon="fas fa-envelope"
         />
         <InputField
-            :error="passwordError"
-            v-model="password"
-            placeholder="Paswoord"
-            id="login_password"
-            type="password"
-            label="Paswoord"
-            left-icon="fas fa-key"
+          id="login_password"
+          v-model="password"
+          :error="passwordError"
+          placeholder="Paswoord"
+          type="password"
+          label="Paswoord"
+          left-icon="fas fa-key"
         />
         <div class="text-center mt-6">
           <SubmitButton
-              class="bg-gray-900 text-white active:bg-gray-700 disabled:bg-gray-300"
-              @click="submitForm"
-              :disabled="isSubmitting"
+            class="bg-gray-900 text-white active:bg-gray-700 disabled:bg-gray-300"
+            :disabled="isSubmitting"
+            @click="submitForm"
           >
-            <i class="fas fa-lock fa-fw"></i> Login
+            <i class="fas fa-lock fa-fw" /> Login
           </SubmitButton>
         </div>
       </form>
     </div>
     <div
-        class="w-full p-4 pt-0"
-        v-if="loginError"
+      v-if="loginError"
+      class="w-full p-4 pt-0"
     >
       <Alert
-          type="danger"
-          title="Inloggen mislukt"
+        type="danger"
+        title="Inloggen mislukt"
       >
         Email onbekend of verkeerd paswoord.
       </Alert>
@@ -78,7 +78,7 @@ export default {
     const router = useRouter();
     const route = useRoute();
 
-    const submitForm = handleSubmit(async (values) => {
+    const submitForm = handleSubmit(async(values) => {
       loginError.value = 0;
       try {
         await authenticationService.login(values.email, values.password);
@@ -88,8 +88,7 @@ export default {
         } else {
           await router.push({ name: 'home' });
         }
-
-      } catch(error) {
+      } catch (error) {
         if (error.response) {
           if (error.response.status === 401) {
             loginError.value = 401;
@@ -104,18 +103,18 @@ export default {
       value: email,
       errorMessage: emailError
     } = useField(
-        'email',
-        yup.string()
-            .required('Dit is een verplicht veld')
-            .email('Ongeldig emailadres')
+      'email',
+      yup.string()
+        .required('Dit is een verplicht veld')
+        .email('Ongeldig emailadres')
     );
 
     const {
       value: password,
       errorMessage: passwordError
     } = useField(
-        'password',
-        yup.string().required('Dit is een verplicht veld')
+      'password',
+      yup.string().required('Dit is een verplicht veld')
     );
 
     const ability = useAbility();
@@ -129,7 +128,7 @@ export default {
       isSubmitting,
       loginError,
       ability
-    }
+    };
   }
 };
 </script>

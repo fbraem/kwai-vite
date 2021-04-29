@@ -1,13 +1,12 @@
 <template>
   <span>
     <component
-        :is="tag"
-        class="absolute inset-0"
-        :[href]="link"
-        @[click]="method"
-        :[to]="route"
-    >
-    </component>
+      :is="tag"
+      class="absolute inset-0"
+      :[href]="link"
+      :[to]="route"
+      @[click]="method"
+    />
   </span>
 </template>
 
@@ -17,13 +16,16 @@ import { computed } from 'vue';
 export default {
   props: {
     route: {
-      type: Object
+      type: Object,
+      default: null
     },
     method: {
-      type: Function
+      type: Function,
+      default: null
     },
     link: {
-      type: String
+      type: String,
+      default: null
     }
   },
   setup(props) {
@@ -37,7 +39,7 @@ export default {
       href,
       to,
       click
-    }
+    };
   }
-}
+};
 </script>

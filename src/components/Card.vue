@@ -2,14 +2,16 @@
   <div class="relative flex flex-col min-w-0 break-normal w-full mb-8 shadow-lg rounded-lg text-center">
     <div class="px-4 py-5 flex-auto">
       <div
-          v-if="icon"
-          class="p-3 inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full"
-          :class="[ iconTextColor, iconBgColor ]"
+        v-if="icon"
+        class="p-3 inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full"
+        :class="[ iconTextColor, iconBgColor ]"
       >
-        <i :class="icon"></i>
+        <i :class="icon" />
       </div>
-      <h6 class="text-xl font-semibold mb-2">{{ title }}</h6>
-      <slot></slot>
+      <h6 class="text-xl font-semibold mb-2">
+        {{ title }}
+      </h6>
+      <slot />
     </div>
   </div>
 </template>
@@ -18,7 +20,8 @@
 export default {
   props: {
     icon: {
-      type: String
+      type: String,
+      default: null
     },
     iconTextColor: {
       type: String,
@@ -33,5 +36,5 @@ export default {
       required: true
     }
   }
-}
+};
 </script>

@@ -9,16 +9,16 @@ const USER_RULES_KEYS = 'rules';
 const ACCESS_TOKEN_KEY = 'access_token';
 const REFRESH_TOKEN_KEY = 'refresh_token';
 
-let user = ref(Lockr.get(USER_KEY, null));
-let userRules = ref(Lockr.get(USER_RULES_KEYS, []));
-let accessToken = ref(Lockr.get(ACCESS_TOKEN_KEY, null));
-let refreshToken = ref(Lockr.get(REFRESH_TOKEN_KEY, null));
+const user = ref(Lockr.get(USER_KEY, null));
+const userRules = ref(Lockr.get(USER_RULES_KEYS, []));
+const accessToken = ref(Lockr.get(ACCESS_TOKEN_KEY, null));
+const refreshToken = ref(Lockr.get(REFRESH_TOKEN_KEY, null));
 
-export let ability = new Ability();
+export const ability = new Ability();
 ability.update(userRules.value);
 
 export default function useAuthentication() {
-  const login = async (email, password) => {
+  const login = async(email, password) => {
     const form = {
       username: email,
       password
@@ -44,14 +44,14 @@ export default function useAuthentication() {
         userRules.value.push({
           action: rule.action,
           subject: rule.subject
-        })
+        });
       }
     }
     Lockr.set(USER_RULES_KEYS, userRules.value);
     ability.update(userRules.value);
   };
 
-  const logout = async () => {
+  const logout = async() => {
     const form = {
       refresh_token: refreshToken.value
     };
@@ -62,7 +62,7 @@ export default function useAuthentication() {
         .formData(form)
         .post()
       ;
-    } catch(error) {
+    } catch (error) {
       if (error.response) {
         // Ignore 401, tokens are already revoked
         if (error.response.status !== 401) {
@@ -72,7 +72,7 @@ export default function useAuthentication() {
     }
 
     reset();
-  }
+  };
 
   const reset = () => {
     ability.update([]);
@@ -84,7 +84,7 @@ export default function useAuthentication() {
     Lockr.rm(ACCESS_TOKEN_KEY);
     refreshToken.value = null;
     Lockr.rm(REFRESH_TOKEN_KEY);
-  }
+  };
 
   return {
     login,

@@ -3,10 +3,10 @@
     :is="tag"
     :[to]="route"
     :[href]="link"
-    @[clickEvent]="method"
     class="border-none text-base inline-flex justify-center items-center align-middle no-underline rounded-full cursor-pointer focus:outline-none hover:no-underline disabled:opacity-50 disabled:cursor-not-allowed px-2 py-1"
+    @[clickEvent]="method"
   >
-    <i :class="icon"></i>
+    <i :class="icon" />
   </component>
 </template>
 
@@ -16,13 +16,16 @@ import { computed } from 'vue';
 export default {
   props: {
     route: {
-      type: Object
+      type: Object,
+      default: null
     },
     method: {
-      type: Function
+      type: Function,
+      default: null
     },
     link: {
-      type: String
+      type: String,
+      default: null
     },
     icon: {
       type: String,
@@ -42,5 +45,5 @@ export default {
       href
     };
   }
-}
+};
 </script>

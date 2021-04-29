@@ -1,33 +1,33 @@
 <template>
   <div
-      class="flex border-l-4 p-2"
-      :class="cssClass"
-      role="alert"
+    class="flex border-l-4 p-2"
+    :class="cssClass"
+    role="alert"
   >
     <div class="flex flex-col">
       <h3
-          class="font-bold"
-          v-if="title"
+        v-if="title"
+        class="font-bold"
       >
         {{ title }}
       </h3>
       <div class="flex items-center">
         <i
-            v-if="icon"
-            class="mr-4"
-            :class="iconClass"
-        ></i>
+          v-if="icon"
+          class="mr-4"
+          :class="iconClass"
+        />
         <div>
-          <slot></slot>
+          <slot />
         </div>
       </div>
     </div>
     <div
-        class="ml-auto"
-        v-if="closeable"
+      v-if="closeable"
+      class="ml-auto"
     >
       <a @click.prevent="$emit('close')">
-        <i class="fas fa-times fa-fw"></i>
+        <i class="fas fa-times fa-fw" />
       </a>
     </div>
   </div>
@@ -69,19 +69,23 @@ const css = {
 export default {
   props: {
     type: {
-      type: String
+      type: String,
+      default: null
     },
     icon: {
-      type: String
+      type: String,
+      default: null
     },
     title: {
-      type: String
+      type: String,
+      default: null
     },
     closeable: {
-      type: Boolean
+      type: Boolean,
+      default: false
     }
   },
-  emits: [ 'close' ],
+  emits: ['close'],
   setup(props) {
     const cssClass = computed(() => {
       if (props.type) {
@@ -103,5 +107,5 @@ export default {
       iconClass
     };
   }
-}
+};
 </script>

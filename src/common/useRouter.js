@@ -16,9 +16,9 @@ export const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
-    document.title = website.title + ' | ' + to.meta.title
+    document.title = website.title + ' | ' + to.meta.title;
   } else {
-    document.title = website.title
+    document.title = website.title;
   }
   next();
 });
