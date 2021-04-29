@@ -41,7 +41,7 @@
             <ButtonLink
               class="bg-red-700 text-white mt-6"
               :route="{
-                name: application.name + '.articles',
+                name: application.name,
                 params: {
                   id: page.id
                 }
@@ -68,7 +68,10 @@
           id="article"
           class="w-full sm:w-2/3 pt-6 sm:pt-0 pl-0 sm:pl-6"
         >
-          <router-view></router-view>
+          <Article
+              v-if="article"
+              :article="article"
+          />
         </div>
       </div>
     </section>
@@ -80,6 +83,7 @@ import Layout from '/@theme/layouts/LandingLayout.vue';
 import Header from '/@theme/components/Header.vue';
 import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
+import Article from '/@theme/portal/components/Article.vue';
 
 import useApplication from '/src/apps/portal/composables/useApplication.js';
 import usePages from '/src/apps/portal/composables/usePages.js';
@@ -87,15 +91,15 @@ import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 
 import { website } from '/@config';
 
-import { ref, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { computed, ref } from 'vue';
 
 export default {
   components: {
     StoryListItem,
     ButtonLink,
     Layout,
-    Header
+    Header,
+    Article
   },
   props: {
     name: {
@@ -105,6 +109,11 @@ export default {
     image: {
       type: String,
       required: true
+    },
+    id: {
+      type: String,
+      required: false,
+      default: null
     }
   },
   setup(props) {
@@ -114,26 +123,17 @@ export default {
     const newsCount = ref(0);
     const { news } = usePromotedNews({ count: newsCount, application });
 
-    const route = useRoute();
-    const router = useRouter();
-
-    // By default use the first available page as default
-    watch(
-      pages,
-      async(nv) => {
-        if (nv && nv.length > 0) {
-          const pathParts = route.path.split('/');
-          if (pathParts.length === 2) {
-            await router.replace({
-              name: pathParts[1] + '.articles',
-              params: {
-                id: nv[0].id
-              }
-            });
-          }
+    const article = computed(() => {
+      if (props.id) {
+        if (pages.value) {
+          return pages.value.find((p) => p.id === props.id);
         }
       }
-    );
+      if (pages.value && pages.value.length > 0) {
+        return pages.value[0];
+      }
+      return null;
+    });
 
     return {
       title: website.title,
@@ -141,7 +141,8 @@ export default {
       pages,
       pageCount,
       newsCount,
-      news
+      news,
+      article
     };
   }
 };

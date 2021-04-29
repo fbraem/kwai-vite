@@ -1,6 +1,5 @@
 // Routes for applications on the portal
 import ApplicationPage from '/@theme/portal/pages/ApplicationPage.vue';
-import ArticlePage from '/@theme/portal/pages/ArticlePage.vue';
 import judoImage from '/assets/portal/judo.jpg';
 import clubImage from '/assets/portal/club.jpg';
 import tournamentsImage from '/assets/portal/tournaments.jpg';
@@ -9,56 +8,52 @@ import shopImage from '/assets/portal/shop.jpg';
 export default [
   {
     name: 'club',
-    path: '/club',
+    path: '/club/:id(\\d+)?',
     component: ApplicationPage,
-    props: {
+    props: (route) => ({
+      id: route.params.id,
       name: 'club',
       image: clubImage
-    },
-    children: [
-      {
-        name: 'club.articles',
-        path: ':id(\\d+)',
-        props: true,
-        component: ArticlePage
-      }
-    ],
+    }),
     meta: {
       title: 'Club'
     }
   },
   {
     name: 'tournaments',
-    path: '/tournaments',
+    path: '/tournaments/:id(\\d+)?',
     component: ApplicationPage,
-    props: {
+    props: (route) => ({
+      id: route.params.id,
       name: 'tournaments',
       image: tournamentsImage
-    },
+    }),
     meta: {
       title: 'Tornooien'
     }
   },
   {
     name: 'judo',
-    path: '/judo',
+    path: '/judo/:id(\\d+)?',
     component: ApplicationPage,
-    props: {
+    props: (route) => ({
+      id: route.params.id,
       name: 'judo',
       image: judoImage
-    },
+    }),
     meta: {
       title: 'Judo'
     }
   },
   {
     name: 'shop',
-    path: '/shop',
+    path: '/shop/:id(\\d+)?',
     component: ApplicationPage,
-    props: {
+    props: (route) => ({
+      id: route.params.id,
       name: 'shop',
       image: shopImage
-    },
+    }),
     meta: {
       title: 'Materiaal'
     }
