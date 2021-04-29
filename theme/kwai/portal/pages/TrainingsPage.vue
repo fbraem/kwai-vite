@@ -11,7 +11,7 @@
         {{ application.short_description }}
       </p>
     </template>
-    <section class="bg-gray-300 text-gray-300">
+    <section class="bg-gray-300">
       <div class="container mx-auto px-4 pt-6">
         <div class="flex flex-wrap md:flex-row">
           <div class="w-full md:w-1/2">
