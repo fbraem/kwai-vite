@@ -35,7 +35,7 @@
               {{ page.title }}
             </h2>
             <div
-              class="text-sm"
+              class="text-sm mb-4"
               v-html="page.summary"
             />
             <ButtonLink
