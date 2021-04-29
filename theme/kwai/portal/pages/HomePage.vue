@@ -6,7 +6,7 @@
     <template #title>
       <Hero />
     </template>
-    <section class="bg-gray-300 relative pt-16">
+    <section class="bg-gray-300 relative pt-16 pb-8">
       <div class="container mx-auto px-4">
         <div class="flex flex-wrap">
           <div class="lg:pt-12 pt-6 w-full md:w-4/12 px-4 text-center -mt-32">
