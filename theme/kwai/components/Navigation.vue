@@ -3,41 +3,49 @@
     <div class="container px-4 mx-auto flex flex-wrap items-center justify-between">
       <div class="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
         <a
-            class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white"
-            :href="url"
+          class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white"
+          :href="url"
         >
           {{ title }}
         </a>
         <button
-            v-if="hasMenus"
-            class="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
-            type="button"
-            v-on:click="toggleNavBar()"
+          v-if="hasMenus"
+          class="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+          type="button"
+          @click="toggleNavBar()"
         >
-          <i class="text-white fas fa-bars"></i>
+          <i class="text-white fas fa-bars" />
         </button>
       </div>
       <div
-          class="lg:flex flex-grow items-center bg-white lg:bg-transparent lg:shadow-none"
-          v-bind:class="{'hidden': !showMenu, 'block': showMenu}"
+        class="lg:flex flex-grow items-center bg-white lg:bg-transparent lg:shadow-none"
+        :class="{'hidden': !showMenu, 'block': showMenu}"
       >
         <ul class="flex flex-col lg:flex-row list-none mr-auto">
           <li
-              v-for="menu in leftMenu"
-              class="flex items-center"
+            v-for="menu in leftMenu"
+            :key="menu.name"
+            class="flex items-center"
           >
-            <slot :name="'left-menu-' + menu.name ?? ''" :menu="menu">
+            <slot
+              :name="'left-menu-' + menu.name ?? ''"
+              :menu="menu"
+            >
               <NavigationMenu :menu="menu" />
             </slot>
           </li>
         </ul>
         <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
           <li
-              v-for="menu in rightMenu"
-              class="flex items-center"
+            v-for="menu in rightMenu"
+            :key="menu.name"
+            class="flex items-center"
           >
-            <slot :name="'right-menu-' + menu.name" :menu="menu">
-              <NavigationMenu :menu="menu"/>
+            <slot
+              :name="'right-menu-' + menu.name"
+              :menu="menu"
+            >
+              <NavigationMenu :menu="menu" />
             </slot>
           </li>
         </ul>
@@ -62,14 +70,14 @@ export default {
     },
     leftMenu: {
       type: Array,
-      default: []
+      default: () => []
     },
     rightMenu: {
       type: Array,
-      default: []
+      default: () => []
     }
   },
-  setup (props) {
+  setup(props) {
     const showMenu = ref(false);
 
     const toggleNavBar = () => { showMenu.value = !showMenu.value; };
