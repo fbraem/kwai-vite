@@ -9,10 +9,10 @@ import SimpleNavigation from '/@theme/portal/SimpleNavigation.vue';
 import TrainingsPage from '/@theme/portal/pages/TrainingsPage.vue';
 
 import extraRoutes from '/@theme/portal/routes.js';
+import CoachPage from '/src/apps/portal/pages/CoachPage.vue';
 
 export default [
   {
-    name: 'home',
     path: '/',
     components: {
       navigation: SiteNavigation,
@@ -29,7 +29,8 @@ export default [
         path: '/news',
         component: NewsPage,
         meta: {
-          title: 'Nieuws'
+          title: 'Nieuws',
+          application: 'news'
         }
       },
       {
@@ -39,7 +40,11 @@ export default [
           year: parseInt(route.params.year),
           month: parseInt(route.params.month)
         }),
-        component: NewsPage
+        component: NewsPage,
+        meta: {
+          title: 'Nieuws',
+          application: 'news'
+        }
       },
       {
         name: 'news.application',
@@ -47,7 +52,11 @@ export default [
         props: route => ({
           application_id: parseInt(route.params.application_id)
         }),
-        component: NewsPage
+        component: NewsPage,
+        meta: {
+          title: 'Nieuws',
+          application: 'news'
+        }
       },
       {
         name: 'news.story',
@@ -55,7 +64,8 @@ export default [
         props: true,
         component: StoryPage,
         meta: {
-          title: 'Nieuws'
+          title: 'Nieuws',
+          application: 'news'
         }
       },
       {
@@ -63,7 +73,8 @@ export default [
         path: '/trainings',
         component: TrainingsPage,
         meta: {
-          title: 'Trainingen'
+          title: 'Trainingen',
+          application: 'trainings'
         }
       },
       ...extraRoutes
@@ -77,7 +88,19 @@ export default [
       default: LoginPage
     },
     meta: {
-      title: 'Login'
+      title: 'Login',
+      layout: 'dialog'
+    }
+  },
+  {
+    name: 'coach',
+    path: '/coach',
+    components: {
+      navigation: SiteNavigation,
+      default: CoachPage
+    },
+    meta: {
+      title: 'Coach'
     }
   }
 ];
