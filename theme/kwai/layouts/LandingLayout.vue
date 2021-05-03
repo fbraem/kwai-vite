@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main>
+    <div>
       <div class="relative min-h-1/2 flex items-center">
         <div
           class="absolute top-0 w-full h-full bg-center md:bg-top bg-cover"
@@ -17,7 +17,7 @@
         </div>
       </div>
       <slot />
-    </main>
+    </div>
   </div>
 </template>
 

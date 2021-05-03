@@ -12,27 +12,25 @@
         regelmatig eens kijken om op de hoogte te blijven!
       </p>
     </template>
-    <section class="container mx-auto py-8">
-      <div class="w-full pt-6">
-        <div class="hidden sm:block float-right bg-gray-200 m-3 p-3 w-1/3 rounded-lg">
-          <NewsArchive></NewsArchive>
+    <section class="container mx-auto p-8">
+      <div class="w-full">
+        <div class="hidden sm:block float-right bg-gray-200 ml-3 w-1/3 rounded-lg">
+          <NewsArchive />
         </div>
         <div class="mx-auto w-full">
           <div
             v-if="application_id && application"
             class="mb-5"
           >
-            <h1
-                class="text-2xl md:text-4xl pt-3 font-extrabold mb-2"
-            >
+            <h1 class="text-2xl md:text-4xl pt-3 font-extrabold mb-2">
               {{ application.title }}
             </h1>
             <h2 class="text-sm italic mb-2">
               Alle nieuwsberichten gepubliceerd voor "{{ application.title }}"
             </h2>
             <router-link
-                class="text-sm text-blue-600"
-                :to="{ name: 'news' }"
+              class="text-sm text-blue-600"
+              :to="{ name: 'news' }"
             >
               <i class="far fa-arrow-alt-circle-left" />
               Terug naar het nieuws van de dag
@@ -42,7 +40,7 @@
             v-if="archive"
             class="mb-4"
           >
-            <h1 class="text-2xl md:text-4xl pt-3 font-extrabold">
+            <h1 class="text-2xl md:text-4xl font-extrabold">
               Archief van {{ archive.month }} {{ archive.year }}
             </h1>
             <router-link
@@ -79,11 +77,10 @@
           </Paginator>
         </div>
         <div class="sm:hidden bg-gray-200 p-3 mt-5 w-full rounded-lg">
-          <NewsArchive></NewsArchive>
+          <NewsArchive />
         </div>
       </div>
-      <div class="hidden sm:block clear-both">
-      </div>
+      <div class="hidden sm:block clear-both" />
     </section>
   </Layout>
 </template>
@@ -111,7 +108,7 @@ export default {
   props: {
     year: {
       type: Number,
-      default: 0,
+      default: 0
     },
     month: {
       type: Number,

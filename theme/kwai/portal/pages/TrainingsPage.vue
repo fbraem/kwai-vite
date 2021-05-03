@@ -11,38 +11,36 @@
         {{ application.short_description }}
       </p>
     </template>
-    <section class="bg-gray-300 py-8">
-      <div class="container mx-auto px-4 pt-6">
-        <div class="flex flex-wrap md:flex-row">
-          <div class="w-full md:w-1/2">
-            <TrainingWeek />
-            <div
-              v-if="count > 0"
-              class="mt-6"
+    <section class="bg-gray-300 container mx-auto p-8">
+      <div class="flex flex-wrap md:flex-row">
+        <div class="w-full md:w-1/2">
+          <TrainingWeek />
+          <div
+            v-if="count > 0"
+            class="mt-6"
+          >
+            <Header>Belangrijk Nieuws</Header>
+            <template
+              v-for="story in news"
+              :key="story.id"
             >
-              <Header>Belangrijk Nieuws</Header>
-              <template
-                v-for="story in news"
-                :key="story.id"
-              >
-                <StoryListItem :story="story" />
-              </template>
-            </div>
+              <StoryListItem :story="story" />
+            </template>
           </div>
-          <div class="w-full mt-4 md:w-1/2 md:pl-10 lg:w-5/12">
-            <Highlight
-              title="Onze coaches"
-              image="/assets/portal/hero.jpg"
-            >
-              <CoachList />
-            </Highlight>
-          </div>
+        </div>
+        <div class="w-full mt-4 md:w-1/2 md:pl-10 lg:w-5/12">
+          <Highlight
+            title="Onze coaches"
+            image="/assets/portal/hero.jpg"
+          >
+            <CoachList />
+          </Highlight>
         </div>
       </div>
     </section>
     <section
       v-if="pageCount > 0"
-      class="bg-white container mx-auto py-8"
+      class="bg-white container mx-auto p-8"
     >
       <div class="divide-y space-y-8 divide-gray-300">
         <template

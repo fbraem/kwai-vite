@@ -19,9 +19,9 @@
     </template>
     <section
       v-if="pageCount > 0"
-      class="bg-white container mx-auto py-8"
+      class="bg-white container mx-auto p-8"
     >
-      <div class="flex flex-wrap pt-6 sm:divide-x sm:divide-gray-300">
+      <div class="flex flex-wrap sm:divide-x sm:divide-gray-300">
         <div class="w-full sm:w-1/3 pr-6">
           <Header class="text-4xl">
             Alle informatie
@@ -69,8 +69,8 @@
           class="w-full sm:w-2/3 pt-6 sm:pt-0 pl-0 sm:pl-6"
         >
           <Article
-              v-if="article"
-              :article="article"
+            v-if="article"
+            :article="article"
           />
         </div>
       </div>
@@ -91,7 +91,7 @@ import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 
 import { website } from '/@config';
 
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 
 export default {
   components: {
