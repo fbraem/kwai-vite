@@ -16,7 +16,8 @@ export default [
       image: clubImage
     }),
     meta: {
-      title: 'Club'
+      title: 'Club',
+      application: 'club'
     }
   },
   {
@@ -29,7 +30,8 @@ export default [
       image: tournamentsImage
     }),
     meta: {
-      title: 'Tornooien'
+      title: 'Tornooien',
+      application: 'tournaments'
     }
   },
   {
@@ -42,7 +44,8 @@ export default [
       image: judoImage
     }),
     meta: {
-      title: 'Judo'
+      title: 'Judo',
+      application: 'judo'
     }
   },
   {
@@ -55,7 +58,8 @@ export default [
       image: shopImage
     }),
     meta: {
-      title: 'Materiaal'
+      title: 'Materiaal',
+      application: 'shop'
     }
   }
 ];

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import DialogPageLayout from '/@theme/layouts/DialogPageLayout.vue';
+import DialogPageLayout from '/@theme/layouts/EmptyLayout.vue';
 import OriginalLoginPage from '/src/apps/portal/pages/LoginPage.vue';
 
 export default {
