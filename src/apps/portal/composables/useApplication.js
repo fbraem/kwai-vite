@@ -11,6 +11,7 @@ export default function useApplication({
   const { data: application } = useSWRV(
     () => {
       if (!applications.value) return null;
+
       if (isRef(id)) {
         if (id.value) {
           return `/application/${id.value}`;
@@ -18,6 +19,10 @@ export default function useApplication({
         return null;
       }
       if (id) return `/application/${id}`;
+
+      if (isRef(name)) {
+        return `/application/${name.value}`;
+      }
       if (name) return `/application/${name}`;
       return null;
     },

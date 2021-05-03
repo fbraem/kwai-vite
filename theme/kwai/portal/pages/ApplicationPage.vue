@@ -91,7 +91,7 @@ import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 
 import { website } from '/@config';
 
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 export default {
   components: {
@@ -117,7 +117,9 @@ export default {
     }
   },
   setup(props) {
-    const { application } = useApplication({ name: props.name });
+    // We need a reactive application name to trigger useApplication
+    const applicationName = computed(() => props.name);
+    const { application } = useApplication({ name: applicationName });
     const { pages, count: pageCount } = usePages(application);
 
     const newsCount = ref(0);
