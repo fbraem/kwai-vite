@@ -19,7 +19,6 @@ export default function useApplication({
         return null;
       }
       if (id) return `/application/${id}`;
-
       if (isRef(name)) {
         return `/application/${name.value}`;
       }
@@ -30,7 +29,7 @@ export default function useApplication({
       let application = null;
       if (name) {
         application = applications.value.find(
-          (d) => d.name === name
+          (d) => d.name === (isRef(name) ? name.value : name)
         );
       }
       if (id) {
