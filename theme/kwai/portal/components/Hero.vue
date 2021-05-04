@@ -1,15 +1,15 @@
 <template>
   <div>
     <h1 class="text-white font-semibold text-4xl">
-        {{ title }}
+      {{ title }}
     </h1>
     <img
-        src="/assets/portal/logo2.png"
-        class="w-24 mx-auto mt-3"
-        alt="logo"
-    />
+      src="/assets/portal/logo2.png"
+      class="w-24 mx-auto mt-3"
+      alt="logo"
+    >
     <p class="mt-4 text-md sm:text-lg text-gray-100">
-        {{ text }}
+      {{ text }}
     </p>
   </div>
 </template>
@@ -18,11 +18,11 @@
 import { website } from '/@config';
 
 export default {
-    setup() {
-        return {
-            title: website.title,
-            text: website.hero
-        }
-    }
-}
+  setup() {
+    return {
+      title: website.title,
+      text: website.hero
+    };
+  }
+};
 </script>
