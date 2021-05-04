@@ -1,8 +1,5 @@
 <template>
-  <Layout
-    image="/assets/portal/hero.jpg"
-    :big="true"
-  >
+  <Layout image="/assets/portal/hero.jpg">
     <template #title>
       <Hero />
     </template>
@@ -53,8 +50,7 @@
             <div
               class="text-md font-light mt-2 text-white"
               v-html="highlight.text"
-            >
-            </div>
+            />
           </Highlight>
         </div>
       </div>
@@ -100,13 +96,13 @@
             >
               <div class="flex flex-col justify-center h-full">
                 <img
-                    v-if="board.image"
-                    :alt="board.title"
-                    :src="board.image"
-                    class="max-w-full w-32 mx-auto p-1 bg-white shadow-md rounded-full"
-                />
+                  v-if="board.image"
+                  :alt="board.title"
+                  :src="board.image"
+                  class="max-w-full w-32 mx-auto p-1 bg-white shadow-md rounded-full"
+                >
                 <div class="mt-5 text-opacity-70">
-                  <div v-html="board.text"></div>
+                  <div v-html="board.text" />
                 </div>
               </div>
             </Card>
