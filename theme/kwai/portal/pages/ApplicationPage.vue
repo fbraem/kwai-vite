@@ -1,18 +1,12 @@
 <template>
-  <Layout
-    :image="image"
-    :big="true"
-  >
+  <Layout :image="image">
     <template
       v-if="application"
       #title
     >
       <h1 class="text-white font-semibold text-4xl mb-2">
-        {{ title }}
-      </h1>
-      <h2 class="text-white font-semibold text-2xl mb-2">
         {{ application.title }}
-      </h2>
+      </h1>
       <p class="mt-4 text-lg text-gray-100">
         {{ application.short_description }}
       </p>
@@ -89,8 +83,6 @@ import useApplication from '/src/apps/portal/composables/useApplication.js';
 import usePages from '/src/apps/portal/composables/usePages.js';
 import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 
-import { website } from '/@config';
-
 import { computed, ref } from 'vue';
 
 export default {
@@ -138,7 +130,6 @@ export default {
     });
 
     return {
-      title: website.title,
       application,
       pages,
       pageCount,
