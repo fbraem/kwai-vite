@@ -82,7 +82,7 @@
     <section class="bg-gray-700 p-8">
       <div class="flex flex-wrap items-center mx-auto">
         <div
-          class="w-full lg:w-1/2 grid grid-cols-1 lg:grid-cols-2 gap-10 mx-auto"
+          class="w-full grid grid-cols-1 md:grid-cols-2 gap-10 mx-auto"
           style="grid-auto-rows: 1fr;"
         >
           <div
