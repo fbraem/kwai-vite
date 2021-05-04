@@ -20,7 +20,7 @@
             style="width:72px;"
           >
           <div class="text-white text-center text-3xl mx-2 font-semibold mt-4">
-            JudoKwai Kemzeke
+            Judokwai Kemzeke
           </div>
         </div>
       </div>
