@@ -18,6 +18,7 @@
             src="/assets/portal/logo2.png"
             class="mb-2"
             style="width:72px;"
+            alt="logo"
           >
           <div class="text-white text-center text-3xl mx-2 font-semibold mt-4">
             Judokwai Kemzeke
@@ -28,7 +29,6 @@
       <div class="px-3">
         <SitebarNavigation :application-routes="linkedApplications" />
       </div>
-
     </div>
   </div>
 </template>
