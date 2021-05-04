@@ -12,8 +12,8 @@
         regelmatig eens kijken om op de hoogte te blijven!
       </p>
     </template>
-    <section class="container mx-auto p-8">
-      <div class="w-full">
+    <section class="bg-gray-200">
+      <div class="container mx-auto p-8">
         <div class="hidden sm:block float-right bg-gray-200 ml-3 w-1/3 rounded-lg">
           <NewsArchive />
         </div>

@@ -19,9 +19,9 @@
     </template>
     <section
       v-if="pageCount > 0"
-      class="bg-white container mx-auto p-8"
+      class="bg-gray-200"
     >
-      <div class="flex flex-wrap sm:divide-x sm:divide-gray-300">
+      <div class="container mx-auto p-8 flex flex-wrap sm:divide-x sm:divide-gray-300">
         <div class="w-full sm:w-1/3 pr-6">
           <Header class="text-4xl">
             Alle informatie

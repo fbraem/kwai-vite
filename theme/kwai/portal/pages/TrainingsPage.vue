@@ -11,8 +11,8 @@
         {{ application.short_description }}
       </p>
     </template>
-    <section class="bg-gray-300 container mx-auto p-8">
-      <div class="flex flex-wrap md:flex-row">
+    <section class="bg-gray-300">
+      <div class="container mx-auto p-8 flex flex-wrap md:flex-row">
         <div class="w-full md:w-1/2">
           <TrainingWeek />
           <div
@@ -40,9 +40,9 @@
     </section>
     <section
       v-if="pageCount > 0"
-      class="bg-white container mx-auto p-8"
+      class="bg-white"
     >
-      <div class="divide-y space-y-8 divide-gray-300">
+      <div class="container mx-auto p-8 divide-y space-y-8 divide-gray-300">
         <template
           v-for="page in pages"
           :key="page.id"
