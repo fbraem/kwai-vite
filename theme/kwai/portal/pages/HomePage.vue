@@ -60,8 +60,8 @@
       </div>
     </section>
     <section class="bg-white py-8">
-      <div class="lg:mx-36">
-        <div class="pt-6 text-left md:text-center">
+      <div class="mx-3 lg:mx-36">
+        <div class="text-left md:text-center">
           <h2 class="mb-2 text-3xl font-extrabold leading-tight text-gray-900">
             Nieuws
           </h2>
@@ -83,7 +83,7 @@
         </div>
       </div>
     </section>
-    <section class="bg-gray-700 py-8">
+    <section class="bg-gray-700 p-8">
       <div class="flex flex-wrap items-center mx-auto">
         <div
           class="w-full lg:w-1/2 grid grid-cols-1 lg:grid-cols-2 gap-10 mx-auto"

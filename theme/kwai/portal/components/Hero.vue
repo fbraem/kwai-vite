@@ -8,7 +8,7 @@
         class="w-24 mx-auto mt-3"
         alt="logo"
     />
-    <p class="mt-4 text-lg text-gray-100">
+    <p class="mt-4 text-md sm:text-lg text-gray-100">
         {{ text }}
     </p>
   </div>
