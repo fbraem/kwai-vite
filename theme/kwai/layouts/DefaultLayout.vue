@@ -5,6 +5,7 @@
       <Toolbar />
       <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
         <slot />
+        <Footer />
       </main>
     </div>
   </div>
@@ -13,8 +14,9 @@
 <script>
 import Sidebar from '/@theme/components/Sidebar.vue';
 import Toolbar from '/@theme/components/Toolbar.vue';
+import Footer from '/@theme/portal/Footer.vue';
 
 export default {
-  components: { Sidebar, Toolbar }
+  components: { Footer, Sidebar, Toolbar }
 };
 </script>
