@@ -1,13 +1,13 @@
 <template>
   <div>
     <h2 class="mb-2 text-xl font-extrabold leading-snug tracking-tight text-gray-800 md:text-2xl">
-      <a
+      <router-link
         v-if="story.has_more"
-        href="#"
+        :to="{ name: 'news.story', params: { id: story.id }}"
         class="text-gray-900"
       >
         {{ story.title }}
-      </a>
+      </router-link>
       <span
         v-else
         class="text-gray-900"
