@@ -9,7 +9,6 @@ import SimpleNavigation from '/@theme/portal/SimpleNavigation.vue';
 import TrainingsPage from '/@theme/portal/pages/TrainingsPage.vue';
 
 import extraRoutes from '/@theme/portal/routes.js';
-import CoachPage from '/src/apps/portal/pages/CoachPage.vue';
 
 export default [
   {
@@ -91,17 +90,6 @@ export default [
     meta: {
       title: 'Login',
       layout: 'dialog'
-    }
-  },
-  {
-    name: 'coach',
-    path: '/coach',
-    components: {
-      navigation: SiteNavigation,
-      default: CoachPage
-    },
-    meta: {
-      title: 'Coach'
     }
   }
 ];
