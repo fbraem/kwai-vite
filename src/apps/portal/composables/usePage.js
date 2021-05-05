@@ -8,7 +8,10 @@ const service = usePageService();
 export default function usePage(id) {
   const { data, isValidating, error } = useSWRV(
     () => `/pages/${id.value}`,
-    () => service.get(id.value)
+    () => service.get(id.value),
+    {
+      revalidateOnFocus: false
+    }
   );
 
   return {

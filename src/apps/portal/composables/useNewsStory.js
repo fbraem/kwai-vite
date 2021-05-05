@@ -8,7 +8,10 @@ const service = useNewsService();
 export default function useNewsStory(id) {
   const { data: story, isValidating: loading, error } = useSWRV(
     '/news/story',
-    () => service.get(id)
+    () => service.get(id),
+    {
+      revalidateOnFocus: false
+    }
   );
 
   return {

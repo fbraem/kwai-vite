@@ -22,6 +22,9 @@ export default function usePromotedNews({
         limit: limit.value,
         application: application?.value.id
       });
+    },
+    {
+      revalidateOnFocus: false
     }
   );
 

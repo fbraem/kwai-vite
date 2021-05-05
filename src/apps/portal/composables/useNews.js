@@ -32,6 +32,9 @@ export default function useNews({
         offset: offset.value,
         limit: limit.value
       });
+    },
+    {
+      revalidateOnFocus: false
     }
   );
 

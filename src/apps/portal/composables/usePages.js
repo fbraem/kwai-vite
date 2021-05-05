@@ -7,7 +7,10 @@ const service = usePageService();
 export default function usePages(application) {
   const { data: pages, isValidating: loading, error } = useSWRV(
     () => application.value?.id && `/pages/${application.value.id}`,
-    () => service.load({ application: application.value.id })
+    () => service.load({ application: application.value.id }),
+    {
+      revalidateOnFocus: false
+    }
   );
 
   return {
