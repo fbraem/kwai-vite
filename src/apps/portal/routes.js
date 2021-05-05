@@ -3,9 +3,6 @@ import Page from '/@theme/Page.vue';
 import LoginPage from '/@theme/portal/pages/LoginPage.vue';
 import NewsPage from '/@theme/portal/pages/NewsPage.vue';
 import StoryPage from '/@theme/portal/pages/StoryPage.vue';
-import SiteNavigation from '/@theme/portal/SiteNavigation.vue';
-import Footer from '/@theme/portal/Footer.vue';
-import SimpleNavigation from '/@theme/portal/SimpleNavigation.vue';
 import TrainingsPage from '/@theme/portal/pages/TrainingsPage.vue';
 
 import extraRoutes from '/@theme/portal/routes.js';
@@ -13,11 +10,7 @@ import extraRoutes from '/@theme/portal/routes.js';
 export default [
   {
     path: '/',
-    components: {
-      navigation: SiteNavigation,
-      default: Page,
-      footer: Footer
-    },
+    component: Page,
     children: [
       {
         name: 'home',
@@ -83,10 +76,7 @@ export default [
   {
     name: 'login',
     path: '/login',
-    components: {
-      navigation: SimpleNavigation,
-      default: LoginPage
-    },
+    component: LoginPage,
     meta: {
       title: 'Login',
       layout: 'dialog'
