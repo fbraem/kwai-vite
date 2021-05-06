@@ -70,8 +70,8 @@ export default {
 
     const router = useRouter();
     const gotoLogin = async() => {
-      if (router.hasRoute('portal.login')) {
-        await router.push({ name: 'portal.login' });
+      if (router.hasRoute('login')) {
+        await router.push({ name: 'login' });
       } else {
         window.location.href = '/#/login';
       }

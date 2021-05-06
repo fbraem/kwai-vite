@@ -74,7 +74,7 @@ export default [
     ]
   },
   {
-    name: 'portal.login',
+    name: 'login',
     path: '/login',
     component: LoginPage,
     meta: {

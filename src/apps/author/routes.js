@@ -19,7 +19,7 @@ export default [
     ]
   },
   {
-    name: 'author.login',
+    name: 'login',
     path: '/login',
     component: LoginPage,
     meta: {
