@@ -1,4 +1,6 @@
 import Page from '/@theme/Page.vue';
+import LoginPage from '/@theme/pages/LoginPage.vue';
+import HomePage from '/src/apps/author/pages/HomePage.vue';
 
 export default [
   {
@@ -8,7 +10,7 @@ export default [
       {
         name: 'author.home',
         path: '',
-        component: null
+        component: HomePage
       },
       {
         path: '/author.news',
