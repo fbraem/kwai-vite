@@ -59,7 +59,7 @@ export default {
       }
       return routes;
     });
-    
+
     return {
       isOpen,
       applications,
