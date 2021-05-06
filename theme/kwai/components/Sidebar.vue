@@ -11,19 +11,20 @@
     >
       <div
         class="flex flex-col items-center justify-center mt-8 hover:cursor-pointer"
-        @click="goHome"
       >
-        <div class="flex flex-col items-center border-b border-gray-700 pb-2">
-          <img
-            src="/assets/portal/logo2.png"
-            class="mb-2"
-            style="width:72px;"
-            alt="logo"
-          >
-          <div class="text-white text-center text-3xl mx-2 font-semibold mt-4">
-            Judokwai Kemzeke
+        <a href="/">
+          <div class="flex flex-col items-center border-b border-gray-700 pb-2">
+            <img
+              src="/assets/portal/logo2.png"
+              class="mb-2"
+              style="width:72px;"
+              alt="logo"
+            >
+            <div class="text-white text-center text-3xl mx-2 font-semibold mt-4">
+              Judokwai Kemzeke
+            </div>
           </div>
-        </div>
+        </a>
       </div>
 
       <div class="px-3">
@@ -52,22 +53,17 @@ export default {
       const routes = [];
       if (applications.value) {
         applications.value.forEach((application) => {
-          const route = router.getRoutes().find((route) => route.name === application.name);
+          const route = router.getRoutes().find((route) => route.name === 'portal.' + application.name);
           if (route) routes.push(route);
         });
       }
       return routes;
     });
-
-    const goHome = () => {
-      router.push({ name: 'home' });
-    };
-
+    
     return {
       isOpen,
       applications,
-      linkedApplications,
-      goHome
+      linkedApplications
     };
   }
 };

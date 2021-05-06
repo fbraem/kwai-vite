@@ -14,7 +14,7 @@
 <script>
 import Sidebar from '/@theme/components/Sidebar.vue';
 import Toolbar from '/@theme/components/Toolbar.vue';
-import Footer from '/@theme/portal/Footer.vue';
+import Footer from '/@theme/components/Footer.vue';
 
 export default {
   components: { Footer, Sidebar, Toolbar }

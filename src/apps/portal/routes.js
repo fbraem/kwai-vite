@@ -1,11 +1,11 @@
-import HomePage from '/@theme/portal/pages/HomePage.vue';
+import HomePage from '/@theme/apps/portal/pages/HomePage.vue';
 import Page from '/@theme/Page.vue';
-import LoginPage from '/@theme/portal/pages/LoginPage.vue';
-import NewsPage from '/@theme/portal/pages/NewsPage.vue';
-import StoryPage from '/@theme/portal/pages/StoryPage.vue';
-import TrainingsPage from '/@theme/portal/pages/TrainingsPage.vue';
+import LoginPage from '/@theme/pages/LoginPage.vue';
+import NewsPage from '/@theme/apps/portal/pages/NewsPage.vue';
+import StoryPage from '/@theme/apps/portal/pages/StoryPage.vue';
+import TrainingsPage from '/@theme/apps/portal/pages/TrainingsPage.vue';
 
-import extraRoutes from '/@theme/portal/routes.js';
+import extraRoutes from '/@theme/apps/portal/routes.js';
 
 export default [
   {
@@ -13,12 +13,12 @@ export default [
     component: Page,
     children: [
       {
-        name: 'home',
+        name: 'portal.home',
         path: '',
         component: HomePage
       },
       {
-        name: 'news',
+        name: 'portal.news',
         path: '/news',
         component: NewsPage,
         meta: {
@@ -27,7 +27,7 @@ export default [
         }
       },
       {
-        name: 'news.archive',
+        name: 'portal.news.archive',
         path: '/news/archive/:year(\\d+)/:month(\\d+)',
         props: route => ({
           year: parseInt(route.params.year),
@@ -40,7 +40,7 @@ export default [
         }
       },
       {
-        name: 'news.application',
+        name: 'portal.news.application',
         path: '/news/application/:application_id(\\d+)',
         props: route => ({
           application_id: parseInt(route.params.application_id)
@@ -52,7 +52,7 @@ export default [
         }
       },
       {
-        name: 'news.story',
+        name: 'portal.news.story',
         path: '/news/:id(\\d+)',
         props: true,
         component: StoryPage,
@@ -62,7 +62,7 @@ export default [
         }
       },
       {
-        name: 'trainings',
+        name: 'portal.trainings',
         path: '/trainings',
         component: TrainingsPage,
         meta: {
@@ -74,7 +74,7 @@ export default [
     ]
   },
   {
-    name: 'login',
+    name: 'portal.login',
     path: '/login',
     component: LoginPage,
     meta: {

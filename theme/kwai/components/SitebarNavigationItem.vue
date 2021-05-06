@@ -30,7 +30,7 @@ export default {
     const router = useRouter();
     const active = computed(() => {
       if (router.currentRoute.value.meta?.application) {
-        return router.currentRoute.value.meta.application === props.route.name;
+        return 'portal.' + router.currentRoute.value.meta.application === props.route.name;
       }
       return false;
     });

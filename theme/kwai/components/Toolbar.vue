@@ -70,11 +70,19 @@ export default {
 
     const router = useRouter();
     const gotoLogin = async() => {
-      await router.push({ name: 'login' });
+      if (router.hasRoute('portal.login')) {
+        await router.push({ name: 'portal.login' });
+      } else {
+        window.location.href = '/#/login';
+      }
     };
     const logout = async() => {
       await doLogout();
-      await router.push({ name: 'home' });
+      if (router.hasRoute('portal.home')) {
+        await router.push({ name: 'portal.home' });
+      } else {
+        window.location.href = '/';
+      }
       dropdownOpen.value = false;
     };
 

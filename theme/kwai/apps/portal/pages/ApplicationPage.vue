@@ -35,7 +35,7 @@
             <ButtonLink
               class="bg-red-700 text-white mt-6"
               :route="{
-                name: application.name,
+                name: 'portal.' + application.name,
                 params: {
                   id: page.id
                 }
@@ -75,9 +75,9 @@
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import Header from '/@theme/components/Header.vue';
-import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
+import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
-import Article from '/@theme/portal/components/Article.vue';
+import Article from '/@theme/apps/portal/components/Article.vue';
 
 import useApplication from '/src/apps/portal/composables/useApplication.js';
 import usePages from '/src/apps/portal/composables/usePages.js';

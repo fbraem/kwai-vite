@@ -3,7 +3,7 @@
     <h2 class="mb-2 text-xl font-extrabold leading-snug tracking-tight text-gray-800 md:text-2xl">
       <router-link
         v-if="story.has_more"
-        :to="{ name: 'news.story', params: { id: story.id }}"
+        :to="{ name: 'portal.news.story', params: { id: story.id }}"
         class="text-gray-900"
       >
         {{ story.title }}
@@ -19,7 +19,7 @@
       {{ story.publish_date }} &nbsp;&bull;&nbsp;
       <router-link
         class="text-sm text-blue-600"
-        :to="{ name: 'news.application', params: { application_id: story.application.id }}"
+        :to="{ name: 'portal.news.application', params: { application_id: story.application.id }}"
       >
         {{ story.application.title }}
         <i class="ml-1 fas fa-tag" />
@@ -31,7 +31,7 @@
     />
     <ButtonLink
       class="bg-red-700 text-white"
-      :route="{ name: 'news.story', params: { id: story.id }}"
+      :route="{ name: 'portal.news.story', params: { id: story.id }}"
     >
       <i class="fas fa-angle-right mr-2" />Lees verder
     </ButtonLink>

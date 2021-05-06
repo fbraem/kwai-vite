@@ -57,14 +57,14 @@
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import Header from '/@theme/components/Header.vue';
-import Highlight from '/@theme/portal/components/Highlight.vue';
-import CoachList from '/@theme/portal/components/CoachList.vue';
-import TrainingWeek from '/@theme/portal/components/TrainingWeek.vue';
+import Highlight from '/@theme/apps/portal/components/Highlight.vue';
+import CoachList from '/@theme/apps/portal/components/CoachList.vue';
+import TrainingWeek from '/@theme/apps/portal/components/TrainingWeek.vue';
 import useApplication from '/src/apps/portal/composables/useApplication.js';
 import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
-import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
+import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
 import usePages from '/src/apps/portal/composables/usePages.js';
-import Article from '/@theme/portal/components/Article.vue';
+import Article from '/@theme/apps/portal/components/Article.vue';
 import { ref } from 'vue';
 
 export default {

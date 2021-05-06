@@ -86,7 +86,12 @@ export default {
         if (route.meta?.back && route.meta.back.name !== route.name) {
           await router.push(route.meta.back);
         } else {
-          await router.push({ name: 'home' });
+          if (router.hasRoute('portal.home')) {
+            await router.push({ name: 'portal.home' });
+          }
+          else {
+            window.location.href = '/';
+          }
         }
       } catch (error) {
         if (error.response) {

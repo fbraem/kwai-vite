@@ -30,7 +30,7 @@
             </h2>
             <router-link
               class="text-sm text-blue-600"
-              :to="{ name: 'news' }"
+              :to="{ name: 'portal.news' }"
             >
               <i class="far fa-arrow-alt-circle-left" />
               Terug naar het nieuws van de dag
@@ -45,7 +45,7 @@
             </h1>
             <router-link
               class="text-sm text-blue-600"
-              :to="{ name: 'news' }"
+              :to="{ name: 'portal.news' }"
             >
               <i class="far fa-arrow-alt-circle-left" />
               Terug naar het nieuws van de dag
@@ -87,9 +87,9 @@
 
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
-import NewsArchive from '/@theme/portal/components/NewsArchive.vue';
+import NewsArchive from '/@theme/apps/portal/components/NewsArchive.vue';
 import Paginator from '/src/components/Paginator.vue';
-import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
+import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
 import Spinner from '/src/components/Spinner.vue';
 import useNews from '/src/apps/portal/composables/useNews.js';
 import usePagination from '/src/composables/usePagination.js';

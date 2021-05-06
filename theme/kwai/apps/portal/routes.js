@@ -1,5 +1,5 @@
 // Routes for applications on the portal
-import ApplicationPage from '/@theme/portal/pages/ApplicationPage.vue';
+import ApplicationPage from '/@theme/apps/portal/pages/ApplicationPage.vue';
 import judoImage from '/assets/portal/judo.jpg';
 import clubImage from '/assets/portal/club.jpg';
 import tournamentsImage from '/assets/portal/tournaments.jpg';
@@ -7,7 +7,7 @@ import shopImage from '/assets/portal/shop.jpg';
 
 export default [
   {
-    name: 'club',
+    name: 'portal.club',
     path: '/club/:id(\\d+)?',
     component: ApplicationPage,
     props: (route) => ({
@@ -21,7 +21,7 @@ export default [
     }
   },
   {
-    name: 'tournaments',
+    name: 'portal.tournaments',
     path: '/tournaments/:id(\\d+)?',
     component: ApplicationPage,
     props: (route) => ({
@@ -35,7 +35,7 @@ export default [
     }
   },
   {
-    name: 'judo',
+    name: 'portal.judo',
     path: '/judo/:id(\\d+)?',
     component: ApplicationPage,
     props: (route) => ({
@@ -49,7 +49,7 @@ export default [
     }
   },
   {
-    name: 'shop',
+    name: 'portal.shop',
     path: '/shop/:id(\\d+)?',
     component: ApplicationPage,
     props: (route) => ({

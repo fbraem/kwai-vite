@@ -30,7 +30,7 @@
         <li class="py-1" v-for="month in archive[year]">
           <slot name="month" :archive="archive[year]">
             <div class="relative flex leading-6">
-              <CoverLink :route="{ name: 'news.archive', params: { year, month: month.month }}">
+              <CoverLink :route="{ name: 'portal.news.archive', params: { year, month: month.month }}">
               </CoverLink>
               <div class="text-blue-600 flex-grow">
                 {{ month.name }} {{ month.year }}

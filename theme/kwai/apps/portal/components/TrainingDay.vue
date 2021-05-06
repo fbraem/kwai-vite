@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import TrainingPeriod from '/@theme/portal/components/TrainingPeriod.vue';
+import TrainingPeriod from '/@theme/apps/portal/components/TrainingPeriod.vue';
 import { createDateFromFormat, formatDate } from '/src/common/useDayJS.js';
 
 export default {

@@ -17,7 +17,8 @@ export default ({ mode }) => {
     build: {
       rollupOptions: {
         input: {
-          main: resolve(__dirname, 'index.html')
+          main: resolve(__dirname, 'index.html'),
+          author: resolve(__dirname, 'author.html')
         }
       }
     }

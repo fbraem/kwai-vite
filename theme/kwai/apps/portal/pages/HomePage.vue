@@ -11,7 +11,7 @@
               v-if="clubApplication"
               class="bg-white"
               :application="clubApplication"
-              :route="{ name: 'club' }"
+              :route="{ name: 'portal.club' }"
               icon="fas fa-users"
               icon-bg-color="bg-red-700"
             />
@@ -21,7 +21,7 @@
               v-if="newsApplication"
               class="bg-white"
               :application="newsApplication"
-              :route="{ name: 'news' }"
+              :route="{ name: 'portal.news' }"
               icon="fas fa-newspaper"
               icon-bg-color="bg-red-700"
             />
@@ -31,7 +31,7 @@
               v-if="trainingsApplication"
               class="bg-white"
               :application="trainingsApplication"
-              :route="{ name: 'trainings' }"
+              :route="{ name: 'portal.trainings' }"
               icon="fas fa-university"
               icon-bg-color="bg-red-700"
             />
@@ -116,11 +116,11 @@
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import Card from '/src/components/Card.vue';
-import StoryListItem from '/@theme/portal/components/StoryListItem.vue';
-import Hero from '/@theme/portal/components/Hero.vue';
-import ApplicationCard from '/@theme/portal/components/ApplicationCard.vue';
-import Promotion from '/@theme/portal/components/Promotion.vue';
-import Highlight from '/@theme/portal/components/Highlight.vue';
+import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
+import Hero from '/@theme/apps/portal/components/Hero.vue';
+import ApplicationCard from '/@theme/apps/portal/components/ApplicationCard.vue';
+import Promotion from '/@theme/apps/portal/components/Promotion.vue';
+import Highlight from '/@theme/apps/portal/components/Highlight.vue';
 
 import useApplication from '/src/apps/portal/composables/useApplication.js';
 import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';

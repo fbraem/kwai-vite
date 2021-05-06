@@ -73,7 +73,7 @@ import Alert from '/src/components/Alert.vue';
 import Spinner from '/src/components/Spinner.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
 import Header from '/@theme/components/Header.vue';
-import TrainingDay from '/@theme/portal/components/TrainingDay.vue';
+import TrainingDay from '/@theme/apps/portal/components/TrainingDay.vue';
 
 export default {
   components: { Header, ButtonLink, Alert, Spinner, TrainingDay },
