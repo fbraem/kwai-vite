@@ -1,6 +1,6 @@
 <template>
   <nav class="mt-10 text-white">
-    <SitebarNavigationItem
+    <SidebarNavigationItem
       v-for="applicationRoute in applicationRoutes"
       :key="applicationRoute.name"
       :route="applicationRoute"
@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import SitebarNavigationItem from '/@theme/components/SitebarNavigationItem.vue';
+import SidebarNavigationItem from '/@theme/components/SidebarNavigationItem.vue';
 
 export default {
-  components: { SitebarNavigationItem },
+  components: { SidebarNavigationItem },
   props: {
     applicationRoutes: {
       type: Array,
@@ -20,7 +20,6 @@ export default {
     }
   },
   setup(props) {
-
   }
 };
 </script>

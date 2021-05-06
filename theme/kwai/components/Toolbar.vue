@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { useSidebar } from '/src/apps/portal/composables/useSidebar.js';
+import { useSidebar } from '/src/components/sidebar/useSidebar.js';
 import useAuthentication from '/src/common/useAuthentication.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
