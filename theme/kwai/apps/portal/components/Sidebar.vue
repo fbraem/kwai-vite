@@ -38,6 +38,7 @@ export default {
 
     const router = useRouter();
     const linkedApplications = computed(() => {
+      /* Only add application routes to the sidebar */
       const routes = [];
       if (applications.value) {
         applications.value.forEach((application) => {
