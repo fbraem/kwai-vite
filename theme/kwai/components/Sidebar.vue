@@ -19,7 +19,7 @@
     </div>
 
     <div class="px-3">
-      <SidebarNavigation :application-routes="linkedApplications" />
+      <SidebarNavigation :routes="linkedApplications" />
     </div>
   </MainSidebar>
 </template>
