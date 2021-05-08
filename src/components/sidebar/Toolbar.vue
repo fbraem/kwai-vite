@@ -1,6 +1,6 @@
 <template>
   <header
-    class="flex justify-between items-center py-4 px-6 bg-red-700"
+    class="flex justify-between items-center py-4 px-6"
   >
     <div class="flex items-center">
       <button
@@ -10,10 +10,7 @@
         <i class="fas fa-bars" />
       </button>
     </div>
-
-    <div class="flex items-center space-x-2">
-      <slot></slot>
-    </div>
+    <slot />
   </header>
 </template>
 

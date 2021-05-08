@@ -1,20 +1,8 @@
 <template>
-  <header
-    class="flex justify-between items-center py-4 px-6 bg-red-700"
-  >
-    <div class="flex items-center">
-      <button
-        class="text-white focus:outline-none lg:hidden"
-        @click="isOpen = true"
-      >
-        <i class="fas fa-bars" />
-      </button>
-    </div>
-
+  <MainToolbar class="bg-red-700">
+    <p class="text-white text-md sm:text-2xl">{{ title }}</p>
     <div class="flex items-center space-x-2">
-      <button
-        class="block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none bg-white text-red-700"
-      >
+      <button class="block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none bg-white text-red-700">
         <i class="fab fa-facebook" />
       </button>
       <div class="relative">
@@ -52,19 +40,20 @@
         </div>
       </div>
     </div>
-  </header>
+  </MainToolbar>
 </template>
 
 <script>
-import { useSidebar } from '/src/components/sidebar/useSidebar.js';
+import MainToolbar from '/src/components/sidebar/Toolbar.vue';
 import useAuthentication from '/src/common/useAuthentication.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { website } from '/@config';
 
 export default {
+  components: { MainToolbar },
   setup() {
     const dropdownOpen = ref(false);
-    const { isOpen } = useSidebar();
 
     const { isLoggedIn, logout: doLogout } = useAuthentication();
 
@@ -87,11 +76,11 @@ export default {
     };
 
     return {
-      isOpen,
       dropdownOpen,
       isLoggedIn,
       logout,
-      gotoLogin
+      gotoLogin,
+      title: website.title
     };
   }
 };

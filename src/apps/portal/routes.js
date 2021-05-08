@@ -6,7 +6,7 @@ import StoryPage from '/@theme/apps/portal/pages/StoryPage.vue';
 import TrainingsPage from '/@theme/apps/portal/pages/TrainingsPage.vue';
 
 import Sidebar from '/@theme/apps/portal/components/Sidebar.vue';
-import Toolbar from '/@theme/components/Toolbar.vue';
+import Toolbar from '/@theme/apps/portal/components/Toolbar.vue';
 import Footer from '/@theme/components/Footer.vue';
 
 import extraRoutes from '/@theme/apps/portal/routes.js';
