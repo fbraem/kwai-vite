@@ -1,25 +1,28 @@
 <template>
   <MainToolbar class="bg-red-700">
-    <p class="text-white text-md sm:text-2xl">{{ title }}</p>
+    <p class="text-white text-md sm:text-2xl">
+      {{ title }}
+    </p>
     <div class="flex items-center space-x-2">
-      <button class="block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none bg-white text-red-700">
-        <i class="fab fa-facebook" />
-      </button>
+      <IconRoundLink
+        v-if="facebook"
+        :href="facebook"
+        class="bg-white text-red-700"
+        icon="fab fa-facebook"
+      />
       <div class="relative">
-        <button
+        <IconRoundLink
           v-if="isLoggedIn"
-          class="relative z-10 block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none bg-white text-red-700"
+          class="bg-white text-red-700"
+          icon="fas fa-user"
           @click="dropdownOpen = !dropdownOpen"
-        >
-          <i class="fas fa-user" />
-        </button>
-        <button
+        />
+        <IconRoundLink
           v-else
-          class="relative z-10 block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none bg-white text-red-700"
+          class="bg-white text-red-700"
+          icon="fas fa-lock"
           @click="gotoLogin()"
-        >
-          <i class="fas fa-lock" />
-        </button>
+        />
         <div
           v-show="dropdownOpen"
           class="fixed inset-0 h-full w-full z-10"
@@ -45,13 +48,14 @@
 
 <script>
 import MainToolbar from '/src/components/sidebar/Toolbar.vue';
+import IconRoundLink from '/src/components/IconRoundLink.vue';
 import useAuthentication from '/src/common/useAuthentication.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { website } from '/@config';
+import { website, contact } from '/@config';
 
 export default {
-  components: { MainToolbar },
+  components: { IconRoundLink, MainToolbar },
   setup() {
     const dropdownOpen = ref(false);
 
@@ -80,7 +84,8 @@ export default {
       isLoggedIn,
       logout,
       gotoLogin,
-      title: website.title
+      title: website.title,
+      facebook: contact.facebook
     };
   }
 };
