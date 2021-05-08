@@ -1,11 +1,8 @@
 <template>
   <div>
-    <h1 class="text-white font-semibold text-4xl">
-      {{ title }}
-    </h1>
     <img
       src="/assets/portal/logo2.png"
-      class="w-24 mx-auto mt-3"
+      class="w-24 mx-auto"
       alt="logo"
     >
     <p class="mt-4 text-md sm:text-lg text-gray-100">
