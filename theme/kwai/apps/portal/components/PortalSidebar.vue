@@ -1,14 +1,14 @@
 <template>
-  <MainSidebar>
+  <Sidebar>
     <SidebarLogo />
     <div class="px-3">
       <SidebarNavigation :routes="linkedApplications" />
     </div>
-  </MainSidebar>
+  </Sidebar>
 </template>
 
 <script>
-import MainSidebar from '/src/components/sidebar/Sidebar.vue';
+import Sidebar from '/src/components/sidebar/Sidebar.vue';
 import useApplications from '/src/apps/portal/composables/useApplications.js';
 import SidebarNavigation from '/@theme/components/SidebarNavigation.vue';
 import SidebarLogo from '/@theme/components/SidebarLogo.vue';
@@ -16,7 +16,7 @@ import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
-  components: { SidebarLogo, MainSidebar, SidebarNavigation },
+  components: { SidebarLogo, Sidebar, SidebarNavigation },
   setup() {
     const { applications } = useApplications();
 
