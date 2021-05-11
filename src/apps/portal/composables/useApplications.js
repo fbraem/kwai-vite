@@ -6,7 +6,10 @@ const service = useApplicationService();
 export default function useApplications() {
   const { data: applications, isValidation: loading, error } = useSWRV(
     '/applications',
-    service.load
+    service.load,
+    {
+      revalidateOnFocus: false
+    }
   );
 
   return {
