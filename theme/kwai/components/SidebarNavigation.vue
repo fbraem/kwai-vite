@@ -1,10 +1,12 @@
 <template>
   <nav class="mt-10 text-white">
-    <SidebarNavigationItem
-      v-for="route in routes"
-      :key="route.name"
-      :route="route"
-    />
+    <slot>
+      <SidebarNavigationItem
+        v-for="(route, index) in routes"
+        :key="index"
+        :route-name="route"
+      />
+    </slot>
   </nav>
 </template>
 
