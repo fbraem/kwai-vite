@@ -1,21 +1,27 @@
 <template>
   <router-link
-    class="flex items-center duration-200 mt-4 py-2 px-6 border-l-4 hover:cursor-pointer"
-    :class="[active ? activeClass : inactiveClass]"
-    :to="route"
+    v-slot="{ href, navigate, isExactActive, route }"
+    custom
+    :to="{ name: routeName }"
   >
-    {{ route.meta.title }}
+    <a
+      :href="href"
+      class="flex items-center duration-200 mt-4 py-2 px-6 border-l-4 hover:cursor-pointer"
+      :class="[isExactActive ? activeClass : inactiveClass]"
+      @click="navigate"
+    >
+      {{ route.meta.title ?? 'meta.title missing' }}
+    </a>
   </router-link>
 </template>
 
 <script>
-import { computed, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref } from 'vue';
 
 export default {
   props: {
-    route: {
-      type: Object,
+    routeName: {
+      type: String,
       required: true
     }
   },
@@ -27,15 +33,9 @@ export default {
       'border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100'
     );
 
-    const router = useRouter();
-    const active = computed(() => {
-      return router.currentRoute.value.name === props.route.name;
-    });
-
     return {
       activeClass,
-      inactiveClass,
-      active
+      inactiveClass
     };
   }
 };
