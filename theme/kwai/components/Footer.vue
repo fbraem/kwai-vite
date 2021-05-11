@@ -1,7 +1,7 @@
 <template>
   <footer>
     <section class="bg-gray-300">
-      <div class="container grid grid-rows-3 lg:grid-cols-3 lg:grid-rows-1 justify-items-center py-8">
+      <div class="grid grid-rows-3 lg:grid-cols-3 lg:grid-rows-1 justify-items-center py-8">
         <div class="w-full p-4 text-center lg:text-left">
           <div>
             <strong>{{ contact.title }}</strong><br>
