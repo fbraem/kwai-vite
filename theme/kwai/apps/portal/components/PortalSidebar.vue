@@ -1,9 +1,7 @@
 <template>
   <Sidebar>
     <SidebarLogo />
-    <div class="px-3">
-      <SidebarNavigation :routes="linkedApplications" />
-    </div>
+    <SidebarNavigation :routes="linkedApplications" />
   </Sidebar>
 </template>
 
@@ -27,7 +25,9 @@ export default {
       if (applications.value) {
         applications.value.forEach((application) => {
           const route = router.getRoutes().find((route) => route.name === 'portal.' + application.name);
-          if (route) routes.push(route);
+          if (route) {
+            routes.push(route.name);
+          }
         });
       }
       return routes;
