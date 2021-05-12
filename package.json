@@ -7,32 +7,32 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@casl/ability": "^5.2.2",
-    "@casl/vue": "^2.0.2",
-    "@fortawesome/fontawesome-free": "^5.15.2",
+    "@casl/ability": "^5.3.1",
+    "@casl/vue": "^2.1.0",
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "@tailwindcss/forms": "^0.2.1",
     "dayjs": "^1.10.4",
     "lockr": "^0.8.5",
     "swrv": "^1.0.0-beta.8",
-    "tailwindcss": "^2.0.2",
-    "vee-validate": "^4.1.17",
-    "vue": "^3.0.5",
-    "vue-router": "^4.0.3",
+    "tailwindcss": "^2.1.2",
+    "vee-validate": "^4.3.6",
+    "vue": "^3.0.11",
+    "vue-router": "^4.0.6",
     "wretch": "^1.7.4",
-    "yup": "^0.32.8"
+    "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@fbraem/rollup-plugin-toml": "file:../rollup-plugin-toml",
-    "@vitejs/plugin-vue": "^1.1.2",
-    "@vue/compiler-sfc": "^3.0.5",
-    "autoprefixer": "^10.2.4",
-    "eslint": "^7.22.0",
+    "@fbraem/rollup-plugin-toml": "0.0.1",
+    "@vitejs/plugin-vue": "^1.2.2",
+    "@vue/compiler-sfc": "^3.0.11",
+    "autoprefixer": "^10.2.5",
+    "eslint": "^7.26.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-config-standard-jsx": "^10.0.0",
     "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-vue": "^7.0.0-beta.4",
-    "postcss": "^8.2.4",
+    "eslint-plugin-vue": "^7.9.0",
+    "postcss": "^8.2.15",
     "standard": "^16.0.3",
-    "vite": "^2.0.0-beta.50"
+    "vite": "^2.3.1"
   }
 }
