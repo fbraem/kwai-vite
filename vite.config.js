@@ -6,9 +6,11 @@ const { resolve } = require('path');
 export default ({ mode }) => {
   const configFile = `config.${mode}.toml`;
   return defineConfig({
-    alias: {
-      '/@theme': resolve(__dirname, './theme/kwai'),
-      '/@config': resolve(__dirname, './src/config', configFile)
+    resolve: {
+      alias: {
+        '/@theme': resolve(__dirname, './theme/kwai'),
+        '/@config': resolve(__dirname, './src/config', configFile)
+      }
     },
     plugins: [
       vue(),
