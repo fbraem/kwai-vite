@@ -30,7 +30,7 @@
         />
         <div class="text-center mt-6">
           <SubmitButton
-            class="bg-gray-900 text-white active:bg-gray-700 disabled:bg-gray-300"
+            class="bg-gray-900 text-white active:bg-gray-700 disabled:bg-gray-300 w-full"
             :disabled="isSubmitting"
             @click="submitForm"
           >
