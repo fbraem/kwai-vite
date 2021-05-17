@@ -51,6 +51,40 @@ export default function useAuthentication() {
     ability.update(userRules.value);
   };
 
+  const refresh = async() => {
+    if (refreshToken.value) {
+      const form = {
+        refresh_token: refreshToken.value
+      };
+      const json = await useHttp
+        .url('auth/access_token')
+        .formData(form)
+        .post()
+        .json()
+      ;
+      Lockr.set(ACCESS_TOKEN_KEY, json.access_token);
+      accessToken.value = json.access_token;
+      Lockr.set(REFRESH_TOKEN_KEY, json.refresh_token);
+      refreshToken.value = json.refresh_token;
+
+      const userService = useUserService();
+      user.value = await userService.get();
+      Lockr.set(USER_KEY, user.value);
+
+      userRules.value = [];
+      for (const ability of user.value.abilities) {
+        for (const rule of ability.rules) {
+          userRules.value.push({
+            action: rule.action,
+            subject: rule.subject
+          });
+        }
+      }
+      Lockr.set(USER_RULES_KEYS, userRules.value);
+      ability.update(userRules.value);
+    }
+  };
+
   const logout = async() => {
     const form = {
       refresh_token: refreshToken.value
@@ -88,6 +122,7 @@ export default function useAuthentication() {
 
   return {
     login,
+    refresh,
     logout,
     reset,
     user,
