@@ -57,7 +57,7 @@ export default function useAuthentication() {
         refresh_token: refreshToken.value
       };
       const json = await useHttp
-        .url('auth/access_token')
+        .url('/auth/access_token')
         .formData(form)
         .post()
         .json()
