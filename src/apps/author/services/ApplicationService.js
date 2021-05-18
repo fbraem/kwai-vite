@@ -1,7 +1,6 @@
 import { useHttp, useHttpApi } from '/src/common/useHttp.js';
 
 function toModel(json) {
-  console.log(json);
   const map = d => ({
     id: d.id,
     title: d.attributes.title,
