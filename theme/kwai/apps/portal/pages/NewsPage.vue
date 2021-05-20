@@ -59,8 +59,8 @@
             <StoryListItem :story="story" />
           </div>
           <Paginator
-            v-if="pagination.pageCount > 0"
-            class="mt-10"
+            v-if="pagination.pageCount.value > 0"
+            class="mt-10 bg-white"
             :pagination="pagination"
             previous_text="Vorige"
             next_text="Volgende"
@@ -120,14 +120,19 @@ export default {
     }
   },
   setup(props) {
+    const limit = ref(10);
+    const count = ref(0);
+
     const pagination = usePagination({
-      limit: ref(10)
+      limit, count
     });
 
     const input = toRefs(props);
     const { news, error, loading } = useNews({
       ...input,
-      ...pagination
+      limit,
+      count,
+      offset: pagination.offset
     });
 
     const { application } = useApplication({ id: input.application_id });
