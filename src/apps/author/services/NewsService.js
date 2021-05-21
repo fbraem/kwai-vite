@@ -25,7 +25,8 @@ function toModel(json) {
         name: application.attributes.name,
         title: application.attributes.title
       },
-      enabled: d.attributes.enabled
+      enabled: d.attributes.enabled,
+      promotion: d.attributes.promotion
     };
   };
   if (Array.isArray(json.data)) {
