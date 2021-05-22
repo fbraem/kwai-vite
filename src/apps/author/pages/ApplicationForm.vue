@@ -28,7 +28,6 @@
         v-model="shortDescription"
         :error="shortDescriptionError"
         placeholder="Korte Omschrijving"
-        type="textarea"
         label="Korte Omschrijving"
       />
       <TextArea
@@ -36,7 +35,6 @@
         v-model="longDescription"
         :error="longDescriptionError"
         placeholder="Omschrijving"
-        type="textarea"
         label="Omschrijving"
       />
       <div class="text-right">

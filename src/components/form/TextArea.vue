@@ -49,10 +49,6 @@ export default {
       type: String,
       default: ''
     },
-    type: {
-      type: String,
-      default: 'text'
-    },
     rows: {
       type: Number,
       default: 5
