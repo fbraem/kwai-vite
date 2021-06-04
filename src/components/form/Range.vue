@@ -1,6 +1,6 @@
 <template>
-  <!-- Based on https://codepen.io/seanstopnik/pen/CeLqA -->
   <div class="mb-3">
+    <!-- Based on https://codepen.io/seanstopnik/pen/CeLqA -->
     <label
       v-if="label"
       :for="id"
