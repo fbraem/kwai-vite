@@ -29,7 +29,7 @@
           :class="open ? 'opacity-30 fixed inset-0' : 'opacity-0'"
         />
         <PopoverPanel class="absolute right-0 z-50">
-          <div class="flex flex-col px-3 py-2 border border-blue-500 bg-white mt-1">
+          <div class="flex flex-col px-3 py-2 bg-white mt-1">
             <div class="flex items-center">
               <div class="px-3 py-2 inline-flex items-center justify-center block h-8 w-8">
                 <i
