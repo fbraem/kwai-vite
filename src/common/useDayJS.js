@@ -8,6 +8,8 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 dayjs.extend(localizedFormat);
 import localeData from 'dayjs/plugin/localeData';
 dayjs.extend(localeData);
+import weekday from 'dayjs/plugin/weekday';
+dayjs.extend(weekday);
 
 // dayjs.utc();
 
@@ -23,3 +25,6 @@ export const formatDate = (date, format) => date.format(format ?? 'L LTS');
 export const setUTCMode = () => dayjs.utc();
 export const setLocalMode = () => dayjs.local();
 export const months = () => dayjs.months();
+export const daysInMonths = () => dayjs.daysInMonth();
+export const startOfMonth = (date) => date.startOf('M');
+export const weekdays = () => dayjs.weekdays(true);
