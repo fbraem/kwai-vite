@@ -15,7 +15,7 @@
         :value="modelValue"
         class="appearance-none range-slider__range"
         @input="$emit('update:modelValue', $event.target.value)"
-      />
+      >
       <div class="range-slider__value">
         {{ modelValue }}
       </div>
@@ -28,6 +28,31 @@
     </p>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    id: {
+      type: String,
+      required: true
+    },
+    // eslint-disable-next-line vue/require-prop-types
+    modelValue: {
+      required: true,
+      default: 0
+    },
+    error: {
+      type: String,
+      default: null
+    },
+    label: {
+      type: String,
+      default: null
+    }
+  },
+  emits: ['update:modelValue']
+};
+</script>
 
 <style scoped>
 .range-slider__range {
@@ -107,27 +132,3 @@ input::-moz-focus-outer {
   border: 0;
 }
 </style>
-
-<script>
-export default {
-  props: {
-    id: {
-      type: String,
-      required: true
-    },
-    modelValue: {
-      required: true,
-      default: 0
-    },
-    error: {
-      type: String,
-      default: null
-    },
-    label: {
-      type: String,
-      default: null
-    }
-  },
-  emits: ['update:modelValue']
-};
-</script>
