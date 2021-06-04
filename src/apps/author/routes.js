@@ -6,6 +6,7 @@ import NewsPage from '/src/apps/author/pages/NewsPage.vue';
 import ApplicationsPage from '/src/apps/author/pages/ApplicationsPage.vue';
 import ApplicationForm from '/src/apps/author/pages/ApplicationForm.vue';
 import LoginPage from '/@theme/pages/LoginPage.vue';
+import NewsStoryForm from '/src/apps/author/pages/NewsStoryForm.vue';
 
 export default [
   {
@@ -49,6 +50,15 @@ export default [
         component: NewsPage,
         meta: {
           title: 'Nieuwsberichten'
+        }
+      },
+      {
+        name: 'author.news.edit',
+        path: '/news/edit/:id(\\d+)',
+        props: true,
+        component: NewsStoryForm,
+        meta: {
+          title: 'Nieuwsbericht'
         }
       }
     ]

@@ -60,7 +60,9 @@
             />
           </td>
           <td class="px-6 py-3 border-b text-gray-700">
-            <a href="#"><i class="fas fa-edit" /></a>
+            <router-link :to="{ name: 'author.news.edit', params: { id: story.id } }">
+              <i class="fas fa-edit" />
+            </router-link>
           </td>
         </tr>
       </tbody>

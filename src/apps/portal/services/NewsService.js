@@ -11,7 +11,8 @@ function toModel(json) {
     return {
       id: d.id,
       title: d.attributes.contents[0].title,
-      summary: d.attributes.contents[0].html_summary,
+      summary: d.attributes.contents[0].summary,
+      html_summary: d.attributes.contents[0].html_summary,
       publish_date: formatDate(
         dateToTimezone(
           d.attributes.publish_date,
@@ -20,12 +21,17 @@ function toModel(json) {
         'D MMMM, YYYY'
       ),
       has_more: d.attributes.contents[0].html_content.length > 0,
-      content: d.attributes.contents[0].html_content,
+      html_content: d.attributes.contents[0].html_content,
+      content: d.attributes.contents[0].content,
       application: {
         id: application.id,
         name: application.attributes.name,
         title: application.attributes.title
-      }
+      },
+      promotion: {
+        priority: d.attributes.promotion
+      },
+      active: d.attributes.enabled
     };
   };
   if (Array.isArray(json.data)) {
