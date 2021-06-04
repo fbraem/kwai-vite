@@ -7,7 +7,7 @@
     >
       {{ label }}
     </label>
-    <div class="flex w-full items-stretch mb-3 overflow-visible">
+    <div class="flex w-full items-stretch mb-3">
       <input
         :id="id"
         ref="input"
@@ -17,7 +17,7 @@
         :class="{ 'border-red-600': error }"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
-      />
+      >
       <Popover v-slot="{ open }">
         <PopoverButton
           class="ml-1 rounded px-3 py-2 bg-gray-300 border-2 border-transparent focus:outline-none focus:border-blue-900"
@@ -28,7 +28,7 @@
           class="bg-black"
           :class="open ? 'opacity-30 fixed inset-0' : 'opacity-0'"
         />
-        <PopoverPanel class="absolute right-0">
+        <PopoverPanel class="absolute right-0 z-50">
           <div class="flex flex-col px-3 py-2 border border-blue-500 bg-white mt-1">
             <div class="flex items-center">
               <div class="px-3 py-2 inline-flex items-center justify-center block h-8 w-8">
