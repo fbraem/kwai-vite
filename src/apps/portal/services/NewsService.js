@@ -27,11 +27,7 @@ function toModel(json) {
         id: application.id,
         name: application.attributes.name,
         title: application.attributes.title
-      },
-      promotion: {
-        priority: d.attributes.promotion
-      },
-      active: d.attributes.enabled
+      }
     };
   };
   if (Array.isArray(json.data)) {
