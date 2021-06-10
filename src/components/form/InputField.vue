@@ -11,7 +11,7 @@
       <div class="relative flex w-full flex-wrap items-stretch mb-3">
         <span
           v-if="leftIcon"
-          class="z-10 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"
+          class="z-10 h-full leading-snug font-normal absolute text-center text-gray-400 bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"
         >
           <i :class="leftIcon" />
         </span>
@@ -27,7 +27,7 @@
         >
         <span
           v-if="rightIcon"
-          class="z-10 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"
+          class="z-10 h-full leading-snug font-normal absolute text-center text-gray-400 bg-transparent rounded text-base items-center justify-center w-8 pr-3 py-3 right-0"
         >
           <i :class="rightIcon" />
         </span>
