@@ -56,6 +56,37 @@
         />
       </Form>
       <Form
+        title="Publicatie"
+        class="p-3 relative"
+      >
+        <template #description>
+          <p class="mt-1 text-sm text-gray-700">
+            Wanneer moet het bericht gepubliceerd worden? Het bericht zal automatisch verdwijnen
+            bij een eiddatum.
+          </p>
+        </template>
+        <div class="flex flex-row justify-between w-full">
+          <DatePicker
+            id="publication_date"
+            v-model="publicationDate"
+            label="Publicatiedatum"
+            :error="publicationDateError"
+          />
+          <TimePicker
+            id="publication_time"
+            v-model="publicationTime"
+            label="Tijdstip"
+            :error="publicationTimeError"
+          />
+        </div>
+        <DatePicker
+          id="publication_end_date"
+          v-model="publicationEndDate"
+          label="Publicatie Einddatum"
+          :error="publicationEndDateError"
+        />
+      </Form>
+      <Form
         title="Promotie"
         class="p-3 relative"
       >
@@ -64,22 +95,18 @@
             Een nieuwsbericht kan op de startpagina geplaatst worden.
           </p>
         </template>
-        <div>
-          <Range
-            id="promotion_priority"
-            v-model="promotionPriority"
-            label="Prioriteit"
-            :error="promotionPriorityError"
-          />
-        </div>
-        <div>
-          <DatePicker
-            id="promotion_end_date"
-            v-model="promotionEndDate"
-            label="Einddatum"
-            :error="promotionEndDateError"
-          />
-        </div>
+        <Range
+          id="promotion_priority"
+          v-model="promotionPriority"
+          label="Prioriteit"
+          :error="promotionPriorityError"
+        />
+        <DatePicker
+          id="promotion_end_date"
+          v-model="promotionEndDate"
+          label="Einddatum"
+          :error="promotionEndDateError"
+        />
       </Form>
       <Form
         title=""
@@ -118,15 +145,17 @@ import SubmitButton from '/src/components/form/SubmitButton.vue';
 import CheckBox from '/src/components/form/CheckBox.vue';
 import Select from '/src/components/form/Select.vue';
 import Range from '/src/components/form/Range.vue';
+import DatePicker from '/src/components/form/DatePicker.vue';
+import TimePicker from '/src/components/form/TimePicker.vue';
 
 import useApplications from '/src/apps/author/composables/useApplications.js';
 import useNewsStory from '/src/apps/author/composables/useNewsStory.js';
 import { useField, useForm } from 'vee-validate';
 import { computed, watch } from 'vue';
-import DatePicker from '../../../components/form/DatePicker.vue';
+import { formatDate } from '/src/common/useDayJS.js';
 
 export default {
-  components: { DatePicker, Range, Select, CheckBox, SubmitButton, TextArea, InputField, Header, Form },
+  components: { TimePicker, DatePicker, Range, Select, CheckBox, SubmitButton, TextArea, InputField, Header, Form },
   props: {
     id: {
       type: String,
@@ -156,13 +185,25 @@ export default {
     watch(
       story,
       (nv) => {
-        console.log(nv.application.id);
         title.value = nv.title;
         summary.value = nv.summary;
         content.value = nv.content;
         active.value = nv.active;
         application.value = nv.application.id;
         promotionPriority.value = nv.promotion.priority;
+        promotionEndDate.value = nv.promotion.end_date;
+        promotionEndDate.value = nv.promotion.end_date
+          ? formatDate(nv.promotion.end_date, 'L')
+          : '';
+        publicationDate.value = nv.publication.start_date
+          ? formatDate(nv.publication.start_date, 'L')
+          : '';
+        publicationTime.value = nv.publication.start_date
+          ? formatDate(nv.publication.start_date, 'HH:MM')
+          : '';
+        publicationEndDate.value = nv.publication.end_date
+          ? formatDate(nv.publication.end_date, 'L')
+          : '';
       }
     );
 
@@ -192,6 +233,21 @@ export default {
     } = useField('application');
 
     const {
+      value: publicationDate,
+      errorMessage: publicationDateError
+    } = useField('publication_date');
+
+    const {
+      value: publicationTime,
+      errorMessage: publicationTimeError
+    } = useField('publication_time');
+
+    const {
+      value: publicationEndDate,
+      errorMessage: publicationEndDateError
+    } = useField('publication_enddate');
+
+    const {
       value: promotionPriority,
       errorMessage: promotionPriorityError
     } = useField('promotion_priority');
@@ -216,6 +272,12 @@ export default {
       application,
       applicationError,
       newsApplications,
+      publicationDate,
+      publicationDateError,
+      publicationTime,
+      publicationTimeError,
+      publicationEndDate,
+      publicationEndDateError,
       promotionPriority,
       promotionPriorityError,
       promotionEndDate,
