@@ -1,6 +1,6 @@
 // Composable for reading a news story.
 
-import { useNewsService } from '/src/apps/portal/services/NewsService.js';
+import { useNewsService } from '/src/apps/author/services/NewsService.js';
 import useState from '/src/composables/useState.js';
 
 const service = useNewsService();
