@@ -1,4 +1,4 @@
-import { useHttpApi } from '/src/common/useHttp.js';
+import { useHttp, useHttpApi } from '/src/common/useHttp.js';
 import { dateToTimezone, formatDate } from '/src/common/useDayJS.js';
 
 function toModel(json) {
@@ -10,7 +10,7 @@ function toModel(json) {
     return {
       id: d.id,
       title: d.attributes.contents[0].title,
-      summary: d.attributes.contents[0].html_summary,
+      summary: d.attributes.contents[0].summary,
       publish_date: formatDate(
         dateToTimezone(
           d.attributes.publish_date,
@@ -18,15 +18,28 @@ function toModel(json) {
         ),
         'D MMMM, YYYY'
       ),
-      has_more: d.attributes.contents[0].html_content.length > 0,
-      content: d.attributes.contents[0].html_content,
+      has_more: d.attributes.contents[0].content.length > 0,
+      content: d.attributes.contents[0].content,
       application: {
         id: application.id,
         name: application.attributes.name,
         title: application.attributes.title
       },
       enabled: d.attributes.enabled,
-      promotion: d.attributes.promotion
+      promotion: {
+        priority: d.attributes.promotion,
+        end_date: d.attributes.promotiom_end_date
+          ? dateToTimezone(d.attributes.promotion_end_date, d.attributes.timezone)
+          : null
+      },
+      publication: {
+        start_date: d.attributes.publish_date
+          ? dateToTimezone(d.attributes.publish_date, d.attributes.timezone)
+          : null,
+        end_date: d.attributes.end_date
+          ? dateToTimezone(d.attributes.end_date, d.attributes.timezone)
+          : null
+      }
     };
   };
   if (Array.isArray(json.data)) {
@@ -60,6 +73,15 @@ const load = ({
   return api.get().json(json => toModel(json));
 };
 
+const get = id => {
+  return useHttp
+    .url(`/news/stories/${id}`)
+    .get()
+    .json((json) => toModel(json))
+  ;
+};
+
 export const useNewsService = () => ({
-  load
+  load,
+  get
 });
