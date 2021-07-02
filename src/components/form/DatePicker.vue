@@ -7,104 +7,105 @@
     >
       {{ label }}
     </label>
-    <div class="relative text-left">
-      <div class="flex w-full items-stretch mb-3">
-        <input
-          :id="id"
-          ref="input"
-          type="text"
-          :placeholder="placeholder"
-          class="rounded w-full"
-          :class="{ 'border-red-600': error }"
-          :value="modelValue"
-          @input="$emit('update:modelValue', $event.target.value)"
+    <div class="flex w-full items-stretch mb-3">
+      <input
+        :id="id"
+        ref="input"
+        type="text"
+        :placeholder="placeholder"
+        class="rounded w-full"
+        :class="{ 'border-red-600': error }"
+        :value="modelValue"
+        @input="$emit('update:modelValue', $event.target.value)"
+      >
+      <Popover
+        v-slot="{ open }"
+        class="relative z-10"
+      >
+        <PopoverButton
+          class="ml-1 rounded px-3 py-2 bg-gray-300 border-2 border-transparent focus:outline-none focus:border-blue-900"
         >
-        <Popover v-slot="{ open }">
-          <PopoverButton
-            class="ml-1 rounded px-3 py-2 bg-gray-300 border-2 border-transparent focus:outline-none focus:border-blue-900"
-          >
-            <i class="fas fa-calendar" />
-          </PopoverButton>
-          <PopoverOverlay
-            class="bg-black"
-            :class="open ? 'opacity-30 fixed inset-0' : 'opacity-0'"
-          />
-          <PopoverPanel class="absolute right-0 z-50">
-            <div class="flex flex-col px-3 py-2 bg-white mt-1">
-              <div class="flex items-center">
-                <div class="px-3 py-2 inline-flex items-center justify-center block h-8 w-8">
-                  <i
-                    class="fas fa-angle-double-left hover:cursor-pointer"
-                    @click="prevYear"
-                  />
-                </div>
-                <div class="px-3 py-2 inline-flex items-center justify-center block h-8 w-8">
-                  <i
-                    class="fas fa-angle-left hover:cursor-pointer"
-                    @click="prevMonth"
-                  />
-                </div>
-                <div class="text-center font-bold">
-                  {{ currentMonthName }} {{ currentYear }}
-                </div>
-                <div class="px-3 py-2 inline-flex items-center justify-center block h-8 w-8">
-                  <i
-                    class="fas fa-angle-right hover:cursor-pointer"
-                    @click="nextMonth"
-                  />
-                </div>
-                <div class="px-3 py-2 inline-flex items-center justify-center block h-8 w-8">
-                  <i
-                    class="fas fa-angle-double-right hover:cursor-pointer"
-                    @click="nextYear"
-                  />
-                </div>
+          <i class="fas fa-calendar" />
+        </PopoverButton>
+        <PopoverOverlay
+          class="bg-black"
+          :class="open ? 'opacity-30 fixed inset-0' : 'opacity-0'"
+        />
+        <PopoverPanel class="absolute right-0">
+          <div class="flex flex-col px-3 py-2 bg-white mt-1">
+            <div class="flex items-center">
+              <div class="px-3 py-2 inline-flex items-center justify-center block h-8 w-8">
+                <i
+                  class="fas fa-angle-double-left hover:cursor-pointer"
+                  @click="prevYear"
+                />
               </div>
-              <table class="w-full">
-                <tr>
-                  <th
-                    v-for="(day, index) in weekDays"
-                    :key="index"
-                    class="text-xs font-normal text-center"
-                  >
-                    {{ day }}
-                  </th>
-                </tr>
-                <tr
-                  v-for="(week, index) in weeks"
-                  :key="index"
-                >
-                  <td
-                    v-for="day in week"
-                    :key="day"
-                    class="text-center text-sm"
-                    :class="{ 'text-gray-400': day.outsideCurrentMonth }"
-                  >
-                    <a
-                      v-if="!day.outsideCurrentMonth"
-                      class="hover:cursor-pointer"
-                      @click="select(day.date)"
-                    >
-                      {{ day.format }}
-                    </a>
-                    <span v-else>
-                      {{ day.format }}
-                    </span>
-                  </td>
-                </tr>
-              </table>
-              <div class="text-center">
-                <a
-                  class="text-xs text-blue-500 hover:cursor-pointer"
-                  @click="setToday"
-                >
-                  Vandaag
-                </a>
+              <div class="px-3 py-2 inline-flex items-center justify-center block h-8 w-8">
+                <i
+                  class="fas fa-angle-left hover:cursor-pointer"
+                  @click="prevMonth"
+                />
+              </div>
+              <div class="text-center font-bold">
+                {{ currentMonthName }} {{ currentYear }}
+              </div>
+              <div class="px-3 py-2 inline-flex items-center justify-center block h-8 w-8">
+                <i
+                  class="fas fa-angle-right hover:cursor-pointer"
+                  @click="nextMonth"
+                />
+              </div>
+              <div class="px-3 py-2 inline-flex items-center justify-center block h-8 w-8">
+                <i
+                  class="fas fa-angle-double-right hover:cursor-pointer"
+                  @click="nextYear"
+                />
               </div>
             </div>
-          </PopoverPanel>
-        </Popover>
-      </div>
+            <table class="w-full">
+              <tr>
+                <th
+                  v-for="(day, index) in weekDays"
+                  :key="index"
+                  class="text-xs font-normal text-center"
+                >
+                  {{ day }}
+                </th>
+              </tr>
+              <tr
+                v-for="(week, index) in weeks"
+                :key="index"
+              >
+                <td
+                  v-for="day in week"
+                  :key="day"
+                  class="text-center text-sm"
+                  :class="{ 'text-gray-400': day.outsideCurrentMonth }"
+                >
+                  <a
+                    v-if="!day.outsideCurrentMonth"
+                    class="hover:cursor-pointer"
+                    @click="select(day.date)"
+                  >
+                    {{ day.format }}
+                  </a>
+                  <span v-else>
+                    {{ day.format }}
+                  </span>
+                </td>
+              </tr>
+            </table>
+            <div class="text-center">
+              <a
+                class="text-xs text-blue-500 hover:cursor-pointer"
+                @click="setToday"
+              >
+                Vandaag
+              </a>
+            </div>
+          </div>
+        </PopoverPanel>
+      </Popover>
     </div>
   </div>
 </template>
