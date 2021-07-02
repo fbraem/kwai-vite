@@ -57,7 +57,7 @@
       </Form>
       <Form
         title="Publicatie"
-        class="p-3 relative"
+        class="p-3"
       >
         <template #description>
           <p class="mt-1 text-sm text-gray-700">
@@ -88,7 +88,7 @@
       </Form>
       <Form
         title="Promotie"
-        class="p-3 relative"
+        class="p-3"
       >
         <template #description>
           <p class="mt-1 text-sm text-gray-600">
