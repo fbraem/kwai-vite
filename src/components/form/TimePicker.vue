@@ -10,7 +10,7 @@
     <div class="flex flex-row space-x-2">
       <div class="relative">
         <span
-          class="z-10 h-full leading-snug font-normal absolute text-center bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"
+          class="h-full leading-snug font-normal absolute text-center bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"
         >
           <i
             class="fa fa-minus hover:cursor-pointer"
@@ -28,7 +28,7 @@
           max="23"
         >
         <span
-          class="z-10 h-full leading-snug font-normal absolute text-center bg-transparent rounded text-base items-center justify-center w-8 pr-3 py-3 right-0"
+          class="h-full leading-snug font-normal absolute text-center bg-transparent rounded text-base items-center justify-center w-8 pr-3 py-3 right-0"
         >
           <i
             class="fa fa-plus hover:cursor-pointer"
@@ -38,7 +38,7 @@
       </div>
       <div class="relative">
         <span
-          class="z-10 h-full leading-snug font-normal absolute text-center bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"
+          class="h-full leading-snug font-normal absolute text-center bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"
         >
           <i
             class="fa fa-minus hover:cursor-pointer"
@@ -56,7 +56,7 @@
           max="59"
         >
         <span
-          class="z-10 h-full leading-snug font-normal absolute text-center bg-transparent rounded text-base items-center justify-center w-8 pr-3 py-3 right-0"
+          class="h-full leading-snug font-normal absolute text-center bg-transparent rounded text-base items-center justify-center w-8 pr-3 py-3 right-0"
         >
           <i
             class="fa fa-plus hover:cursor-pointer"
