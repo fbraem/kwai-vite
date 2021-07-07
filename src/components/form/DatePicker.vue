@@ -20,7 +20,7 @@
       >
       <Popover
         v-slot="{ open }"
-        class="relative z-10"
+        class="relative"
       >
         <PopoverButton
           class="ml-1 rounded px-3 py-2 bg-gray-300 border-2 border-transparent focus:outline-none focus:border-blue-900"
@@ -31,9 +31,9 @@
           class="bg-black"
           :class="open ? 'opacity-30 fixed inset-0' : 'opacity-0'"
         />
-        <PopoverPanel class="absolute right-0">
-          <div class="flex flex-col px-3 py-2 bg-white mt-1">
-            <div class="flex items-center">
+        <PopoverPanel class="absolute right-0 z-10 bg-white px-3 py-2 mt-1 rounded-md">
+          <div class="flex flex-col">
+            <div class="flex items-center justify-center">
               <div class="px-3 py-2 inline-flex items-center justify-center block h-8 w-8">
                 <i
                   class="fas fa-angle-double-left hover:cursor-pointer"
@@ -104,6 +104,73 @@
               </a>
             </div>
           </div>
+          <div class="mb-3">
+            <label
+              v-if="label"
+              :for="id"
+              class="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Tijdstip (HH:MM)
+            </label>
+            <div class="flex flex-row space-x-2">
+              <div class="relative">
+                <span
+                  class="h-full leading-snug font-normal absolute text-center bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"
+                >
+                  <i
+                    class="fa fa-minus hover:cursor-pointer"
+                    @click="subHour"
+                  />
+                </span>
+                <input
+                  :id="id"
+                  v-model="hour"
+                  type="number"
+                  placeholder="HH"
+                  class="px-10 rounded text-center w-32"
+                  :class="{ 'border-red-600': error }"
+                  min="0"
+                  max="23"
+                >
+                <span
+                  class="h-full leading-snug font-normal absolute text-center bg-transparent rounded text-base items-center justify-center w-8 pr-3 py-3 right-0"
+                >
+                  <i
+                    class="fa fa-plus hover:cursor-pointer"
+                    @click="addHour"
+                  />
+                </span>
+              </div>
+              <div class="relative">
+                <span
+                  class="h-full leading-snug font-normal absolute text-center bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"
+                >
+                  <i
+                    class="fa fa-minus hover:cursor-pointer"
+                    @click="subMinute"
+                  />
+                </span>
+                <input
+                  :id="id"
+                  v-model="minute"
+                  type="number"
+                  placeholder="MM"
+                  class="px-10 rounded text-center"
+                  :class="{ 'border-red-600': error }"
+                  min="0"
+                  max="59"
+                >
+                <span
+                  class="h-full leading-snug font-normal absolute text-center bg-transparent rounded text-base items-center justify-center w-8 pr-3 py-3 right-0"
+                >
+                  <i
+                    class="fa fa-plus hover:cursor-pointer"
+                    @click="addMinute"
+                  />
+                </span>
+              </div>
+            </div>
+          </div>
         </PopoverPanel>
       </Popover>
     </div>
@@ -114,7 +181,7 @@
 import { Popover, PopoverButton, PopoverPanel, PopoverOverlay } from '@headlessui/vue';
 import { now, formatDate } from '/src/common/useDayJS.js';
 import dayjs from 'dayjs';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 export default {
   components: {
@@ -145,8 +212,29 @@ export default {
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     const input = ref(null);
-    const currentYear = ref(now().year());
-    const currentMonth = ref(now().month());
+
+    const date = ref(now());
+
+    watch(() => props.modelValue, (nv) => {
+      if (nv) {
+        date.value = dayjs(nv, 'L LTS');
+      }
+    });
+
+    const currentYear = ref(date.value.year());
+    const currentMonth = ref(date.value.month());
+    const currentHour = ref(date.value.hour());
+    const currentMinute = ref(date.value.minute());
+
+    watch(
+      () => date,
+      (nv) => {
+        currentYear.value = nv.year();
+        currentMonth.value = nv.month();
+        currentHour.value = nv.hour();
+        currentMinute.value = nv.minute();
+      }
+    );
 
     const currentMonthName = computed(() => dayjs.monthsShort()[currentMonth.value]);
     const weekDays = ref(dayjs.weekdaysShort(true));
@@ -176,6 +264,9 @@ export default {
       }
       return weeks;
     });
+
+    const hour = ref(currentHour.value);
+    const minute = ref(currentMinute.value);
 
     const select = (date) => {
       emit('update:modelValue', formatDate(date, 'L'));
@@ -210,11 +301,47 @@ export default {
       currentMonth.value = currentDate.month();
     };
 
+    const subHour = () => {
+      if (hour.value > 0) {
+        hour.value -= 1;
+      } else {
+        hour.value = 23;
+      }
+    };
+
+    const addHour = () => {
+      if (hour.value === 23) {
+        hour.value = 0;
+      } else {
+        hour.value += 1;
+      }
+    };
+
+    const subMinute = () => {
+      if (minute.value > 0) {
+        minute.value -= 1;
+      } else {
+        minute.value = 59;
+      }
+    };
+
+    const addMinute = () => {
+      if (minute.value === 59) {
+        minute.value = 0;
+      } else {
+        minute.value += 1;
+      }
+    };
+
     return {
       input,
       currentYear,
       currentMonth,
       currentMonthName,
+      currentHour,
+      currentMinute,
+      hour,
+      minute,
       weeks,
       weekDays,
       select,
@@ -222,8 +349,21 @@ export default {
       nextMonth,
       prevYear,
       prevMonth,
-      setToday
+      setToday,
+      subHour,
+      addHour,
+      subMinute,
+      addMinute
     };
   }
 };
 </script>
+
+<style scoped>
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+</style>
