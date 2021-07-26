@@ -317,7 +317,7 @@ export default {
       if (props.time) {
         date.value = d;
       } else {
-        emit('update:modelValue', d.format(d, 'L'));
+        emit('update:modelValue', d.format('L'));
         // Without time inputs, close the popover when a date is clicked
         input.value.focus();
       }
