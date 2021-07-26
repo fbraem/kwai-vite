@@ -244,6 +244,8 @@ export default {
         } else {
           date.value = dayjs(props.modelValue, format);
         }
+        if (!date.value.isValid())
+          date.value = dayjs();
       }
     });
 
