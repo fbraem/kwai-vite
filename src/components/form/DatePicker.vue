@@ -319,7 +319,7 @@ export default {
 
     const clickDate = (d) => {
       if (props.time) {
-        date.value = d;
+        date.value = d.hour(currentHour.value).minute(currentMinute.value);
       } else {
         emit('update:modelValue', d.format('L'));
         // Without time inputs, close the popover when a date is clicked
