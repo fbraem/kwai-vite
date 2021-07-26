@@ -80,12 +80,15 @@
                   v-for="day in week"
                   :key="day"
                   class="text-center text-sm"
-                  :class="{ 'text-gray-400': day.outsideCurrentMonth }"
+                  :class="{
+                    'text-gray-400': day.outsideCurrentMonth,
+                    'bg-blue-400': day.date.isSame(date, 'day')
+                  }"
                 >
                   <a
                     v-if="!day.outsideCurrentMonth"
                     class="hover:cursor-pointer"
-                    @click="select(day.date)"
+                    @click="clickDate(day.date)"
                   >
                     {{ day.format }}
                   </a>
@@ -104,13 +107,16 @@
               </a>
             </div>
           </div>
-          <div class="mb-3">
+          <div
+            v-if="time"
+            class="mb-3"
+          >
             <label
               v-if="label"
               :for="id"
               class="block text-sm font-medium text-gray-700 mb-1"
             >
-              Tijdstip (HH:MM)
+              Tijdstip
             </label>
             <div class="flex flex-row space-x-2">
               <div class="relative">
@@ -124,7 +130,7 @@
                 </span>
                 <input
                   :id="id"
-                  v-model="hour"
+                  v-model="currentHour"
                   type="number"
                   placeholder="HH"
                   class="px-10 rounded text-center w-32"
@@ -152,7 +158,7 @@
                 </span>
                 <input
                   :id="id"
-                  v-model="minute"
+                  v-model="currentMinute"
                   type="number"
                   placeholder="MM"
                   class="px-10 rounded text-center"
@@ -171,6 +177,17 @@
               </div>
             </div>
           </div>
+          <div
+            v-if="time"
+            class="mb-3 flex flex-row justify-center"
+          >
+            <SubmitButton
+              class="bg-red-600 text-white"
+              @click="select"
+            >
+              Select
+            </SubmitButton>
+          </div>
         </PopoverPanel>
       </Popover>
     </div>
@@ -179,13 +196,13 @@
 
 <script>
 import { Popover, PopoverButton, PopoverPanel, PopoverOverlay } from '@headlessui/vue';
-import { now, formatDate } from '/src/common/useDayJS.js';
-import dayjs from 'dayjs';
+import dayjs from '/src/common/useDayJS.js';
 import { computed, ref, watch } from 'vue';
+import SubmitButton from '/src/components/form/SubmitButton.vue';
 
 export default {
   components: {
-    Popover, PopoverButton, PopoverPanel, PopoverOverlay
+    SubmitButton, Popover, PopoverButton, PopoverPanel, PopoverOverlay
   },
   props: {
     id: {
@@ -207,41 +224,56 @@ export default {
     error: {
       type: String,
       default: null
+    },
+    time: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     const input = ref(null);
 
-    const date = ref(now());
+    const date = ref(dayjs());
 
     watch(() => props.modelValue, (nv) => {
       if (nv) {
-        date.value = dayjs(nv, 'L LTS');
+        const format = dayjs().localeData().longDateFormat('L');
+        date.value = dayjs(props.modelValue, `${format} HH:mm`);
       }
     });
 
-    const currentYear = ref(date.value.year());
-    const currentMonth = ref(date.value.month());
-    const currentHour = ref(date.value.hour());
-    const currentMinute = ref(date.value.minute());
+    const currentYear = computed( {
+      get: () => date.value.year(),
+      set: (value) => { date.value = date.value.year(value); }
+    });
 
-    watch(
-      () => date,
-      (nv) => {
-        currentYear.value = nv.year();
-        currentMonth.value = nv.month();
-        currentHour.value = nv.hour();
-        currentMinute.value = nv.minute();
-      }
-    );
+    const currentMonth = computed({
+      get: () => date.value.month(),
+      set: (value) => { date.value = date.value.month(value); }
+    });
+
+    const currentHour = computed({
+      get: () => date.value.hour(),
+      set: (value) => { date.value = date.value.hour(value); }
+    });
+
+    const currentMinute = computed({
+      get: () => date.value.minute(),
+      set: (value) => { date.value = date.value.minute(value); }
+    });
+
+    const currentDay = computed({
+      get: () => date.value.date(),
+      set: (value) => { date.value = date.value.day(value); }
+    });
 
     const currentMonthName = computed(() => dayjs.monthsShort()[currentMonth.value]);
     const weekDays = ref(dayjs.weekdaysShort(true));
 
     const weeks = computed(() => {
       const weeks = [];
-      const start = now().year(currentYear.value).month(currentMonth.value).startOf('M');
+      const start = date.value.startOf('M');
       const dayInMonth = start.daysInMonth();
       const previousMonthDays = start.date(1).day() - 1;
       const offset = 0 - previousMonthDays;
@@ -265,12 +297,30 @@ export default {
       return weeks;
     });
 
-    const hour = ref(currentHour.value);
-    const minute = ref(currentMinute.value);
-
-    const select = (date) => {
-      emit('update:modelValue', formatDate(date, 'L'));
+    const select = () => {
+      let newDate = dayjs()
+        .year(currentYear.value)
+        .month(currentMonth.value)
+        .date(currentDay.value)
+      ;
+      if (props.time) {
+        newDate = newDate
+          .hour(currentHour.value)
+          .minute(currentMinute.value)
+        ;
+      }
+      emit('update:modelValue', newDate.format(props.time ? 'L HH:mm' : 'L'));
       input.value.focus();
+    };
+
+    const clickDate = (d) => {
+      if (props.time) {
+        date.value = d;
+      } else {
+        emit('update:modelValue', d.format(d, 'L'));
+        // Without time inputs, close the popover when a date is clicked
+        input.value.focus();
+      }
     };
 
     const nextYear = () => {
@@ -296,55 +346,57 @@ export default {
       }
     };
     const setToday = () => {
-      const currentDate = now();
+      const currentDate = dayjs();
       currentYear.value = currentDate.year();
       currentMonth.value = currentDate.month();
+      currentDay.value = currentDate.day();
     };
 
     const subHour = () => {
-      if (hour.value > 0) {
-        hour.value -= 1;
+      if (currentHour.value > 0) {
+        currentHour.value -= 1;
       } else {
-        hour.value = 23;
+        currentHour.value = 23;
       }
     };
 
     const addHour = () => {
-      if (hour.value === 23) {
-        hour.value = 0;
+      if (currentHour.value === 23) {
+        currentHour.value = 0;
       } else {
-        hour.value += 1;
+        currentHour.value += 1;
       }
     };
 
     const subMinute = () => {
-      if (minute.value > 0) {
-        minute.value -= 1;
+      if (currentMinute.value > 0) {
+        currentMinute.value -= 1;
       } else {
-        minute.value = 59;
+        currentMinute.value = 59;
       }
     };
 
     const addMinute = () => {
-      if (minute.value === 59) {
-        minute.value = 0;
+      if (currentMinute.value === 59) {
+        currentMinute.value = 0;
       } else {
-        minute.value += 1;
+        currentMinute.value += 1;
       }
     };
 
     return {
       input,
+      date,
       currentYear,
       currentMonth,
+      currentDay,
       currentMonthName,
       currentHour,
       currentMinute,
-      hour,
-      minute,
       weeks,
       weekDays,
       select,
+      clickDate,
       nextYear,
       nextMonth,
       prevYear,
