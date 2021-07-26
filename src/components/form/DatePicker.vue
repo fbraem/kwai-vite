@@ -239,7 +239,11 @@ export default {
     watch(() => props.modelValue, (nv) => {
       if (nv) {
         const format = dayjs().localeData().longDateFormat('L');
-        date.value = dayjs(props.modelValue, `${format} HH:mm`);
+        if (props.time) {
+          date.value = dayjs(props.modelValue, `${format} HH:mm`);
+        } else {
+          date.value = dayjs(props.modelValue, format);
+        }
       }
     });
 
