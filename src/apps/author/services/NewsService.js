@@ -1,5 +1,5 @@
 import { useHttp, useHttpApi } from '/src/common/useHttp.js';
-import { dateToTimezone, formatDate } from '/src/common/useDayJS.js';
+import dayjs from '/src/common/useDayJS.js';
 
 function toModel(json) {
   const map = d => {
@@ -11,12 +11,9 @@ function toModel(json) {
       id: d.id,
       title: d.attributes.contents[0].title,
       summary: d.attributes.contents[0].summary,
-      publish_date: formatDate(
-        dateToTimezone(
-          d.attributes.publish_date,
-          d.attributes.timezone
-        ),
-        'D MMMM, YYYY'
+      publish_date: dayjs.tz(
+        d.attributes.publish_date,
+        d.attributes.timezone
       ),
       has_more: d.attributes.contents[0].content.length > 0,
       content: d.attributes.contents[0].content,
@@ -29,15 +26,15 @@ function toModel(json) {
       promotion: {
         priority: d.attributes.promotion,
         end_date: d.attributes.promotiom_end_date
-          ? dateToTimezone(d.attributes.promotion_end_date, d.attributes.timezone)
+          ? dayjs.tz(dayjs(d.attributes.promotion_end_date, 'YYYY-MM-DD HH:mm:ss'), d.attributes.timezone)
           : null
       },
       publication: {
         start_date: d.attributes.publish_date
-          ? dateToTimezone(d.attributes.publish_date, d.attributes.timezone)
+          ? dayjs.tz(dayjs(d.attributes.publish_date, 'YYYY-MM-DD HH:mm:ss'), d.attributes.timezone)
           : null,
         end_date: d.attributes.end_date
-          ? dateToTimezone(d.attributes.end_date, d.attributes.timezone)
+          ? dayjs.tz(dayjs(d.attributes.end_date, 'YYYY-MM-DD HH:mm:ss'), d.attributes.timezone)
           : null
       }
     };
