@@ -65,7 +65,7 @@
             bij een eiddatum.
           </p>
         </template>
-        <div class="flex flex-row justify-between w-full">
+        <div class="flex flex-row justify-between">
           <DatePicker
             id="publication_date"
             v-model="publicationDate"
@@ -75,7 +75,7 @@
             :placeholder="`Datum in formaat ${dateFormat}`"
           />
         </div>
-        <div class="flex flex-row justify-between w-full">
+        <div class="flex flex-row justify-between">
           <DatePicker
             id="publication_end_date"
             v-model="publicationEndDate"
@@ -101,7 +101,7 @@
           label="Prioriteit"
           :error="errors['promotionPriority']"
         />
-        <div class="flex flex-row justify-between w-full">
+        <div class="flex flex-row justify-between">
           <DatePicker
             id="promotion_end_date"
             v-model="promotionEndDate"
