@@ -72,6 +72,7 @@
             label="Start Publicatie"
             :error="errors['publicationDate']"
             :time="true"
+            :placeholder="`Datum in formaat ${dateFormat}`"
           />
         </div>
         <div class="flex flex-row justify-between w-full">
@@ -81,6 +82,7 @@
             label="Einde Publicatie"
             :error="errors['publicationEndDate']"
             :time="true"
+            :placeholder="`Datum in formaat ${dateFormat}`"
           />
         </div>
       </Form>
@@ -105,6 +107,7 @@
             v-model="promotionEndDate"
             label="Einddatum"
             :error="errors['promotionEndDate']"
+            :placeholder="`Datum in formaat ${dateFormat}`"
           />
         </div>
       </Form>
@@ -216,10 +219,10 @@ export default {
     const validationSchema = yup.object({
       title: yup.string().required('Dit is een verplicht veld'),
       publicationDate: yup.date().format(dateFormat)
-          .typeError('Ongeldige datum (formaat DD-MM-YYYY HH:mm)')
+          .typeError(`Ongeldige datum (formaat ${dateFormat})`)
           .nullable(),
       publicationEndDate: yup.date().format(dateFormat)
-          .typeError('Ongeldige datum (formaat DD-MM-YYYY HH:mm)')
+          .typeError(`Ongeldige datum (formaat ${dateFormat})`)
           .nullable()
           .when('publicationDate', (publicationDate, schema) => {
             return schema.test(
@@ -280,7 +283,8 @@ export default {
       publicationEndDate,
       promotionPriority,
       promotionEndDate,
-      errors: useFormErrors()
+      errors: useFormErrors(),
+      dateFormat
     };
   }
 };
