@@ -232,7 +232,22 @@ export default {
                   return true;
                 }
             );
-        })
+        }),
+      promotionEndDate: yup.date().format(dateFormat)
+          .typeError(`Ongeldige datum (formaat ${dateFormat})`)
+          .nullable()
+          .when('publicationDate', (publicationDate, schema) => {
+            return schema.test(
+                'date-after',
+                'Datum moet na publicatiedatum vallen',
+                (value) => {
+                  if (publicationDate instanceof Date && value instanceof Date) {
+                    return dayjs(value).isAfter(dayjs(publicationDate))
+                  }
+                  return true;
+                }
+            );
+          })
     });
     const { handleSubmit, isSubmitting } = useForm({
       validationSchema
