@@ -112,6 +112,10 @@
         </div>
       </Form>
       <Form
+        title="Opmerking"
+        class="p-3"
+      />
+      <Form
         title=""
         class="p-3"
       >
@@ -157,7 +161,7 @@ import { computed, watch } from 'vue';
 import * as yup from 'yup';
 import dayjs from '/src/common/useDayJS.js';
 
-yup.addMethod(yup.date, "format", function (format) {
+yup.addMethod(yup.date, 'format', function(format) {
   return this.transform(function(value, original) {
     if (original === '') return null;
 
@@ -192,7 +196,9 @@ export default {
       return [];
     });
 
-    const { story, reload } = useNewsStory(props.id);
+    const dateFormat = dayjs().localeData().longDateFormat('L') + ' HH:mm';
+
+    const { story } = useNewsStory(props.id);
     watch(
       story,
       (nv) => {
@@ -204,53 +210,52 @@ export default {
         promotionPriority.value = nv.promotion.priority;
         promotionEndDate.value = nv.promotion.end_date;
         promotionEndDate.value = nv.promotion.end_date
-          ? nv.promotion.end_date.format('L HH:MM')
+          ? nv.promotion.end_date.format(dateFormat)
           : '';
         publicationDate.value = nv.publication.start_date
-          ? nv.publication.start_date.format('L HH:MM')
+          ? nv.publication.start_date.format(dateFormat)
           : '';
         publicationEndDate.value = nv.publication.end_date
-          ? nv.publication.end_date.format('L HH:MM')
+          ? nv.publication.end_date.format(dateFormat)
           : '';
       }
     );
 
-    const dateFormat = dayjs().localeData().longDateFormat('L') + ' HH:mm';
     const validationSchema = yup.object({
       title: yup.string().required('Dit is een verplicht veld'),
       publicationDate: yup.date().format(dateFormat)
-          .typeError(`Ongeldige datum (formaat ${dateFormat})`)
-          .nullable(),
+        .typeError(`Ongeldige datum (formaat ${dateFormat})`)
+        .nullable(),
       publicationEndDate: yup.date().format(dateFormat)
-          .typeError(`Ongeldige datum (formaat ${dateFormat})`)
-          .nullable()
-          .when('publicationDate', (publicationDate, schema) => {
-            return schema.test(
-                'date-after',
-                'Datum moet na publicatiedatum vallen',
-                (value) => {
-                  if (publicationDate instanceof Date && value instanceof Date) {
-                    return dayjs(value).isAfter(dayjs(publicationDate))
-                  }
-                  return true;
-                }
-            );
+        .typeError(`Ongeldige datum (formaat ${dateFormat})`)
+        .nullable()
+        .when('publicationDate', (publicationDate, schema) => {
+          return schema.test(
+            'date-after',
+            'Datum moet na publicatiedatum vallen',
+            (value) => {
+              if (publicationDate instanceof Date && value instanceof Date) {
+                return dayjs(value).isAfter(dayjs(publicationDate));
+              }
+              return true;
+            }
+          );
         }),
       promotionEndDate: yup.date().format(dateFormat)
-          .typeError(`Ongeldige datum (formaat ${dateFormat})`)
-          .nullable()
-          .when('publicationDate', (publicationDate, schema) => {
-            return schema.test(
-                'date-after',
-                'Datum moet na publicatiedatum vallen',
-                (value) => {
-                  if (publicationDate instanceof Date && value instanceof Date) {
-                    return dayjs(value).isAfter(dayjs(publicationDate))
-                  }
-                  return true;
-                }
-            );
-          })
+        .typeError(`Ongeldige datum (formaat ${dateFormat})`)
+        .nullable()
+        .when('publicationDate', (publicationDate, schema) => {
+          return schema.test(
+            'date-after',
+            'Datum moet na publicatiedatum vallen',
+            (value) => {
+              if (publicationDate instanceof Date && value instanceof Date) {
+                return dayjs(value).isAfter(dayjs(publicationDate));
+              }
+              return true;
+            }
+          );
+        })
     });
     const { handleSubmit, isSubmitting } = useForm({
       validationSchema
