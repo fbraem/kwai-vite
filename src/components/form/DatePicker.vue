@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-3">
+  <div class="w-full">
     <label
       v-if="label"
       :for="id"
