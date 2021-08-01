@@ -62,7 +62,7 @@
         <template #description>
           <p class="mt-1 text-sm text-gray-700">
             Wanneer moet het bericht gepubliceerd worden? Het bericht zal automatisch verdwijnen
-            bij een eiddatum.
+            bij een einddatum.
           </p>
         </template>
         <div class="flex flex-row justify-between">
