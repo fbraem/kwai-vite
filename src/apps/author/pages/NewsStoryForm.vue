@@ -19,7 +19,7 @@
         <InputField
           id="title"
           v-model="title"
-          :error="titleError"
+          :error="errors['title']"
           placeholder="titel"
           type="text"
           label="Titel"
@@ -27,14 +27,14 @@
         <TextArea
           id="summary"
           v-model="summary"
-          :error="summaryError"
+          :error="errors['summary']"
           placeholder="Samenvatting"
           label="Samenvatting"
         />
         <TextArea
           id="summary"
           v-model="content"
-          :error="contentError"
+          :error="errors['content']"
           placeholder="Tekst"
           label="Tekst"
         />
@@ -51,7 +51,7 @@
         <Select
           id="application"
           v-model="application"
-          :error="applicationError"
+          :error="errors['application']"
           :options="newsApplications"
         />
       </Form>
@@ -69,22 +69,20 @@
           <DatePicker
             id="publication_date"
             v-model="publicationDate"
-            label="Publicatiedatum"
-            :error="publicationDateError"
-          />
-          <TimePicker
-            id="publication_time"
-            v-model="publicationTime"
-            label="Tijdstip"
-            :error="publicationTimeError"
+            label="Start Publicatie"
+            :error="errors['publicationDate']"
+            :time="true"
           />
         </div>
-        <DatePicker
-          id="publication_end_date"
-          v-model="publicationEndDate"
-          label="Publicatie Einddatum"
-          :error="publicationEndDateError"
-        />
+        <div class="flex flex-row justify-between w-full">
+          <DatePicker
+            id="publication_end_date"
+            v-model="publicationEndDate"
+            label="Einde Publicatie"
+            :error="errors['publicationEndDate']"
+            :time="true"
+          />
+        </div>
       </Form>
       <Form
         title="Promotie"
@@ -99,14 +97,16 @@
           id="promotion_priority"
           v-model="promotionPriority"
           label="Prioriteit"
-          :error="promotionPriorityError"
+          :error="errors['promotionPriority']"
         />
-        <DatePicker
-          id="promotion_end_date"
-          v-model="promotionEndDate"
-          label="Einddatum"
-          :error="promotionEndDateError"
-        />
+        <div class="flex flex-row justify-between w-full">
+          <DatePicker
+            id="promotion_end_date"
+            v-model="promotionEndDate"
+            label="Einddatum"
+            :error="errors['promotionEndDate']"
+          />
+        </div>
       </Form>
       <Form
         title=""
@@ -146,16 +146,28 @@ import CheckBox from '/src/components/form/CheckBox.vue';
 import Select from '/src/components/form/Select.vue';
 import Range from '/src/components/form/Range.vue';
 import DatePicker from '/src/components/form/DatePicker.vue';
-import TimePicker from '/src/components/form/TimePicker.vue';
 
 import useApplications from '/src/apps/author/composables/useApplications.js';
 import useNewsStory from '/src/apps/author/composables/useNewsStory.js';
-import { useField, useForm } from 'vee-validate';
+import { useField, useForm, useFormErrors } from 'vee-validate';
 import { computed, watch } from 'vue';
-import { formatDate } from '/src/common/useDayJS.js';
+import * as yup from 'yup';
+import dayjs from '/src/common/useDayJS.js';
+
+yup.addMethod(yup.date, "format", function (format) {
+  return this.transform(function(value, original) {
+    if (original === '') return null;
+
+    const d = dayjs(original, format, true);
+    if (d.isValid()) {
+      return d.toDate();
+    }
+    return original;
+  });
+});
 
 export default {
-  components: { TimePicker, DatePicker, Range, Select, CheckBox, SubmitButton, TextArea, InputField, Header, Form },
+  components: { DatePicker, Range, Select, CheckBox, SubmitButton, TextArea, InputField, Header, Form },
   props: {
     id: {
       type: String,
@@ -164,10 +176,6 @@ export default {
     }
   },
   setup(props) {
-    const { handleSubmit, isSubmitting } = useForm();
-    const submitForm = handleSubmit(async(values) => {
-    });
-
     const { applications } = useApplications();
     const newsApplications = computed(() => {
       if (applications.value) {
@@ -193,95 +201,71 @@ export default {
         promotionPriority.value = nv.promotion.priority;
         promotionEndDate.value = nv.promotion.end_date;
         promotionEndDate.value = nv.promotion.end_date
-          ? formatDate(nv.promotion.end_date, 'L')
+          ? nv.promotion.end_date.format('L HH:MM')
           : '';
         publicationDate.value = nv.publication.start_date
-          ? formatDate(nv.publication.start_date, 'L')
-          : '';
-        publicationTime.value = nv.publication.start_date
-          ? formatDate(nv.publication.start_date, 'HH:MM')
+          ? nv.publication.start_date.format('L HH:MM')
           : '';
         publicationEndDate.value = nv.publication.end_date
-          ? formatDate(nv.publication.end_date, 'L')
+          ? nv.publication.end_date.format('L HH:MM')
           : '';
       }
     );
 
-    const {
-      value: title,
-      errorMessage: titleError
-    } = useField('title');
+    const dateFormat = dayjs().localeData().longDateFormat('L') + ' HH:mm';
+    const validationSchema = yup.object({
+      title: yup.string().required('Dit is een verplicht veld'),
+      publicationDate: yup.date().format(dateFormat)
+          .typeError('Ongeldige datum (formaat DD-MM-YYYY HH:mm)')
+          .nullable(),
+      publicationEndDate: yup.date().format(dateFormat)
+          .typeError('Ongeldige datum (formaat DD-MM-YYYY HH:mm)')
+          .nullable()
+          .when('publicationDate', (publicationDate, schema) => {
+            return schema.test(
+                'date-after',
+                'Datum moet na publicatiedatum vallen',
+                (value) => {
+                  if (publicationDate instanceof Date && value instanceof Date) {
+                    return dayjs(value).isAfter(dayjs(publicationDate))
+                  }
+                  return true;
+                }
+            );
+        })
+    });
+    const { handleSubmit, isSubmitting } = useForm({
+      validationSchema
+    });
+    const submitForm = handleSubmit(async(values) => {
+      console.log(values);
+    });
 
-    const {
-      value: summary,
-      errorMessage: summaryError
-    } = useField('summary');
-
-    const {
-      value: content,
-      errorMessage: contentError
-    } = useField('content');
-
-    const {
-      value: active,
-      errorMessage: activeError
-    } = useField('active');
-
-    const {
-      value: application,
-      errorMessage: applicationError
-    } = useField('application');
-
-    const {
-      value: publicationDate,
-      errorMessage: publicationDateError
-    } = useField('publication_date');
-
-    const {
-      value: publicationTime,
-      errorMessage: publicationTimeError
-    } = useField('publication_time');
-
-    const {
-      value: publicationEndDate,
-      errorMessage: publicationEndDateError
-    } = useField('publication_enddate');
-
-    const {
-      value: promotionPriority,
-      errorMessage: promotionPriorityError
-    } = useField('promotion_priority');
-
-    const {
-      value: promotionEndDate,
-      errorMessage: promotionEndDateError
-    } = useField('promotion_end_date');
+    const { value: title } = useField('title');
+    const { value: summary } = useField('summary');
+    const { value: content } = useField('content');
+    const { value: active } = useField('active');
+    const { value: application } = useField('application');
+    const { value: publicationDate } = useField('publicationDate');
+    const { value: publicationEndDate } = useField('publicationEndDate');
+    const { value: promotionPriority } = useField('promotionPriority');
+    const { value: promotionEndDate } = useField('promotionEndDate');
 
     return {
       handleSubmit,
       isSubmitting,
       submitForm,
       title,
-      titleError,
       summary,
-      summaryError,
       content,
-      contentError,
       active,
-      activeError,
       application,
-      applicationError,
       newsApplications,
       publicationDate,
-      publicationDateError,
-      publicationTime,
-      publicationTimeError,
       publicationEndDate,
-      publicationEndDateError,
       promotionPriority,
-      promotionPriorityError,
       promotionEndDate,
-      promotionEndDateError
+      errors: useFormErrors()
     };
   }
 };
