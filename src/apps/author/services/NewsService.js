@@ -36,7 +36,8 @@ function toModel(json) {
         end_date: d.attributes.end_date
           ? dayjs.tz(dayjs(d.attributes.end_date, 'YYYY-MM-DD HH:mm:ss'), d.attributes.timezone)
           : null
-      }
+      },
+      remark: d.attributes.remark
     };
   };
   if (Array.isArray(json.data)) {
@@ -78,7 +79,50 @@ const get = id => {
   ;
 };
 
+const save = story => {
+  const payload = {
+    data: {
+      type: 'stories',
+      attributes: {
+        enabled: story.enabled,
+        promotion: story.promotion.priority,
+        timezone: dayjs.tz.guess(),
+        publish_date: story.publication.start_date.utc().format('YYYY-MM-DD HH:mm:ss'),
+        end_date: story.publication.end_date?.utc().format('YYYY-MM-DD HH:mm'),
+        promotion_end_date: story.promotion.end_date?.utc().format('YYYY-MM-DD HH:mm:ss'),
+        remark: story.remark,
+        contents: [
+          {
+            locale: 'nl',
+            format: 'md',
+            title: story.title,
+            summary: story.summary,
+            content: story.content
+          }
+        ]
+      },
+      relationships: {
+        application: {
+          data: {
+            type: 'applications',
+            id: story.application.id
+          }
+        }
+      }
+    }
+  };
+  let api = useHttpApi.url('/news/stories');
+  if (story.id) {
+    payload.data.id = story.id;
+    api = api.url(`/${story.id}`);
+  }
+  api = api.json(payload);
+  return (story.id ? api.patch() : api.post())
+    .json((json) => toModel(json));
+};
+
 export const useNewsService = () => ({
   load,
-  get
+  get,
+  save
 });
