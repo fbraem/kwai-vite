@@ -114,7 +114,21 @@
       <Form
         title="Opmerking"
         class="p-3"
-      />
+      >
+        <template #description>
+          <p class="mt-1 text-sm text-gray-600">
+            Een opmerking voor dit nieuwsbericht. Een opmerking is niet
+            zichtbaar voor een bezoeker.
+          </p>
+        </template>
+        <TextArea
+          id="remark"
+          v-model="remark"
+          :error="errors['remark']"
+          placeholder="Geef een opmerking in"
+          label="Opmerking"
+        />
+      </Form>
       <Form
         title=""
         class="p-3"
@@ -160,6 +174,7 @@ import { useField, useForm, useFormErrors } from 'vee-validate';
 import { computed, watch } from 'vue';
 import * as yup from 'yup';
 import dayjs from '/src/common/useDayJS.js';
+import { useNewsService } from '/src/apps/author/services/NewsService.js';
 
 yup.addMethod(yup.date, 'format', function(format) {
   return this.transform(function(value, original) {
@@ -218,6 +233,7 @@ export default {
         publicationEndDate.value = nv.publication.end_date
           ? nv.publication.end_date.format(dateFormat)
           : '';
+        remark.value = nv.remark;
       }
     );
 
@@ -261,7 +277,23 @@ export default {
       validationSchema
     });
     const submitForm = handleSubmit(async(values) => {
-      console.log(values);
+      const { save } = useNewsService();
+      story.value.enabled = values.active === true;
+      story.value.promotion = {
+        priority: values.promotionPriority,
+        end_date: values.promotionEndDate.length === 0 ? null : dayjs(values.promotionEndDate, dateFormat)
+      };
+      story.value.publication = {
+        start_date: values.publicationDate.length === 0 ? null : dayjs(values.publicationDate, dateFormat),
+        end_date: values.publicationEndDate.length === 0 ? null : dayjs(values.publicationEndDate, dateFormat)
+      };
+      story.value.remark = values.remark;
+      story.value.title = values.title;
+      story.value.content = values.content;
+      story.value.summary = values.summary;
+      story.value.application.id = values.application;
+      const newStory = await save(story.value);
+      console.log(newStory);
     });
 
     const { value: title } = useField('title');
@@ -273,6 +305,7 @@ export default {
     const { value: publicationEndDate } = useField('publicationEndDate');
     const { value: promotionPriority } = useField('promotionPriority');
     const { value: promotionEndDate } = useField('promotionEndDate');
+    const { value: remark } = useField('remark');
 
     return {
       handleSubmit,
@@ -288,6 +321,7 @@ export default {
       publicationEndDate,
       promotionPriority,
       promotionEndDate,
+      remark,
       errors: useFormErrors(),
       dateFormat
     };
