@@ -48,7 +48,7 @@
                 {{ story.title }}
               </span>
               <i
-                v-if="story.promotion"
+                v-if="story.promotion.priority > 0"
                 class="ml-2 fas fa-bullhorn text-gray-500"
               />
             </td>
