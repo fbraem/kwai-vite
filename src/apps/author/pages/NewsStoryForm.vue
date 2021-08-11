@@ -134,8 +134,8 @@
         class="p-3"
       >
         <CheckBox
-          id="active"
-          v-model="active"
+          id="enabled"
+          v-model="enabled"
           label="Actief"
           color="text-yellow-400"
         >
@@ -151,6 +151,12 @@
           >
             <i class="fas fa-save fa-fw" /> Bewaar
           </SubmitButton>
+        </div>
+        <div
+          v-if="Object.keys(errors).length > 0"
+          class="text-sm text-red-600"
+        >
+          Gelieve alle foutief ingevulde velden te corrigeren.
         </div>
       </Form>
     </div>
@@ -171,7 +177,8 @@ import DatePicker from '/src/components/form/DatePicker.vue';
 import useApplications from '/src/apps/author/composables/useApplications.js';
 import useNewsStory from '/src/apps/author/composables/useNewsStory.js';
 import { useField, useForm, useFormErrors } from 'vee-validate';
-import { computed, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import * as yup from 'yup';
 import dayjs from '/src/common/useDayJS.js';
 import { useNewsService } from '/src/apps/author/services/NewsService.js';
@@ -213,14 +220,14 @@ export default {
 
     const dateFormat = dayjs().localeData().longDateFormat('L') + ' HH:mm';
 
-    const { story } = useNewsStory(props.id);
+    const { story } = props.id ? useNewsStory(props.id) : { story: ref({ }) };
     watch(
       story,
       (nv) => {
         title.value = nv.title;
         summary.value = nv.summary;
         content.value = nv.content;
-        active.value = nv.active;
+        enabled.value = nv.enabled;
         application.value = nv.application.id;
         promotionPriority.value = nv.promotion.priority;
         promotionEndDate.value = nv.promotion.end_date;
@@ -239,9 +246,11 @@ export default {
 
     const validationSchema = yup.object({
       title: yup.string().required('Dit is een verplicht veld'),
+      summary: yup.string().required('Dit is een verplicht veld'),
+      application: yup.number().required('Dit is een verplicht veld'),
       publicationDate: yup.date().format(dateFormat)
         .typeError(`Ongeldige datum (formaat ${dateFormat})`)
-        .nullable(),
+        .required('Dit is een verplicht veld'),
       publicationEndDate: yup.date().format(dateFormat)
         .typeError(`Ongeldige datum (formaat ${dateFormat})`)
         .nullable()
@@ -274,32 +283,42 @@ export default {
         })
     });
     const { handleSubmit, isSubmitting } = useForm({
-      validationSchema
+      validationSchema,
+      initialValues: {
+        publicationDate: dayjs().format(dateFormat)
+      }
     });
+
+    const router = useRouter();
+
     const submitForm = handleSubmit(async(values) => {
       const { save } = useNewsService();
-      story.value.enabled = values.active === true;
+      story.value.enabled = values.enabled === true;
       story.value.promotion = {
         priority: values.promotionPriority,
-        end_date: values.promotionEndDate.length === 0 ? null : dayjs(values.promotionEndDate, dateFormat)
+        end_date: values.promotionEndDate?.length ? dayjs(values.promotionEndDate, dateFormat) : null
       };
       story.value.publication = {
-        start_date: values.publicationDate.length === 0 ? null : dayjs(values.publicationDate, dateFormat),
-        end_date: values.publicationEndDate.length === 0 ? null : dayjs(values.publicationEndDate, dateFormat)
+        start_date: values.publicationDate?.length ? dayjs(values.publicationDate, dateFormat) : null,
+        end_date: values.publicationEndDate?.length ? dayjs(values.publicationEndDate, dateFormat) : null
       };
       story.value.remark = values.remark;
       story.value.title = values.title;
       story.value.content = values.content;
       story.value.summary = values.summary;
-      story.value.application.id = values.application;
-      const newStory = await save(story.value);
-      console.log(newStory);
+      story.value.application = {
+        id: values.application
+      };
+
+      await save(story.value);
+
+      router.back();
     });
 
     const { value: title } = useField('title');
     const { value: summary } = useField('summary');
     const { value: content } = useField('content');
-    const { value: active } = useField('active');
+    const { value: enabled } = useField('enabled');
     const { value: application } = useField('application');
     const { value: publicationDate } = useField('publicationDate');
     const { value: publicationEndDate } = useField('publicationEndDate');
@@ -314,7 +333,7 @@ export default {
       title,
       summary,
       content,
-      active,
+      enabled,
       application,
       newsApplications,
       publicationDate,
