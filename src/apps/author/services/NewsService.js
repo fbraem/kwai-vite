@@ -15,7 +15,7 @@ function toModel(json) {
         d.attributes.publish_date,
         d.attributes.timezone
       ),
-      has_more: d.attributes.contents[0].content.length > 0,
+      has_more: d.attributes.contents[0].content && d.attributes.contents[0].content.length > 0,
       content: d.attributes.contents[0].content,
       application: {
         id: application.id,
@@ -25,7 +25,7 @@ function toModel(json) {
       enabled: d.attributes.enabled,
       promotion: {
         priority: d.attributes.promotion,
-        end_date: d.attributes.promotiom_end_date
+        end_date: d.attributes.promotion_end_date
           ? dayjs.tz(dayjs(d.attributes.promotion_end_date, 'YYYY-MM-DD HH:mm:ss'), d.attributes.timezone)
           : null
       },
@@ -87,7 +87,7 @@ const save = story => {
         enabled: story.enabled,
         promotion: story.promotion.priority,
         timezone: dayjs.tz.guess(),
-        publish_date: story.publication.start_date.utc().format('YYYY-MM-DD HH:mm:ss'),
+        publish_date: story.publication.start_date?.utc().format('YYYY-MM-DD HH:mm:ss'),
         end_date: story.publication.end_date?.utc().format('YYYY-MM-DD HH:mm'),
         promotion_end_date: story.promotion.end_date?.utc().format('YYYY-MM-DD HH:mm:ss'),
         remark: story.remark,
