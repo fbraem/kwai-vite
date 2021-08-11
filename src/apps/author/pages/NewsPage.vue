@@ -1,8 +1,18 @@
 <template>
   <div class="container mx-auto p-4">
-    <h1 class="text-3xl font-medium">
-      Nieuws
-    </h1>
+    <div class="flex flex-row justify-between">
+      <h1 class="text-3xl font-medium">
+        Nieuws
+      </h1>
+      <div>
+        <ButtonLink
+          class="bg-yellow-300"
+          :route="{ name: 'author.news.create' }"
+        >
+          <i class="fas fa-plus mr-2" />Nieuw
+        </ButtonLink>
+      </div>
+    </div>
     <div class="flex flex-wrap -mx-6 my-3">
       <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
         <StatCard
@@ -87,9 +97,10 @@ import usePagination from '/src/composables/usePagination.js';
 import Paginator from '/src/components/Paginator.vue';
 import StatCard from '/src/components/StatCard.vue';
 import { ref } from 'vue';
+import ButtonLink from '/src/components/ButtonLink.vue';
 
 export default {
-  components: { StatCard, Paginator },
+  components: { ButtonLink, StatCard, Paginator },
   setup() {
     const limit = ref(10);
     const count = ref(0);
