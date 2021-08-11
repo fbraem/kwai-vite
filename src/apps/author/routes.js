@@ -60,6 +60,14 @@ export default [
         meta: {
           title: 'Nieuwsbericht'
         }
+      },
+      {
+        name: 'author.news.create',
+        path: '/news/create',
+        component: NewsStoryForm,
+        meta: {
+          title: 'Nieuwsbericht'
+        }
       }
     ]
   },
