@@ -27,7 +27,7 @@
     </p>
     <p
       class="mb-4 text-base font-normal text-gray-600"
-      v-html="story.summary"
+      v-html="story.html_summary"
     />
     <ButtonLink
       class="bg-red-700 text-white"
