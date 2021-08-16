@@ -20,7 +20,7 @@ function toModel(json) {
         ),
         'D MMMM, YYYY'
       ),
-      has_more: d.attributes.contents[0].html_content.length > 0,
+      has_more: d.attributes.contents[0].html_content?.length,
       html_content: d.attributes.contents[0].html_content,
       content: d.attributes.contents[0].content,
       application: {
