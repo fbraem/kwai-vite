@@ -73,7 +73,7 @@
             </span>
             <span
               v-else-if="page === currentPage"
-              class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-bold text-gray-700"
+              class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-extrabold text-gray-700"
             >
               {{ page }}
             </span>
