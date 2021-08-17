@@ -144,14 +144,20 @@ export default {
 
     watch(
       () => route.query[props.pageParameter],
-      () => { currentPage.value = parseInt(route.query[props.pageParameter], 10) || 1; }
+      (nv) => {
+        if (nv) {
+          currentPage.value = parseInt(nv, 10);
+        }
+      }
     );
 
     const offset = computed(() => (currentPage.value - 1) * props.limit);
 
     const from = computed(() => offset.value + 1);
     const to = computed(
-      () => offset.value + props.limit < props.count ? offset.value + props.limit : props.count
+      () => offset.value + props.limit < props.count
+        ? offset.value + props.limit
+        : props.count
     );
 
     const pages = computed(() => {
