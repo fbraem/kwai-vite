@@ -19,7 +19,7 @@
         </div>
         <div class="mx-auto w-full">
           <div
-            v-if="application_id && application"
+            v-if="applicationId && application"
             class="mb-5"
           >
             <h1 class="text-2xl md:text-4xl pt-3 font-extrabold mb-2">
@@ -58,10 +58,9 @@
           >
             <StoryListItem :story="story" />
           </div>
-          <Paginator
-            v-if="pagination.pageCount.value > 0"
+          <RoutePagination
             class="mt-10 bg-white"
-            :pagination="pagination"
+            :count="count"
             previous_text="Vorige"
             next_text="Volgende"
           >
@@ -74,7 +73,7 @@
                 <span class="font-medium">{{ count }}</span>.
               </p>
             </template>
-          </Paginator>
+          </RoutePagination>
         </div>
         <div class="sm:hidden bg-gray-200 p-3 mt-5 w-full rounded-lg">
           <NewsArchive />
@@ -88,21 +87,21 @@
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import NewsArchive from '/@theme/apps/portal/components/NewsArchive.vue';
-import Paginator from '/src/components/Paginator.vue';
 import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
 import Spinner from '/src/components/Spinner.vue';
 import useNews from '/src/apps/portal/composables/useNews.js';
-import usePagination from '/src/composables/usePagination.js';
 import { months } from '/src/common/useDayJS.js';
 import useApplication from '/src/apps/portal/composables/useApplication.js';
-import { computed, ref, toRefs } from 'vue';
+import { computed, ref, toRefs, watch } from 'vue';
+import RoutePagination from '/src/components/RoutePagination.vue';
+import { useRoute } from 'vue-router';
 
 export default {
   components: {
+    RoutePagination,
     StoryListItem,
     Layout,
     NewsArchive,
-    Paginator,
     Spinner
   },
   props: {
@@ -114,7 +113,7 @@ export default {
       type: Number,
       default: 0
     },
-    application_id: {
+    applicationId: {
       type: Number,
       default: null
     }
@@ -123,19 +122,30 @@ export default {
     const limit = ref(10);
     const count = ref(0);
 
-    const pagination = usePagination({
-      limit, count
-    });
+    const route = useRoute();
+    if (!route.query.page) {
+      route.query.page = '1';
+    }
+
+    const offset = ref((parseInt(route.query.page, 10) - 1) * limit.value);
+    watch(
+      () => route.query.page,
+      (nv) => {
+        if (nv) {
+          offset.value = (parseInt(nv, 10) - 1) * limit.value;
+        }
+      }
+    );
 
     const input = toRefs(props);
     const { news, error, loading } = useNews({
       ...input,
       limit,
       count,
-      offset: pagination.offset
+      offset
     });
 
-    const { application } = useApplication({ id: input.application_id });
+    const { application } = useApplication({ id: input.applicationId });
 
     const archive = computed(() => {
       if (props.year) {
@@ -152,8 +162,9 @@ export default {
       error,
       loading,
       archive,
-      pagination,
-      application
+      application,
+      count,
+      offset
     };
   }
 };
