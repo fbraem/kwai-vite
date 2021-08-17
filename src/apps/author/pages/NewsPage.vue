@@ -84,35 +84,41 @@
         </tbody>
       </table>
     </div>
-    <Paginator
-      :pagination="pagination"
-      class="bg-white mt-2"
-    />
+    <RoutePagination :count="count" />
   </div>
 </template>
 
 <script>
 import useNews from '/src/apps/author/composables/useNews.js';
-import usePagination from '/src/composables/usePagination.js';
-import Paginator from '/src/components/Paginator.vue';
 import StatCard from '/src/components/StatCard.vue';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
+import RoutePagination from '/src/components/RoutePagination.vue';
+import { useRoute } from 'vue-router';
 
 export default {
-  components: { ButtonLink, StatCard, Paginator },
+  components: { RoutePagination, ButtonLink, StatCard },
   setup() {
     const limit = ref(10);
     const count = ref(0);
-    const pagination = usePagination({
-      limit, count
-    });
-    const { news: stories } = useNews({ limit, count, offset: pagination.offset });
+
+    const route = useRoute();
+    const offset = ref((parseInt(route.query.page ?? '1', 10) - 1) * limit.value);
+    watch(
+      () => route.query.page,
+      (nv) => {
+        if (nv) {
+          offset.value = (parseInt(nv, 10) - 1) * limit.value;
+        }
+      }
+    );
+
+    const { news: stories } = useNews({ limit, count, offset });
 
     return {
       stories,
       count,
-      pagination
+      offset
     };
   }
 };
