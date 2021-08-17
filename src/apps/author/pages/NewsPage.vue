@@ -103,7 +103,10 @@ export default {
     const count = ref(0);
 
     const route = useRoute();
-    const offset = ref((parseInt(route.query.page ?? '1', 10) - 1) * limit.value);
+    if (!route.query.page) {
+      route.query.page = '1';
+    }
+    const offset = ref((parseInt(route.query.page, 10) - 1) * limit.value);
     watch(
       () => route.query.page,
       (nv) => {
