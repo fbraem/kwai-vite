@@ -5,6 +5,7 @@
       <SidebarNavigationItem route-name="author.home" />
       <SidebarNavigationItem route-name="author.applications" />
       <SidebarNavigationItem route-name="author.news" />
+      <SidebarNavigationItem route-name="author.articles" />
     </SidebarNavigation>
   </Sidebar>
 </template>
