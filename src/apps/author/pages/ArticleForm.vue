@@ -23,7 +23,7 @@
 import Header from '/@theme/components/Header.vue';
 import Form from '/src/components/form/Form.vue';
 import { useArticle } from '/src/apps/author/composables/useArticle.js';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import useApplications from '../composables/useApplications.js';
 
 export default {
