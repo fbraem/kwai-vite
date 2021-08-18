@@ -7,6 +7,8 @@ import ApplicationsPage from '/src/apps/author/pages/ApplicationsPage.vue';
 import ApplicationForm from '/src/apps/author/pages/ApplicationForm.vue';
 import LoginPage from '/@theme/pages/LoginPage.vue';
 import NewsStoryForm from '/src/apps/author/pages/NewsStoryForm.vue';
+import ArticlesPage from '/src/apps/author/pages/ArticlesPage.vue';
+import ArticleForm from '/src/apps/author/pages/ArticleForm.vue';
 
 export default [
   {
@@ -67,6 +69,31 @@ export default [
         component: NewsStoryForm,
         meta: {
           title: 'Nieuwsbericht'
+        }
+      },
+      {
+        name: 'author.articles',
+        path: '/articles',
+        component: ArticlesPage,
+        meta: {
+          title: 'Artikels'
+        }
+      },
+      {
+        name: 'author.articles.edit',
+        path: '/articles/edit/:id(\\d+)',
+        props: true,
+        component: ArticleForm,
+        meta: {
+          title: 'Nieuwsbericht'
+        }
+      },
+      {
+        name: 'author.articles.create',
+        path: '/articles/create',
+        component: ArticleForm,
+        meta: {
+          title: 'Artikels'
         }
       }
     ]
