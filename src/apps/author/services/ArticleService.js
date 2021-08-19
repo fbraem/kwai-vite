@@ -1,4 +1,4 @@
-import { useHttp, useHttpAuth } from '/src/common/useHttp.js';
+import { useHttpApi } from '/src/common/useHttp.js';
 
 function toModel(json) {
   const map = d => {
@@ -30,7 +30,7 @@ function toModel(json) {
 }
 
 const get = id => {
-  return useHttpAuth
+  return useHttpApi
     .url(`/pages/${id}`)
     .get()
     .json((json) => toModel(json))
@@ -42,8 +42,9 @@ const load = ({
   limit = 10,
   application = 0
 } = {}) => {
-  let api = useHttpAuth
+  let api = useHttpApi
     .url('/pages')
+    .query({ 'filter[enabled]': false })
   ;
 
   if (offset > 0) {
@@ -59,7 +60,48 @@ const load = ({
   return api.get().json(json => toModel(json));
 };
 
+const save = article => {
+  const payload = {
+    data: {
+      type: 'pages',
+      attributes: {
+        enabled: article.enabled,
+        remark: article.remark,
+        contents: [
+          {
+            locale: 'nl',
+            format: 'md',
+            title: article.title,
+            summary: article.summary,
+            content: article.content
+          }
+        ]
+      },
+      relationships: {
+        application: {
+          data: {
+            type: 'applications',
+            id: article.application.id
+          }
+        }
+      }
+    }
+  };
+
+  let api = useHttpApi.url('/pages');
+  if (article.id) {
+    payload.data.id = article.id;
+    api = api.url(`/${article.id}`);
+  }
+  api = api.json(payload);
+
+  return (article.id ? api.patch() : api.post())
+    .json(json => toModel(json))
+  ;
+};
+
 export const useArticleService = () => ({
   get,
-  load
+  load,
+  save
 });
