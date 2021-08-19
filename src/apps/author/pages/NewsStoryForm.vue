@@ -32,7 +32,7 @@
           label="Samenvatting"
         />
         <TextArea
-          id="summary"
+          id="content"
           v-model="content"
           :error="errors['content']"
           placeholder="Tekst"
