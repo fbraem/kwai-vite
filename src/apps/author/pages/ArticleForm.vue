@@ -118,15 +118,14 @@ import TextArea from '/src/components/form/TextArea.vue';
 import Select from '/src/components/form/Select.vue';
 import CheckBox from '/src/components/form/CheckBox.vue';
 import SubmitButton from '/src/components/form/SubmitButton.vue';
-
 import { useArticle } from '/src/apps/author/composables/useArticle.js';
 import { useField, useForm, useFormErrors } from 'vee-validate';
 import { computed, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import * as yup from 'yup';
-import dayjs from '../../../common/useDayJS.js';
-import useApplications from '../composables/useApplications.js';
-import { useArticleService } from '../services/ArticleService.js';
+import dayjs from '/src/common/useDayJS.js';
+import useApplications from '/src/apps/author/composables/useApplications.js';
+import { useArticleService } from '/src/apps/author/services/ArticleService.js';
 
 export default {
   components: { Header, Form, InputField, TextArea, Select, CheckBox, SubmitButton },
