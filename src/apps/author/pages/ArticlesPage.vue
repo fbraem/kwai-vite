@@ -25,7 +25,7 @@
               {{ count }}
             </h4>
             <div class="text-gray-500">
-              Berichten
+              Artikels
             </div>
           </div>
         </StatCard>
