@@ -153,7 +153,7 @@ export default {
 
     const dateFormat = dayjs().localeData().longDateFormat('L') + ' HH:mm';
 
-    const { article } = props.id ? useArticle(props.id) : { page: ref({}) };
+    const { article } = props.id ? useArticle(props.id) : { article: ref({}) };
     watch(
       article,
       (nv) => {
