@@ -1,7 +1,5 @@
 <template>
-  <Card
-      :title="application.title"
-  >
+  <IconCard :title="application.title">
     <CoverLink
       v-if="route"
       :route="route"
@@ -9,23 +7,25 @@
     <p class="mt-2 mb-4 text-gray-600">
       {{ application.short_description }}
     </p>
-  </Card>
+  </IconCard>
 </template>
 
 <script>
-import Card from '/src/components/Card.vue'
+import IconCard from '/src/components/IconCard.vue';
 import CoverLink from '/src/components/CoverLink.vue';
 
 export default {
-  components: { CoverLink, Card},
+  components: { CoverLink, IconCard },
   props: {
     application: {
       type: Object,
       required: true
     },
     route: {
-      required: false
+      type: Object,
+      required: false,
+      default: null
     }
   }
-}
+};
 </script>

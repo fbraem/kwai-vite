@@ -89,7 +89,7 @@
             v-for="(board, index) in information_boards"
             :key="index"
           >
-            <Card
+            <IconCard
               class="h-full"
               :title="board.title"
               :class="board['bg-color'] + ' ' + (board['text-color'] ?? 'text-white')"
@@ -105,7 +105,7 @@
                   <div v-html="board.text" />
                 </div>
               </div>
-            </Card>
+            </IconCard>
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@
 
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
-import Card from '/src/components/Card.vue';
+import IconCard from '/src/components/IconCard.vue';
 import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
 import Hero from '/@theme/apps/portal/components/Hero.vue';
 import ApplicationCard from '/@theme/apps/portal/components/ApplicationCard.vue';
@@ -135,7 +135,7 @@ export default {
     ApplicationCard,
     Layout,
     Hero,
-    Card
+    IconCard
   },
   setup() {
     const { application: newsApplication } = useApplication({ name: 'news' });
