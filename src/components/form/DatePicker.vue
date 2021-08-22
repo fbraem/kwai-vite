@@ -250,12 +250,13 @@ export default {
         } else {
           date.value = dayjs(props.modelValue, format);
         }
-        if (!date.value.isValid())
+        if (!date.value.isValid()) {
           date.value = dayjs();
+        }
       }
     });
 
-    const currentYear = computed( {
+    const currentYear = computed({
       get: () => date.value.year(),
       set: (value) => { date.value = date.value.year(value); }
     });
