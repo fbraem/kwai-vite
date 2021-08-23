@@ -7,7 +7,10 @@
     </div>
     <div class="w-full md:w-1/2">
       <ul>
-        <li v-for="team in training.teams">
+        <li
+          v-for="team in training.teams"
+          :key="team.id"
+        >
           <div>{{ team.name }}</div>
         </li>
       </ul>
