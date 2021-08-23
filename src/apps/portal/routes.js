@@ -4,6 +4,7 @@ import LoginPage from '/@theme/pages/LoginPage.vue';
 import NewsPage from '/@theme/apps/portal/pages/NewsPage.vue';
 import StoryPage from '/@theme/apps/portal/pages/StoryPage.vue';
 import TrainingsPage from '/@theme/apps/portal/pages/TrainingsPage.vue';
+import EventsPage from '/@theme/apps/portal/pages/EventsPage.vue';
 
 import Sidebar from '/@theme/apps/portal/components/PortalSidebar.vue';
 import Toolbar from '/@theme/apps/portal/components/Toolbar.vue';
@@ -77,6 +78,25 @@ export default [
         meta: {
           title: 'Trainingen',
           application: 'trainings'
+        }
+      },
+      {
+        name: 'portal.events',
+        path: '/events/:year(\\d+)?/:month(\\d+)?',
+        component: EventsPage,
+        props: route => {
+          const props = {};
+          if (route.params.year) {
+            props.year = parseInt(route.params.year);
+          }
+          if (route.params.month) {
+            props.month = parseInt(route.params.month);
+          }
+          return props;
+        },
+        meta: {
+          title: 'Activiteiten',
+          application: 'events'
         }
       },
       ...extraRoutes
