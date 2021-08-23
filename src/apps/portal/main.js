@@ -1,6 +1,10 @@
+/* eslint-disable import/first */
 import { createApp } from 'vue';
 import App from '/src/App.vue';
 const app = createApp(App);
+
+import { createPinia } from 'pinia';
+app.use(createPinia());
 
 import { abilitiesPlugin } from '@casl/vue';
 import { ability } from '/src/common/useAuthentication.js';
