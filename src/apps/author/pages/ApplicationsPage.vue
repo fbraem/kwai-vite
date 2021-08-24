@@ -25,19 +25,19 @@
           <div class="flex space-x-2">
             <Badge
               v-if="application.has_news"
-              class="bg-gray-200 text-gray-700"
+              class="bg-gray-200 text-gray-700 text-sm font-bold"
             >
               #News
             </Badge>
             <Badge
               v-if="application.has_pages"
-              class="bg-gray-200 text-gray-700"
+              class="bg-gray-200 text-gray-700 text-sm font-bold"
             >
               #Pages
             </Badge>
             <Badge
               v-if="application.has_events"
-              class="bg-gray-200 text-gray-700"
+              class="bg-gray-200 text-gray-700 text-sm font-bold"
             >
               #Events
             </Badge>

@@ -36,7 +36,9 @@
                 {{ month.name }} {{ month.year }}
               </div>
               <div class="flex-none">
-                <Badge class="bg-red-600 text-white align-middle">{{ month.count }}</Badge>
+                <Badge class="bg-red-600 text-sm font-bold text-white align-middle">
+                  {{ month.count }}
+                </Badge>
               </div>
             </div>
           </slot>
