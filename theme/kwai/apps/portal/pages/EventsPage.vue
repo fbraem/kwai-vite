@@ -90,7 +90,9 @@
                   </div>
                   <div class="sm:order-last flex flex-wrap space-x-1 sm:ml-2">
                     <div>
-                      <Badge class="bg-red-600 text-white font-bold text-xs">#Training</Badge>
+                      <Badge class="bg-red-600 text-white font-bold text-xs">
+                        #Training
+                      </Badge>
                     </div>
                   </div>
                   <div class="font-bold">
@@ -114,7 +116,6 @@
 
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
-import Header from '/@theme/components/Header.vue';
 import useEvents from '/src/apps/portal/composables/useEvents.js';
 import dayjs from 'dayjs';
 import { computed } from 'vue';
@@ -125,8 +126,7 @@ export default {
   components: {
     ButtonLink,
     Badge,
-    Layout,
-    Header
+    Layout
   },
   props: {
     year: {
