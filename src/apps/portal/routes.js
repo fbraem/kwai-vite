@@ -95,7 +95,7 @@ export default [
           return props;
         },
         meta: {
-          title: 'Activiteiten',
+          title: 'Kalender',
           application: 'events'
         }
       },
