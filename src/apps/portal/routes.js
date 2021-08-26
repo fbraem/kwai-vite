@@ -82,18 +82,8 @@ export default [
       },
       {
         name: 'portal.events',
-        path: '/events/:year(\\d+)?/:month(\\d+)?',
+        path: '/events',
         component: EventsPage,
-        props: route => {
-          const props = {};
-          if (route.params.year) {
-            props.year = parseInt(route.params.year);
-          }
-          if (route.params.month) {
-            props.month = parseInt(route.params.month);
-          }
-          return props;
-        },
         meta: {
           title: 'Kalender',
           application: 'events'

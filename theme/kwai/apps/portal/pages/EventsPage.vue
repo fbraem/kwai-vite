@@ -9,7 +9,7 @@
           <div>
             <ButtonLink
               class="bg-red-600 text-white"
-              :route="{ name: 'portal.events', params: { ...previous } }"
+              :route="previous"
             >
               <i class="fa fa-angle-left sm:mr-2" />
               <span class="hidden sm:inline">
@@ -23,7 +23,7 @@
           <div>
             <ButtonLink
               class="bg-red-600 text-white"
-              :route="{ name: 'portal.events', params: { ...next } }"
+              :route="next"
             >
               <span class="hidden sm:inline">
                 Volgende maand
@@ -121,6 +121,7 @@ import dayjs from 'dayjs';
 import { computed } from 'vue';
 import Badge from '/src/components/Badge.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
+import { useRoute } from 'vue-router';
 
 export default {
   components: {
@@ -128,60 +129,74 @@ export default {
     Badge,
     Layout
   },
-  props: {
-    year: {
-      type: Number,
-      default: () => dayjs().year()
-    },
-    month: {
-      type: Number,
-      default: () => dayjs().month() + 1
+  setup() {
+    const route = useRoute();
+    if (!route.query.year) {
+      route.query.year = dayjs().year().toString();
     }
-  },
-  setup(props) {
-    const previous = computed(() => {
-      if (props.month === 1) {
-        return {
-          month: 12,
-          year: props.year - 1
-        };
+    if (!route.query.month) {
+      route.query.month = (dayjs().month() + 1).toString();
+    }
+
+    const year = computed(() => {
+      const queryYear = parseInt(route.query.year, 10);
+      if (isNaN(queryYear)) {
+        return dayjs().year();
       }
-      return {
-        month: props.month - 1,
-        year: props.year
+      return queryYear;
+    });
+
+    const month = computed(() => {
+      const queryMonth = parseInt(route.query.month, 10);
+      if (isNaN(queryMonth)) {
+        return dayjs().month() + 1;
+      }
+      return queryMonth;
+    });
+
+    const previous = computed(() => {
+      const query = {
+        ...route.query
       };
+      if (month.value === 1) {
+        query.month = '12';
+        query.year = (year.value - 1).toString();
+      } else {
+        query.month = (month.value - 1).toString();
+      }
+      return { query };
     });
 
     const next = computed(() => {
-      if (props.month === 12) {
-        return {
-          month: 1,
-          year: props.year + 1
-        };
-      }
-      return {
-        month: props.month + 1,
-        year: props.year
+      const query = {
+        ...route.query
       };
+      if (month.value === 12) {
+        query.month = '1';
+        query.year = (year.value + 1).toString();
+      } else {
+        query.month = (month.value + 1).toString();
+      }
+      return { query };
     });
 
     const start = computed(() =>
-      dayjs().year(props.year).month(props.month - 1).startOf('month')
+      dayjs().year(year.value).month(month.value - 1).startOf('month')
     );
     const end = computed(() =>
-      dayjs().year(props.year).month(props.month - 1).endOf('month')
+      dayjs().year(year.value).month(month.value - 1).endOf('month')
     );
 
     const { store, load } = useEvents();
     load({ start, end });
 
-    const monthName = computed(() => dayjs.months()[props.month - 1]);
+    const monthName = computed(() => dayjs.months()[month.value - 1]);
 
     const days = computed(() => {
       const numberOfDays = start.value.daysInMonth();
       const days = [];
       for (let i = 1; i <= numberOfDays; i++) {
-        const date = dayjs().date(i).month(props.month - 1).year(props.year);
+        const date = dayjs().date(i).month(month.value - 1).year(year.value);
         days.push({
           day: i,
           date: date.format('L'),
@@ -197,7 +212,8 @@ export default {
       previous,
       next,
       monthName,
-      days
+      days,
+      year
     };
   }
 };
