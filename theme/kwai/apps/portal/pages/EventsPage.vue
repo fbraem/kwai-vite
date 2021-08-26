@@ -1,7 +1,9 @@
 <template>
-  <Layout image="">
+  <Layout image="/assets/portal/events.jpg">
     <template #title>
-      Activiteiten
+      <h1 class="text-white font-semibold text-4xl mb-2">
+        Kalender
+      </h1>
     </template>
     <section class="bg-gray-200 py-4 sm:py-8 px-4 sm:px-12">
       <div class="mb-4">
@@ -59,14 +61,14 @@
         <div
           v-for="(date, index) in days"
           :key="index"
-          class="grid grid-cols-8 grid-flow-row p-2 sm:p-4"
+          class="grid grid-cols-8 sm:grid-cols-12 grid-flow-row py-2 sm:p-4"
         >
           <div>
             <div class="text-center font-bold bg-red-600 text-white w-8 p-1 sm:w-10 sm:p-2">
               {{ date.day }}
             </div>
           </div>
-          <div class="col-span-7 px-2">
+          <div class="col-span-7 sm:col-span-11 px-2">
             <h1 class="text-xs sm:text-sm mb-3">
               {{ date.formatted }}
             </h1>
@@ -77,7 +79,7 @@
               Geen activiteiten
             </div>
           </div>
-          <div class="col-span-8">
+          <div class="col-start-2 col-span-7 sm:col-start-2 sm:col-span-11">
             <div class="divide-y divide-gray-300 divide-dotted">
               <div
                 v-for="event in date.events"
