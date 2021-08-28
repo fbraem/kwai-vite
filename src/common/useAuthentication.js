@@ -1,4 +1,5 @@
-import { Ability } from '@casl/ability';
+import { useAbility } from '/src/common/useAbility.js';
+
 import Lockr from 'lockr';
 import { computed, ref } from 'vue';
 import { useUserService } from '/src/apps/portal/services/UserService.js';
@@ -14,7 +15,7 @@ const userRules = ref(Lockr.get(USER_RULES_KEYS, []));
 const accessToken = ref(Lockr.get(ACCESS_TOKEN_KEY, null));
 const refreshToken = ref(Lockr.get(REFRESH_TOKEN_KEY, null));
 
-export const ability = new Ability();
+const ability = useAbility();
 ability.update(userRules.value);
 
 export default function useAuthentication() {

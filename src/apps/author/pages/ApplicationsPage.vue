@@ -44,7 +44,7 @@
           </div>
           <div>
             <IconRoundLink
-              v-if="canEdit"
+              v-if="can('edit', 'applications')"
               :route="{ name: 'author.applications.edit', params: { id: application.id } }"
               icon="fas fa-edit"
             />
@@ -60,17 +60,17 @@ import useApplications from '/src/apps/author/composables/useApplications.js';
 import Header from '/@theme/components/Header.vue';
 import Badge from '/src/components/Badge.vue';
 import IconRoundLink from '/src/components/IconRoundLink.vue';
-import { ability } from '/src/common/useAuthentication.js';
-import { ref } from 'vue';
+import { useAbility } from '/src/common/useAbility.js';
 
 export default {
   components: { IconRoundLink, Badge, Header },
   setup() {
-    const canEdit = ref(ability.can('edit', 'Application'));
+    const ability = useAbility();
+    const can = ability.can.bind(ability);
 
     return {
       ...useApplications(),
-      canEdit
+      can
     };
   }
 };

@@ -55,7 +55,6 @@
 
 <script>
 import SubmitButton from '/src/components/form/SubmitButton.vue';
-import { useAbility } from '@casl/vue';
 import { useField, useForm } from 'vee-validate';
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -122,8 +121,6 @@ export default {
       yup.string().required('Dit is een verplicht veld')
     );
 
-    const ability = useAbility();
-
     return {
       email,
       emailError,
@@ -131,8 +128,7 @@ export default {
       passwordError,
       submitForm,
       isSubmitting,
-      loginError,
-      ability
+      loginError
     };
   }
 };
