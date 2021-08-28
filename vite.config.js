@@ -20,7 +20,8 @@ export default ({ mode }) => {
       rollupOptions: {
         input: {
           main: resolve(__dirname, 'index.html'),
-          author: resolve(__dirname, 'author.html')
+          author: resolve(__dirname, 'author.html'),
+          coach: resolve(__dirname, 'coach.html')
         }
       }
     }
