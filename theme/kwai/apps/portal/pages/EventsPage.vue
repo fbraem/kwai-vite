@@ -119,7 +119,7 @@
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import useEvents from '/src/apps/portal/composables/useEvents.js';
-import dayjs from 'dayjs';
+import dayjs from '/src/common/useDayJS.js';
 import { computed } from 'vue';
 import Badge from '/src/components/Badge.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';

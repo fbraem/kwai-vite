@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from '/src/common/useDayJS.js';
 import { defineStore } from 'pinia';
 import { useHttp } from '/src/common/useHttp.js';
 import useState from '/src/composables/useState.js';
