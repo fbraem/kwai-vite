@@ -29,6 +29,7 @@ const useStore = defineStore('events', {
         }
         return {
           id: d.id,
+          type: d.type,
           title: d.attributes.contents[0].title,
           summary: d.attributes.contents[0].summary,
           location: d.attributes.event.location,
