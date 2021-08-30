@@ -62,7 +62,8 @@ const load = (store) => ({ start, end } = {}) => {
         .query({ 'filter[start]': formattedStart.value })
         .query({ 'filter[end]': formattedEnd.value })
         .get()
-        .json((json) => store.setData(json))
+        .json()
+        .then((json) => store.setData(json))
   );
 
   return {
