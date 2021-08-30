@@ -31,7 +31,7 @@ const useStore = defineStore('events', {
           id: d.id,
           type: d.type,
           title: d.attributes.contents[0].title,
-          summary: d.attributes.contents[0].summary,
+          summary: d.attributes.contents[0].html_summary,
           location: d.attributes.event.location,
           start_date: dayjs.tz(d.attributes.event.start_date, 'YYYY-MM-DD HH:mm:ss', d.attributes.event.time_zone),
           end_date: dayjs.tz(d.attributes.event.end_date, 'YYYY-MM-DD HH:mm:ss', d.attributes.event.time_zone),
