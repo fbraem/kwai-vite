@@ -1,7 +1,9 @@
 <template>
   <Sidebar>
     <SidebarLogo />
-    <SidebarNavigation />
+    <SidebarNavigation>
+      <SidebarNavigationItem route-name="coach.home" />
+    </SidebarNavigation>
   </Sidebar>
 </template>
 
@@ -9,8 +11,9 @@
 import Sidebar from '/src/components/sidebar/Sidebar.vue';
 import SidebarLogo from '/@theme/components/SidebarLogo.vue';
 import SidebarNavigation from '/@theme/components/SidebarNavigation.vue';
+import SidebarNavigationItem from '/@theme/components/SidebarNavigationItem.vue';
 
 export default {
-  components: { SidebarNavigation, SidebarLogo, Sidebar }
+  components: { SidebarNavigationItem, SidebarNavigation, SidebarLogo, Sidebar }
 };
 </script>
