@@ -2,27 +2,32 @@ import { defineStore } from 'pinia';
 import useState from '/src/composables/useState.js';
 import { useHttpApi } from '/src/common/useHttp.js';
 
+const toCoachModel = (data) => {
+  return {
+    type: data.type,
+    id: data.id,
+    active: data.attributes.active,
+    bio: data.attributes.bio,
+    diploma: data.attributes.diploma,
+    name: data.attributes.name,
+    remark: data.attributes.remark,
+    owner: data.attributes.owner
+  };
+};
+
 const useStore = defineStore('coaches', {
   state: () => ({
     count: 0,
-    coaches: []
+    coaches: [],
+    coach: null
   }),
   actions: {
     setCoaches(json) {
       this.count = json.meta.count;
-      const map = (d) => {
-        return {
-          type: d.type,
-          id: d.id,
-          active: d.attributes.active,
-          bio: d.attributes.bio,
-          diploma: d.attributes.diploma,
-          name: d.attributes.name,
-          remark: d.attributes.remark,
-          owner: d.attributes.owner
-        };
-      };
-      this.coaches = json.data.map(map);
+      this.coaches = json.data.map(data => toCoachModel(data));
+    },
+    setCoach(json) {
+      this.coach = toCoachModel(json.data);
     }
   }
 });
@@ -33,9 +38,31 @@ const load = (store) => () => {
     () => useHttpApi
       .url('/coaches')
       .get()
-      .json(json => store.setCoaches(json))
+      .json()
+      .then(json => {
+        store.setCoaches(json);
+        return json;
+      })
   );
 
+  return {
+    loading,
+    error
+  };
+};
+
+const get = (store) => (id) => {
+  const { loading, error } = useState(
+    `/coach/${id}`,
+    () => useHttpApi
+      .url(`/coaches/${id}`)
+      .get()
+      .json()
+      .then(json => {
+        store.setCoach(json);
+        return json;
+      })
+  );
   return {
     loading,
     error
@@ -46,6 +73,7 @@ export default function useCoaches() {
   const store = useStore();
   return {
     store,
-    load: load(store)
+    load: load(store),
+    get: get(store)
   };
 }
