@@ -19,7 +19,8 @@ module.exports = {
     extend: {
       margin: ['hover'],
       cursor: ['hover', 'focus'],
-      borderRadius: ['hover', 'focus']
+      borderRadius: ['hover', 'focus'],
+      backgroundColor: ['odd']
     }
   },
   plugins: [
