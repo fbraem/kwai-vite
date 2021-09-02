@@ -4,7 +4,7 @@
       <h1 class="text-white font-semibold text-4xl mb-2">
         Coaches
       </h1>
-      <p>
+      <p class="text-white">
         De coaches van onze club.
       </p>
     </template>
@@ -37,13 +37,11 @@
           </div>
         </div>
         <div
-          class="border-t border-gray-200 mt-2 pt-4 flex flex-row justify-end space-x-2"
+          class="border-t border-gray-200 mt-2 pt-4 flex flex-row items-center justify-end space-x-2"
         >
-          <i class="fas fa-calendar text-gray-600" />
-          <i
-            v-if="can('edit', coach)"
-            class="fas fa-edit text-gray-600"
-          />
+          <router-link :to="{ name: 'coach.detail', params: { id: coach.id }}">
+            <i class="far fa-id-card text-gray-600" />
+          </router-link>
         </div>
       </div>
     </section>
@@ -65,17 +63,18 @@ export default {
     const { loading, error } = load();
 
     const customAbility = defineAbility((can) => {
-      can('edit', 'coaches', { owner: true });
+      can('update', 'coaches', { owner: true });
     });
     const ability = useAbility();
     ability.update(ability.rules.concat(customAbility.rules));
-    const can = ability.can.bind(ability);
+
+    const canUpdate = (coach) => ability.can('update', coach);
 
     return {
       store,
       loading,
       error,
-      can
+      canUpdate
     };
   }
 };
