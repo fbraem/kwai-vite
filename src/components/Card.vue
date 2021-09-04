@@ -6,7 +6,7 @@
       </div>
       <p
         v-if="shortDescription"
-        class="text-sm"
+        class="text-sm text-gray-500"
       >
         {{ shortDescription }}
       </p>
