@@ -1,18 +1,14 @@
 <template>
-  <Layout image="">
-    <template #title>
-      <h1 class="text-white font-semibold text-4xl mb-2">
-        Coaches
-      </h1>
-      <p class="text-white">
-        De coaches van onze club.
-      </p>
-    </template>
-    <section class="container mx-auto bg-gray-200 py-8 px-4 sm:px-12 grid grid-cols-1 sm:grid-cols-2 gap-8 justify-items-center">
-      <div
+  <section class="container mx-auto py-12 px-4 sm:px-12">
+    <Header>
+      Coaches van onze club.
+    </Header>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <Card
         v-for="coach in store.coaches"
         :key="coach.id"
-        class="h-full flex flex-col justify-center w-full p-6 shadow-md rounded-xl bg-white relative"
+        :title="coach.name"
+        :short-description="coach.diploma"
       >
         <i
           v-if="!coach.active"
@@ -23,41 +19,34 @@
           alt="Profile face"
           class="w-32 h-32 mx-auto rounded-full"
         >
-        <div class="space-y-4 text-center flex-grow">
-          <div class="my-2 space-y-1">
-            <h2 class="text-xl font-semibold sm:text-2xl">
-              {{ coach.name }}
-            </h2>
-            <p class="px-5 text-xs sm:text-base text-gray-600">
-              {{ coach.diploma }}
-            </p>
-          </div>
-          <div class="flex justify-center pt-2 space-x-4 align-center text-sm">
-            {{ coach.bio }}
-          </div>
+        <div class="flex justify-center pt-2 space-x-4 align-center text-sm">
+          {{ coach.bio }}
         </div>
-        <div
-          class="border-t border-gray-200 mt-2 pt-4 flex flex-row items-center justify-end space-x-2"
-        >
-          <router-link :to="{ name: 'coach.detail', params: { id: coach.id }}">
-            <i class="far fa-id-card text-gray-600" />
-          </router-link>
-        </div>
-      </div>
-    </section>
-  </Layout>
+        <template #footer>
+          <div class="flex w-full justify-end">
+            <ButtonLink
+              class="bg-yellow-500"
+              :route="{ name: 'coach.detail', params: { id: coach.id }}"
+            >
+              <i class="far fa-id-card mr-1" /> Coach
+            </ButtonLink>
+          </div>
+        </template>
+      </Card>
+    </div>
+  </section>
 </template>
 
 <script>
-import Layout from '/@theme/layouts/LandingLayout.vue';
 import useCoaches from '/src/apps/coach/composables/useCoaches.js';
 import { defineAbility } from '@casl/ability';
 import { useAbility } from '/src/common/useAbility.js';
+import Header from '/@theme/components/Header.vue';
+import Card from '/src/components/Card.vue';
+import ButtonLink from '/src/components/ButtonLink.vue';
 
 export default {
-  components: {
-    Layout
-  },
+  components: { ButtonLink, Card, Header },
   setup() {
     const { store, load } = useCoaches();
     const { loading, error } = load();
