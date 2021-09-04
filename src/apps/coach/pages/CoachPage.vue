@@ -1,30 +1,27 @@
 <template>
-  <Layout image="">
-    <template
+  <div>
+    <section
       v-if="coachStore.coach && !coachLoading"
-      #title
+      class="container mx-auto py-8 px-4 sm:px-12 max-w-4xl"
     >
-      <h1 class="text-white font-semibold text-4xl mb-2">
-        {{ coachStore.coach.name }}
-      </h1>
-      <div class="text-white text-2xl">
-        {{ coachStore.coach.diploma }}
-      </div>
-      <div class="text-white text-sm mt-10">
+      <Card
+        :title="coachStore.coach.name"
+        :short-description="coachStore.coach.diploma"
+      >
         {{ coachStore.coach.bio }}
-      </div>
-    </template>
-    <section class="container mx-auto bg-gray-200 py-8 px-4 sm:px-12 max-w-4xl">
+      </Card>
+    </section>
+    <section class="container mx-auto py-8 px-4 sm:px-12 max-w-4xl bg-white my-4">
       <h1
         v-if="coachStore.coach && !coachLoading"
         class="font-semibold text-2xl mb-2"
       >
-        Trainingen {{ coachStore.coach.name }}
+        Trainingen van {{ coachStore.coach.name }}
       </h1>
       <div class="flex flex-row justify-center space-x-6 py-4">
         <div>
           <ButtonLink
-            class="bg-red-600 text-white"
+            class="bg-yellow-500"
             :route="previous"
           >
             <i class="fa fa-angle-left sm:mr-2" />
@@ -38,7 +35,7 @@
         </h2>
         <div>
           <ButtonLink
-            class="bg-red-600 text-white"
+            class="bg-yellow-500"
             :route="next"
           >
             <span class="hidden sm:inline">
@@ -50,19 +47,19 @@
       </div>
       <div
         v-if="trainingStore.count === 0"
-        class="text-center text-sm pb-4"
+        class="text-center text-sm"
       >
         Er zijn geen trainingen gepland in deze maand.
       </div>
       <div
         v-else-if="trainingStore.count === 1"
-        class="text-center text-sm pb-4"
+        class="text-center text-sm"
       >
         Er is 1 training gepland in deze maand.
       </div>
       <div
         v-else-if="trainingStore.count > 1"
-        class="text-center text-sm pb-4"
+        class="text-center text-sm"
       >
         Er zijn
         <span class="font-bold">
@@ -70,14 +67,16 @@
         </span>
         trainingen gepland in deze maand.
       </div>
-      <div
-        v-if="trainingStore.trainings.length > 0"
-        class="space-y-4"
-      >
+    </section>
+    <section
+      v-if="trainingStore.trainings.length > 0"
+      class="container mx-auto py-8 px-4 sm:px-12 max-w-4xl bg-white my-4"
+    >
+      <div class="space-y-8">
         <div
           v-for="training in trainingStore.trainings"
           :key="training.id"
-          class="bg-white shadow overflow-hidden sm:rounded-lg"
+          class="bg-gray-200 shadow overflow-hidden sm:rounded-lg"
         >
           <div class="px-4 py-5 sm:px-6">
             <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -146,19 +145,19 @@
         </div>
       </div>
     </section>
-  </Layout>
+  </div>
 </template>
 
 <script>
-import Layout from '/@theme/layouts/LandingLayout.vue';
 import useCoaches from '/src/apps/coach/composables/useCoaches.js';
 import useCoachTrainings from '/src/apps/coach/composables/useCoachTrainings.js';
 import useYearMonth from '/src/composables/useYearMonth.js';
 import ButtonLink from '/src/components/ButtonLink.vue';
 import Badge from '/src/components/Badge.vue';
+import Card from '/src/components/Card.vue';
 
 export default {
-  components: { Layout, ButtonLink, Badge },
+  components: { ButtonLink, Badge, Card },
   props: {
     id: {
       type: Number,
