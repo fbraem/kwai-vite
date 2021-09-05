@@ -188,7 +188,7 @@ export default {
   },
   setup(props) {
     const { store: coachStore, get } = useCoaches();
-    const { loading: coachLoading, coachError } = get(props.id);
+    const { loading: coachLoading, error: coachError } = get(props.id);
 
     const { year, month, monthName, previous, next, start, end } = useYearMonth();
 
