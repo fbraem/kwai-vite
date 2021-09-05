@@ -1,7 +1,11 @@
 <template>
   <div class="flex flex-col rounded bg-white overflow-hidden shadow-lg">
     <div class="p-3">
-      <div class="text-gray-900 font-bold text-lg mb-2">
+      <slot name="title"></slot>
+      <div
+        v-if="title"
+        class="text-gray-900 font-bold text-lg mb-2"
+      >
         {{ title }}
       </div>
       <p
@@ -24,7 +28,8 @@
 defineProps({
   title: {
     type: String,
-    required: true
+    required: false,
+    default: null
   },
   shortDescription: {
     type: String,
