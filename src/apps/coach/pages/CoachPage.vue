@@ -84,12 +84,12 @@
           <div class="bg-gray-300 px-4 py-5 sm:px-6">
             <div class="flex flex-row justify-between items-center">
               <h3 class="inline-flex items-end justify-between w-full sm:w-2/3 text-lg leading-6 font-medium text-gray-900">
-                <div>
+                <span class="block">
                   <span class="text-sm">
                     {{ training.start_date.format('ddd') }}
                   </span>
                   {{ training.start_date.format('L') }}
-                </div>
+                </span>
                 <span class="">{{ training.start_date.format('HH:mm') }} - {{ training.end_date.format('HH:mm') }}</span>
               </h3>
               <div
@@ -158,8 +158,7 @@
             v-if="training.summary.length > 0"
             class="bg-white px-4 py-5 sm:px-6 border-t border-gray-200"
           >
-            <dt class="text-sm font-medium text-gray-500">
-            </dt>
+            <dt class="text-sm font-medium text-gray-500" />
             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
               <div v-html="training.summary" />
             </dd>
