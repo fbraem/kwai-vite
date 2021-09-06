@@ -1,26 +1,25 @@
 <template>
-  <div>
-    <section
-      v-if="coachStore.coach && !coachLoading"
-      class="container mx-auto py-4 max-w-4xl"
+  <div class="pb-8">
+    <PageSection
+      v-if="store.coach && !coachLoading"
+      class="max-w-4xl"
     >
       <Card
-        :title="coachStore.coach.name"
-        :short-description="coachStore.coach.diploma"
-        class="mx-2"
+        :title="store.coach.name"
+        :short-description="store.coach.diploma"
       >
-        {{ coachStore.coach.bio }}
+        {{ store.coach.bio }}
       </Card>
-    </section>
-    <section class="container mx-auto max-w-4xl my-4">
-      <div class="mx-2 py-4 sm:py-8 px-4 sm:px-12 bg-white">
+    </PageSection>
+    <PageSection class="max-w-4xl">
+      <div class="sm:py-8 px-4 sm:px-12 bg-white">
         <h1
-          v-if="coachStore.coach && !coachLoading"
-          class="font-semibold text-2xl mb-2"
+          v-if="store.coach && !coachLoading"
+          class="font-semibold text-2xl"
         >
-          Trainingen van {{ coachStore.coach.name }}
+          Trainingen van {{ store.coach.name }}
         </h1>
-        <div class="flex flex-row justify-center space-x-6 py-4">
+        <div class="flex flex-row items-center space-x-6 py-4">
           <div>
             <ButtonLink
               class="bg-yellow-500"
@@ -48,36 +47,36 @@
           </div>
         </div>
         <div
-          v-if="trainingStore.count === 0"
+          v-if="store.trainingCount === 0"
           class="text-center text-sm"
         >
           Er zijn geen trainingen gepland in deze maand.
         </div>
         <div
-          v-else-if="trainingStore.count === 1"
+          v-else-if="store.trainingCount === 1"
           class="text-center text-sm"
         >
           Er is 1 training gepland in deze maand.
         </div>
         <div
-          v-else-if="trainingStore.count > 1"
+          v-else-if="store.trainingCount > 1"
           class="text-center text-sm"
         >
           Er zijn
           <span class="font-bold">
-            {{ trainingStore.count }}
+            {{ store.trainingCount }}
           </span>
           trainingen gepland in deze maand.
         </div>
       </div>
-    </section>
-    <section
-      v-if="trainingStore.trainings.length > 0"
-      class="container mx-auto max-w-4xl"
+    </PageSection>
+    <PageSection
+      v-if="store.trainings.length > 0"
+      class="max-w-4xl"
     >
-      <div class="py-4 px-4 space-y-8">
+      <div class="space-y-8">
         <div
-          v-for="training in trainingStore.trainings"
+          v-for="training in store.trainings"
           :key="training.id"
           class="shadow overflow-hidden sm:rounded-lg bg-white"
         >
@@ -96,7 +95,7 @@
                 v-if="training.cancelled"
                 class="hidden sm:block bg-red-600 text-white font-bold text-xs uppercase px-3 py-1"
               >
-                <i class="fa fa-exclamation-triangle mr-2" /> Geannulleerd
+                <i class="fa fa-exclamation-triangle mr-2" /> Geannuleerd
               </div>
             </div>
             <p class="mt-1 max-w-2xl text-sm text-gray-500">
@@ -108,7 +107,7 @@
               v-if="training.cancelled"
               class="sm:hidden bg-red-600 text-white font-bold text-xs uppercase px-3 py-1"
             >
-              <i class="fa fa-exclamation-triangle mr-2" /> Geannulleerd
+              <i class="fa fa-exclamation-triangle mr-2" /> Geannuleerd
             </div>
             <dl>
               <div
@@ -165,20 +164,20 @@
           </div>
         </div>
       </div>
-    </section>
+    </PageSection>
   </div>
 </template>
 
 <script>
-import useCoaches from '/src/apps/coach/composables/useCoaches.js';
-import useCoachTrainings from '/src/apps/coach/composables/useCoachTrainings.js';
+import { useCoachStore } from '/src/apps/coach/stores/coachStore.js';
 import useYearMonth from '/src/composables/useYearMonth.js';
 import ButtonLink from '/src/components/ButtonLink.vue';
 import Badge from '/src/components/Badge.vue';
 import Card from '/src/components/Card.vue';
+import PageSection from '/@theme/components/PageSection.vue';
 
 export default {
-  components: { ButtonLink, Badge, Card },
+  components: { PageSection, ButtonLink, Badge, Card },
   props: {
     id: {
       type: Number,
@@ -186,26 +185,21 @@ export default {
     }
   },
   setup(props) {
-    const { store: coachStore, get } = useCoaches();
-    const { loading: coachLoading, error: coachError } = get(props.id);
+    const store = useCoachStore();
+    const { loading: coachLoading, error: coachError } = store.get(props.id);
 
     const { year, month, monthName, previous, next, start, end } = useYearMonth();
-
-    const { store: trainingStore, load: trainingLoad } = useCoachTrainings();
-    const { load: trainingLoading, error: trainingError } = trainingLoad(props.id, { start, end });
+    store.loadTrainings(props.id, { start, end });
 
     return {
-      coachStore,
+      store,
       coachLoading,
       coachError,
       year,
       month,
       monthName,
       previous,
-      next,
-      trainingStore,
-      trainingLoading,
-      trainingError
+      next
     };
   }
 };

@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import useCoaches from '/src/apps/coach/composables/useCoaches.js';
+import { useCoachStore } from '/src/apps/coach/stores/coachStore.js';
 import { defineAbility } from '@casl/ability';
 import { useAbility } from '/src/common/useAbility.js';
 import Header from '/@theme/components/Header.vue';
@@ -48,8 +48,8 @@ import ButtonLink from '/src/components/ButtonLink.vue';
 export default {
   components: { ButtonLink, Card, Header },
   setup() {
-    const { store, load } = useCoaches();
-    const { loading, error } = load();
+    const store = useCoachStore();
+    const { loading, error } = store.load();
 
     const customAbility = defineAbility((can) => {
       can('update', 'coaches', { owner: true });
