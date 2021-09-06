@@ -3,6 +3,7 @@
     <SidebarLogo />
     <SidebarNavigation>
       <SidebarNavigationItem route-name="coach.home" />
+      <SidebarNavigationItem route-name="coach.training_moments" />
     </SidebarNavigation>
   </Sidebar>
 </template>
