@@ -15,6 +15,7 @@ module.exports = {
     'import/no-absolute-path': 'off',
     semi: ['error', 'always'],
     'space-before-function-paren': ['error', 'never'],
-    'vue/script-setup-uses-vars': 'off'
+    'vue/script-setup-uses-vars': 'off',
+    'vue/no-v-html': 'off'
   }
 };
