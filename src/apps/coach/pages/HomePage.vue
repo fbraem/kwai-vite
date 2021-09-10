@@ -3,36 +3,60 @@
     <Header>
       Coaches van onze club.
     </Header>
+    <div
+      v-if="store.containsInactiveCoaches && canManage"
+      class="flex items-center justify-end py-3"
+    >
+      <div class="mr-2 text-sm">
+        Toon inactieve coaches
+      </div>
+      <Switch
+        v-model="showInactiveCoaches"
+        :class="showInactiveCoaches ? 'bg-green-500' : 'bg-red-600'"
+        class="relative inline-flex items-center h-6 rounded-full w-11"
+      >
+        <span class="sr-only">Toon inactieve coaches</span>
+        <span
+          :class="showInactiveCoaches ? 'translate-x-6' : 'translate-x-1'"
+          class="inline-block w-4 h-4 transform bg-white rounded-full"
+        />
+      </Switch>
+    </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <Card
+      <template
         v-for="coach in store.coaches"
         :key="coach.id"
-        :title="coach.name"
-        :short-description="coach.diploma"
       >
-        <i
-          v-if="!coach.active"
-          class="fa-2x fas fa-times-circle text-red-600 top-4 right-4 absolute"
-        />
-        <img
-          src="/assets/portal/no_avatar.png"
-          alt="Profile face"
-          class="w-32 h-32 mx-auto rounded-full"
+        <Card
+          v-if="showInactiveCoaches || coach.active"
+          :title="coach.name"
+          :short-description="coach.diploma"
+          class="relative"
         >
-        <div class="flex justify-center pt-2 space-x-4 align-center text-sm">
-          {{ coach.bio }}
-        </div>
-        <template #footer>
-          <div class="flex w-full justify-end">
-            <ButtonLink
-              class="bg-yellow-500"
-              :route="{ name: 'coach.detail', params: { id: coach.id }}"
-            >
-              <i class="far fa-id-card mr-1" /> Coach
-            </ButtonLink>
+          <i
+            v-if="!coach.active"
+            class="fa-2x fas fa-times-circle text-red-600 top-2 right-2 absolute"
+          />
+          <img
+            src="/assets/portal/no_avatar.png"
+            alt="Profile face"
+            class="w-32 h-32 mx-auto rounded-full"
+          >
+          <div class="flex justify-center pt-2 space-x-4 align-center text-sm">
+            {{ coach.bio }}
           </div>
-        </template>
-      </Card>
+          <template #footer>
+            <div class="flex w-full justify-end">
+              <ButtonLink
+                class="bg-yellow-500"
+                :route="{ name: 'coach.detail', params: { id: coach.id }}"
+              >
+                <i class="far fa-id-card mr-1" /> Coach
+              </ButtonLink>
+            </div>
+          </template>
+        </Card>
+      </template>
     </div>
   </section>
 </template>
@@ -44,9 +68,11 @@ import { useAbility } from '/src/common/useAbility.js';
 import Header from '/@theme/components/Header.vue';
 import Card from '/src/components/Card.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
+import { Switch } from '@headlessui/vue';
+import { ref } from 'vue';
 
 export default {
-  components: { ButtonLink, Card, Header },
+  components: { ButtonLink, Card, Header, Switch },
   setup() {
     const store = useCoachStore();
     const { loading, error } = store.load();
@@ -59,11 +85,15 @@ export default {
 
     const canUpdate = (coach) => ability.can('update', coach);
 
+    const showInactiveCoaches = ref(false);
+
     return {
       store,
       loading,
       error,
-      canUpdate
+      canUpdate,
+      canManage: ability.can('manage', 'coaches'),
+      showInactiveCoaches
     };
   }
 };
