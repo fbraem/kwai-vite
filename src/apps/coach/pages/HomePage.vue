@@ -5,7 +5,7 @@
     </Header>
     <div
       v-if="store.containsInactiveCoaches && canManage"
-      class="flex items-center justify-end py-3"
+      class="flex items-center justify-end pb-3"
     >
       <div class="mr-2 text-sm">
         Toon inactieve coaches
