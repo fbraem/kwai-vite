@@ -35,7 +35,8 @@ export const useTrainingMomentStore = defineStore('training_moments', {
     trainingCount() {
       const trainingStore = useTrainingStore();
       return trainingStore.count;
-    }
+    },
+    containsInactiveMoments: (state) => state.moments.some(m => m.active)
   },
   actions: {
     /**
