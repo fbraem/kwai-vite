@@ -1,20 +1,82 @@
 <template>
-  <PageSection>
-    {{ store.moment }}
-  </PageSection>
+  <div class="pb-8">
+    <PageSection class="max-w-4xl">
+      <Header>Trainingsmoment</Header>
+      <MomentCard
+        v-if="store.moment"
+        :moment="store.moment"
+      />
+    </PageSection>
+    <PageSection class="max-w-4xl">
+      <div class="sm:py-8 px-4 sm:px-12 bg-white">
+        <h2 class="text-center font-medium text-2xl">Trainingen voor dit trainingsmoment</h2>
+        <div class="flex flex-row items-center space-x-6 py-4">
+          <div>
+            <ButtonLink
+              class="bg-yellow-500"
+              :route="previous"
+            >
+              <i class="fa fa-angle-left sm:mr-2" />
+              <span class="hidden sm:inline">
+                Vorige maand
+              </span>
+            </ButtonLink>
+          </div>
+          <h2 class="flex-grow text-2xl lg:text-3xl font-bold uppercase text-center">
+            {{ monthName }} {{ year }}
+          </h2>
+          <div>
+            <ButtonLink
+              class="bg-yellow-500"
+              :route="next"
+            >
+              <span class="hidden sm:inline">
+                Volgende maand
+              </span>
+              <i class="fa fa-angle-right sm:ml-2" />
+            </ButtonLink>
+          </div>
+        </div>
+        <div
+          v-if="store.trainingCount === 0"
+          class="text-center text-sm"
+        >
+          Er zijn geen trainingen gepland in deze maand.
+        </div>
+        <div
+          v-else-if="store.trainingCount === 1"
+          class="text-center text-sm"
+        >
+          Er is 1 training gepland in deze maand.
+        </div>
+        <div
+          v-else-if="store.trainingCount > 1"
+          class="text-center text-sm"
+        >
+          Er zijn
+          <span class="font-bold">
+            {{ store.trainingCount }}
+          </span>
+          trainingen gepland in deze maand.
+        </div>
+      </div>
+    </PageSection>
+    <Trainings :trainings="store.trainings" />
+  </div>
 </template>
-
-<style scoped>
-</style>
 
 <script>
 import PageSection from '/@theme/components/PageSection.vue';
 import MomentCard from '/src/apps/coach/components/MomentCard.vue';
+import Trainings from '/src/apps/coach/components/Trainings.vue';
+import ButtonLink from '/src/components/ButtonLink.vue';
+import Header from '/@theme/components/Header.vue';
+
 import useYearMonth from '/src/composables/useYearMonth.js';
 import { useTrainingMomentStore } from '/src/apps/coach/stores/trainingMomentStore.js';
 
 export default {
-  components: { PageSection, MomentCard },
+  components: { Header, PageSection, MomentCard, Trainings, ButtonLink },
   props: {
     id: {
       type: Number,
@@ -26,6 +88,7 @@ export default {
     const { loading: momentLoading, error: momentError } = store.get(props.id);
 
     const { year, month, monthName, previous, next, start, end } = useYearMonth();
+    store.loadTrainings(props.id, { start, end });
 
     return {
       store,
