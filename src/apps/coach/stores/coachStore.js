@@ -35,7 +35,8 @@ export const useCoachStore = defineStore('coaches', {
     trainings() {
       const trainingStore = useTrainingStore();
       return trainingStore.trainings;
-    }
+    },
+    containsInactiveCoaches: (state) => state.coaches.some((coach) => !coach.active)
   },
   actions: {
     /**
