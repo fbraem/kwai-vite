@@ -31,6 +31,10 @@ export const useTrainingMomentStore = defineStore('training_moments', {
     trainings() {
       const trainingStore = useTrainingStore();
       return trainingStore.trainings;
+    },
+    trainingCount() {
+      const trainingStore = useTrainingStore();
+      return trainingStore.count;
     }
   },
   actions: {
@@ -86,15 +90,15 @@ export const useTrainingMomentStore = defineStore('training_moments', {
         loading,
         error
       };
+    },
+    /**
+     * Load trainings for the moment with the given id
+     *
+     * Note: This action can only be executed from setup!
+     */
+    loadTrainings(id, period) {
+      const trainingStore = useTrainingStore();
+      trainingStore.loadForMoment(id, period);
     }
-  },
-  /**
-   * Load trainings for the moment with the given id
-   *
-   * Note: This action can only be executed from setup!
-   */
-  loadTrainings(id, period) {
-    const trainingStore = useTrainingStore();
-    trainingStore.loadForMoment(id, period);
   }
 });
