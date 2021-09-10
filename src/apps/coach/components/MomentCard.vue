@@ -1,12 +1,19 @@
 <template>
   <Card>
     <template #title>
-      <h2 class="text-gray-900 font-bold text-lg mb-2">
-        {{ moment.name }}
-      </h2>
-      <p class="text-sm text-gray-600">
-        {{ weekday }} {{ moment.start_time }} - {{ moment.end_time }}
-      </p>
+      <div class="relative">
+        <h2 class="text-gray-900 font-bold text-lg mb-2">
+          {{ moment.name }}
+        </h2>
+        <p class="text-sm text-gray-600">
+          {{ weekday }} {{ moment.start_time }} - {{ moment.end_time }}
+        </p>
+        <i
+          v-if="!moment.active"
+          class="fa-2x fas fa-times-circle text-red-600 top-2 right-2 absolute"
+          title="Niet Actief"
+        />
+      </div>
     </template>
     <p>{{ moment.description }}</p>
     <template #footer>
