@@ -36,6 +36,7 @@
           <i
             v-if="!coach.active"
             class="fa-2x fas fa-times-circle text-red-600 top-2 right-2 absolute"
+            title="Niet Actief"
           />
           <img
             src="/assets/portal/no_avatar.png"
