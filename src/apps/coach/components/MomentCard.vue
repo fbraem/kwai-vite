@@ -1,5 +1,5 @@
 <template>
-  <Card class="mx-2">
+  <Card>
     <template #title>
       <h2 class="text-gray-900 font-bold text-lg mb-2">
         {{ moment.name }}
@@ -10,23 +10,25 @@
     </template>
     <p>{{ moment.description }}</p>
     <template #footer>
-      <div class="flex flex-row justify-between w-full">
+      <div class="flex flex-row flex-wrap justify-between w-full">
         <ButtonLink
+          v-if="$route.name !== 'coach.training_moment'"
           class="bg-yellow-500"
           :route="{ name: 'coach.training_moment', params: { id: moment.id } }"
         >
-          <i class="fa fa-calendar" /> Trainingen
+          <i class="fa fa-calendar mr-2" />Trainingen
         </ButtonLink>
+        <div v-else />
         <div>
           <ButtonLink
             class="bg-yellow-500"
           >
-            <i class="fa fa-edit" /> Wijzig
+            <i class="fa fa-edit mr-2" />Wijzig
           </ButtonLink>
           <ButtonLink
             class="bg-red-600 text-white"
           >
-            <i class="far fa-trash-alt" /> Verwijder
+            <i class="far fa-trash-alt mr-2" />Verwijder
           </ButtonLink>
         </div>
       </div>
@@ -55,7 +57,7 @@ export default {
 
     return {
       weekday
-    }
+    };
   }
 };
 </script>
