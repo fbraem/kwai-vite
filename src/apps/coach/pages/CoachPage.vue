@@ -12,7 +12,7 @@
       </Card>
     </PageSection>
     <PageSection class="max-w-4xl">
-      <div class="sm:py-8 px-4 sm:px-12 bg-white">
+      <div class="sm:py-8 px-4 bg-white">
         <h1
           v-if="store.coach && !coachLoading"
           class="font-semibold text-2xl"

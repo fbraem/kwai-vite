@@ -9,7 +9,7 @@
         :key="training.id"
         class="shadow overflow-hidden sm:rounded-lg bg-white"
       >
-        <div class="bg-gray-300 px-4 py-5 sm:px-6">
+        <div class="bg-gray-300 px-4 py-5">
           <div class="flex flex-row justify-between items-center">
             <h3 class="inline-flex items-end justify-between w-full sm:w-2/3 text-lg leading-6 font-medium text-gray-900">
               <span class="block">

@@ -8,8 +8,8 @@
       />
     </PageSection>
     <PageSection class="max-w-4xl">
-      <div class="sm:py-8 px-4 sm:px-12 bg-white">
-        <h2 class="text-center font-medium text-2xl">Trainingen voor dit trainingsmoment</h2>
+      <div class="sm:py-8 px-4 bg-white">
+        <h2 class="font-medium text-2xl">Trainingen voor dit trainingsmoment</h2>
         <div class="flex flex-row items-center space-x-6 py-4">
           <div>
             <ButtonLink
