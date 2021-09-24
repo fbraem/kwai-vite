@@ -35,6 +35,9 @@ export const useCoachStore = defineStore('coaches', {
     coach: null
   }),
   getters: {
+    containsMember: (state) => (memberId) => {
+      return state.coaches.findIndex(c => c.member.id === memberId) !== -1;
+    },
     trainingCount() {
       const trainingStore = useTrainingStore();
       return trainingStore.count;
