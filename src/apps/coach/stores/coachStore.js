@@ -5,16 +5,23 @@ import { useTrainingStore } from '/src/apps/coach/stores/trainingStore.js';
 import { watch } from 'vue';
 
 const toCoachModel = (json) => {
-  const map = (d) => ({
-    type: d.type,
-    id: d.id,
-    active: d.attributes.active,
-    bio: d.attributes.bio,
-    diploma: d.attributes.diploma,
-    name: d.attributes.name,
-    remark: d.attributes.remark,
-    owner: d.attributes.owner
-  });
+  const map = (d) => {
+    const member = json.included.find(
+      included => included.type === 'members' &&
+        included.id === d.relationships.member.data.id
+    );
+    return {
+      type: d.type,
+      id: d.id,
+      name: member.attributes.name,
+      member,
+      active: d.attributes.active,
+      bio: d.attributes.bio,
+      diploma: d.attributes.diploma,
+      remark: d.attributes.remark,
+      owner: d.attributes.owner
+    };
+  };
   if (Array.isArray(json.data)) {
     return json.data.map(map);
   }
@@ -98,6 +105,32 @@ export const useCoachStore = defineStore('coaches', {
         loading,
         error
       };
+    },
+    /**
+     * Saves (updates or creates) the coach
+     */
+    save(coach) {
+      const payload = {
+        data: {
+          type: 'coaches',
+          attributes: {
+            active: coach.active,
+            diploma: coach.diploma,
+            bio: coach.bio,
+            remark: coach.remark
+          }
+        }
+      };
+      let api = useHttpApi.url('/coaches');
+      if (coach.id) {
+        payload.data.id = coach.id;
+        api = api.url(`/${coach.id}`);
+      }
+      api = api.json(payload);
+      return (coach.id ? api.patch() : api.post())
+        .json()
+        .then(json => { this.coach = toCoachModel(json); })
+      ;
     }
   }
 });
