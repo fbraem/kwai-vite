@@ -6,6 +6,7 @@ import LoginPage from '/@theme/pages/LoginPage.vue';
 import CoachPage from '/src/apps/coach/pages/CoachPage.vue';
 import TrainingMomentsPage from '/src/apps/coach/pages/TrainingMomentsPage.vue';
 import TrainingMomentPage from '/src/apps/coach/pages/TrainingMomentPage.vue';
+import CoachForm from '/src/apps/coach/pages/CoachForm.vue';
 
 export default [
   {
@@ -33,6 +34,25 @@ export default [
         }),
         meta: {
           title: 'Coach'
+        }
+      },
+      {
+        name: 'coach.edit',
+        path: '/edit/:id(\\d+)',
+        component: CoachForm,
+        props: route => ({
+          id: parseInt(route.params.id)
+        }),
+        meta: {
+          title: 'Wijzig Coach'
+        }
+      },
+      {
+        name: 'coach.create',
+        path: '/create',
+        component: CoachForm,
+        meta: {
+          title: 'Maak Coach'
         }
       },
       {

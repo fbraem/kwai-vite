@@ -1,8 +1,16 @@
 <template>
-  <section class="container mx-auto py-12 px-4 sm:px-12">
-    <Header>
-      Coaches van onze club.
-    </Header>
+  <PageSection>
+    <div class="flex flex-row justify-between items-center pb-4">
+      <Header>
+        Coaches van onze club.
+      </Header>
+      <ButtonLink
+        class="bg-yellow-500"
+        :route="{ name: 'coach.create' }"
+      >
+        <i class="fas fa-plus mr-1" /> Nieuw
+      </ButtonLink>
+    </div>
     <div
       v-if="store.containsInactiveCoaches && canManage"
       class="flex items-center justify-end pb-3"
@@ -49,6 +57,13 @@
           <template #footer>
             <div class="flex w-full justify-end">
               <ButtonLink
+                v-if="canUpdate"
+                class="bg-yellow-500"
+                :route="{ name: 'coach.edit', params: { id: coach.id }}"
+              >
+                <i class="far fa-edit mr-1" /> Wijzig
+              </ButtonLink>
+              <ButtonLink
                 class="bg-yellow-500"
                 :route="{ name: 'coach.detail', params: { id: coach.id }}"
               >
@@ -59,7 +74,7 @@
         </Card>
       </template>
     </div>
-  </section>
+  </PageSection>
 </template>
 
 <script>
@@ -67,13 +82,14 @@ import { useCoachStore } from '/src/apps/coach/stores/coachStore.js';
 import { defineAbility } from '@casl/ability';
 import { useAbility } from '/src/common/useAbility.js';
 import Header from '/@theme/components/Header.vue';
+import PageSection from '/@theme/components/PageSection.vue';
 import Card from '/src/components/Card.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
 import { Switch } from '@headlessui/vue';
 import { ref } from 'vue';
 
 export default {
-  components: { ButtonLink, Card, Header, Switch },
+  components: { PageSection, ButtonLink, Card, Header, Switch },
   setup() {
     const store = useCoachStore();
     const { loading, error } = store.load();
