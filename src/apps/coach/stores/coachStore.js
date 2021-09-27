@@ -32,7 +32,8 @@ export const useCoachStore = defineStore('coaches', {
   state: () => ({
     count: 0,
     coaches: [],
-    coach: null
+    coach: null,
+    showInactive: false
   }),
   getters: {
     /**
@@ -124,6 +125,14 @@ export const useCoachStore = defineStore('coaches', {
             diploma: coach.diploma,
             bio: coach.bio,
             remark: coach.remark
+          },
+          relationships: {
+            member: {
+              data: {
+                type: 'members',
+                id: coach.member.id
+              }
+            }
           }
         }
       };
