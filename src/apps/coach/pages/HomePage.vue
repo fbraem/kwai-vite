@@ -86,7 +86,7 @@ import PageSection from '/@theme/components/PageSection.vue';
 import Card from '/src/components/Card.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
 import { Switch } from '@headlessui/vue';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 export default {
   components: { PageSection, ButtonLink, Card, Header, Switch },
@@ -102,7 +102,11 @@ export default {
 
     const canUpdate = (coach) => ability.can('update', coach);
 
-    const showInactiveCoaches = ref(false);
+    const showInactiveCoaches = ref(store.showInactive);
+    watch(
+      showInactiveCoaches,
+      (nv) => { store.showInactive = nv; }
+    );
 
     return {
       store,
