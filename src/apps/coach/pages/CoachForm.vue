@@ -163,6 +163,7 @@ export default {
       (nv) => {
         if (nv) {
           coach.value = nv;
+          member.value = nv.member.id;
           diploma.value = nv.diploma;
           bio.value = nv.bio;
           active.value = nv.active;
@@ -181,7 +182,9 @@ export default {
 
     const router = useRouter();
     const submitForm = handleSubmit(async(values) => {
-      // coach.value.member
+      if (!props.id) {
+        coach.value.member = values.member.value;
+      }
       coach.value.diploma = values.diploma;
       coach.value.bio = values.bio;
       coach.value.remark = values.remark;
