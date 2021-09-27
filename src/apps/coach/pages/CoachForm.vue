@@ -149,6 +149,7 @@ export default {
       memberStore.load();
     }
 
+    // options for autocomplete, filtering out members that are already coach.
     const members = computed(() => {
       return memberStore.members.map(m => ({
         value: m,
