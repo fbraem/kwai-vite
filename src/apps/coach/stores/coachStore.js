@@ -35,6 +35,9 @@ export const useCoachStore = defineStore('coaches', {
     coach: null
   }),
   getters: {
+    /**
+     * Returns true when for the given member a coach can be found in the list.
+     */
     containsMember: (state) => (memberId) => {
       return state.coaches.findIndex(c => c.member.id === memberId) !== -1;
     },
