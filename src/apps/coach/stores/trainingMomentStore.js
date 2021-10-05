@@ -5,16 +5,25 @@ import { useHttpApi } from '/src/common/useHttp.js';
 import { useTrainingStore } from '/src/apps/coach/stores/trainingStore.js';
 
 const toMomentsModel = (json) => {
-  const map = (d) => ({
-    type: d.type,
-    id: d.id,
-    name: d.attributes.name,
-    active: d.attributes.active,
-    description: d.attributes.description,
-    weekday: d.attributes.weekday,
-    start_time: d.attributes.start_time,
-    end_time: d.attributes.end_time
-  });
+  const map = d => {
+    let team = null;
+    if (d.relationships?.team) {
+      team = json.included.find(
+        included => included.type === 'teams' && included.id === d.relationships.team.data.id
+      );
+    }
+    return {
+      type: d.type,
+      id: d.id,
+      name: d.attributes.name,
+      active: d.attributes.active,
+      description: d.attributes.description,
+      weekday: d.attributes.weekday,
+      start_time: d.attributes.start_time,
+      end_time: d.attributes.end_time,
+      team
+    };
+  };
   if (Array.isArray(json.data)) {
     return json.data.map(map);
   }
