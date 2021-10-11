@@ -21,6 +21,9 @@ const toMomentsModel = (json) => {
       weekday: d.attributes.weekday,
       start_time: d.attributes.start_time,
       end_time: d.attributes.end_time,
+      time_zone: d.attributes.time_zone,
+      location: d.attributes.location,
+      remark: d.attributes.remark,
       team
     };
   };
@@ -109,6 +112,44 @@ export const useTrainingMomentStore = defineStore('training_moments', {
     loadTrainings(id, period) {
       const trainingStore = useTrainingStore();
       trainingStore.loadForMoment(id, period);
+    },
+    save(moment) {
+      const payload = {
+        data: {
+          type: 'definitions',
+          attributes: {
+            name: moment.name,
+            description: moment.description,
+            weekday: moment.weekday,
+            start_time: moment.start_time,
+            end_time: moment.end_time,
+            time_zone: moment.time_zone,
+            location: moment.location,
+            remark: moment.remark,
+            active: moment.active
+          }
+        }
+      };
+      if (moment.team) {
+        payload.data.relationships = {
+          team: {
+            data: {
+              type: 'teams',
+              id: moment.team.id
+            }
+          }
+        };
+      }
+      let api = useHttpApi.url('/trainings/definitions');
+      if (moment.id) {
+        payload.data.id = moment.id;
+        api = api.url(`/${moment.id}`);
+      }
+      api = api.json(payload);
+      return (moment.id ? api.patch() : api.post())
+        .json()
+        .then(json => { this.moment = toMomentsModel(json); })
+      ;
     }
   }
 });

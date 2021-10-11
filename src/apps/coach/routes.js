@@ -7,6 +7,7 @@ import CoachPage from '/src/apps/coach/pages/CoachPage.vue';
 import TrainingMomentsPage from '/src/apps/coach/pages/TrainingMomentsPage.vue';
 import TrainingMomentPage from '/src/apps/coach/pages/TrainingMomentPage.vue';
 import CoachForm from '/src/apps/coach/pages/CoachForm.vue';
+import TrainingMomentForm from '/src/apps/coach/pages/TrainingMomentForm.vue';
 
 export default [
   {
@@ -72,6 +73,17 @@ export default [
         }),
         meta: {
           title: 'Trainingsmoment'
+        }
+      },
+      {
+        name: 'coach.training_moment.edit',
+        path: '/training_moments/edit/:id(\\d+)',
+        component: TrainingMomentForm,
+        props: route => ({
+          id: parseInt(route.params.id)
+        }),
+        meta: {
+          title: 'Wijzig Trainingsmoment'
         }
       }
     ]
