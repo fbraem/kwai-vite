@@ -26,9 +26,10 @@
           <i class="fa fa-calendar mr-2" />Trainingen
         </ButtonLink>
         <div v-else />
-        <div>
+        <div class="flex item-stretch">
           <ButtonLink
             class="bg-yellow-500"
+            :route="{ name: 'coach.training_moment.edit', params: { id: moment.id } }"
           >
             <i class="fa fa-edit mr-2" />Wijzig
           </ButtonLink>
