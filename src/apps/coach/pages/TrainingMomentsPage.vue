@@ -1,8 +1,16 @@
 <template>
   <PageSection>
-    <Header>
-      Trainingsmomenten
-    </Header>
+    <div class="flex flex-row justify-between items-center pb-4">
+      <Header>
+        Trainingsmomenten
+      </Header>
+      <ButtonLink
+        class="bg-yellow-500"
+        :route="{ name: 'coach.training_moment.create' }"
+      >
+        <i class="fas fa-plus mr-1" /> Nieuw
+      </ButtonLink>
+    </div>
     <div
       v-if="store.containsInactiveMoments && canManage"
       class="flex items-center justify-end pb-3"
@@ -11,13 +19,13 @@
         Toon inactieve momenten
       </div>
       <Switch
-        v-model="showInactive"
-        :class="showInactive ? 'bg-green-500' : 'bg-red-600'"
+        v-model="store.showInactive"
+        :class="store.showInactive ? 'bg-green-500' : 'bg-red-600'"
         class="relative inline-flex items-center h-6 rounded-full w-11"
       >
         <span class="sr-only">Toon inactieve momenten</span>
         <span
-          :class="showInactive ? 'translate-x-6' : 'translate-x-1'"
+          :class="store.showInactive ? 'translate-x-6' : 'translate-x-1'"
           class="inline-block w-4 h-4 transform bg-white rounded-full"
         />
       </Switch>
@@ -28,7 +36,7 @@
         :key="moment.id"
       >
         <MomentCard
-          v-if="showInactive || moment.active"
+          v-if="store.showInactive || moment.active"
           :moment="moment"
         />
       </template>
@@ -41,13 +49,14 @@ import { useTrainingMomentStore } from '/src/apps/coach/stores/trainingMomentSto
 import Header from '/@theme/components/Header.vue';
 import MomentCard from '/src/apps/coach/components/MomentCard.vue';
 import PageSection from '/@theme/components/PageSection.vue';
+import ButtonLink from '/src/components/ButtonLink.vue';
 import { Switch } from '@headlessui/vue';
 
 import { ref } from 'vue';
 import { useAbility } from '/src/common/useAbility.js';
 
 export default {
-  components: { PageSection, MomentCard, Header, Switch },
+  components: { PageSection, MomentCard, Header, Switch, ButtonLink },
   setup() {
     const store = useTrainingMomentStore();
     store.load();
@@ -55,12 +64,9 @@ export default {
     const ability = useAbility();
     const canManage = ref(ability.can('manage', 'definitions'));
 
-    const showInactive = ref(false);
-
     return {
       store,
-      canManage,
-      showInactive
+      canManage
     };
   }
 };
