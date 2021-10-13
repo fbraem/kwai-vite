@@ -43,17 +43,20 @@
           v-model="weekday"
           :options="weekdays"
           label="Weekdag"
+          :error="errors['weekday']"
         />
         <div class="flex justify-between space-x-6">
           <InputField
             id="start_time"
             v-model="startTime"
             label="Begintijd"
+            :error="errors['startTime']"
           />
           <InputField
             id="end_time"
             v-model="endTime"
             label="Eindtijd"
+            :error="errors['endTime']"
           />
         </div>
       </Form>
@@ -70,6 +73,7 @@
           id="team"
           v-model="team"
           :options="teams"
+          :error="errors['team']"
         />
       </Form>
       <Form
@@ -84,6 +88,7 @@
         <InputField
           id="location"
           v-model="location"
+          :error="errors['location']"
         />
       </Form>
       <Form
@@ -199,25 +204,15 @@ export default {
       }));
     });
 
-    const validationSchema = yup.object({
-      name: yup.string().required('Dit is een verplicht veld'),
-      description: yup.string().required('Dit is een verplicht veld'),
-      weekday: yup.number().required('Dit is een verplicht veld'),
-      startTime: yup.string().required('Dit is een verplicht veld'),
-      endTime: yup.string().required('Dit is een verplicht veld')
-    });
-
     const { handleSubmit, isSubmitting } = useForm({
-      validationSchema,
-      initialValues: {
-      }
+      initialValues: {}
     });
 
     const router = useRouter();
     const submitForm = handleSubmit(async(values) => {
       moment.value.name = values.name;
       moment.value.description = values.description;
-      moment.value.weekday = values.weekday;
+      moment.value.weekday = parseInt(values.weekday, 10);
       moment.value.start_time = values.startTime;
       moment.value.end_time = values.endTime;
       moment.value.time_zone = dayjs.tz.guess();
@@ -229,11 +224,30 @@ export default {
       router.back();
     });
 
-    const { value: name } = useField('name');
-    const { value: description } = useField('description');
-    const { value: weekday } = useField('weekday');
-    const { value: startTime } = useField('startTime');
-    const { value: endTime } = useField('endTime');
+    const { value: name } = useField(
+      'name',
+      yup.string().required('Dit is een verplicht veld')
+    );
+    const { value: description } = useField(
+      'description',
+      yup.string().required('Dit is een verplicht veld')
+    );
+    const { value: weekday } = useField(
+      'weekday',
+      yup.number().required('Dit is een verplicht veld')
+    );
+    const { value: startTime } = useField(
+      'startTime',
+      yup.string()
+        .required('Dit is een verplicht veld')
+        .matches(/^(?:\d|[01]\d|2[0-3]):[0-5]\d$/, 'Ongeldige tijd')
+    );
+    const { value: endTime } = useField(
+      'endTime',
+      yup.string()
+        .required('Dit is een verplicht veld')
+        .matches(/^(?:\d|[01]\d|2[0-3]):[0-5]\d$/, 'Ongeldige tijd')
+    );
     const { value: active } = useField('active');
     const { value: team } = useField('team');
     const { value: location } = useField('location');
