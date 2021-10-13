@@ -85,6 +85,14 @@ export default [
         meta: {
           title: 'Wijzig Trainingsmoment'
         }
+      },
+      {
+        name: 'coach.training_moment.create',
+        path: '/training_moments/create',
+        component: TrainingMomentForm,
+        meta: {
+          title: 'Maak Trainingsmoment'
+        }
       }
     ]
   },
