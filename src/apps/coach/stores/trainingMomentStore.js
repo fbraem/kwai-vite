@@ -37,7 +37,8 @@ export const useTrainingMomentStore = defineStore('training_moments', {
   state: () => ({
     count: 0,
     moments: [],
-    moment: null
+    moment: null,
+    showInactive: false
   }),
   getters: {
     trainings() {
