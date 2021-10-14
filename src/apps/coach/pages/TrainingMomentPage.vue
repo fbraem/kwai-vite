@@ -1,15 +1,26 @@
 <template>
-  <div class="pb-8">
-    <PageSection class="max-w-4xl">
-      <Header>Trainingsmoment</Header>
+  <div>
+    <PageSection>
+      <Header class="pb-4">
+        Trainingsmoment
+      </Header>
       <MomentCard
         v-if="store.moment"
         :moment="store.moment"
       />
     </PageSection>
-    <PageSection class="max-w-4xl">
+    <PageSection>
+      <div class="flex flex-row justify-between items-center pb-4">
+        <Header>
+          Trainingen voor dit trainingsmoment
+        </Header>
+        <ButtonLink
+          class="bg-yellow-500"
+        >
+          <i class="fas fa-plus mr-1" /> Trainingen
+        </ButtonLink>
+      </div>
       <div class="sm:py-8 px-4 bg-white">
-        <h2 class="font-medium text-2xl">Trainingen voor dit trainingsmoment</h2>
         <div class="flex flex-row items-center space-x-6 py-4">
           <div>
             <ButtonLink
