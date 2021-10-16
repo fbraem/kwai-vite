@@ -50,9 +50,9 @@ const css = {
     'text-red-700': true
   },
   warning: {
-    'bg-orange-100': true,
-    'border-orange-500': true,
-    'text-orange-700': true
+    'bg-yellow-100': true,
+    'border-yellow-500': true,
+    'text-yellow-700': true
   },
   info: {
     'bg-blue-100': true,
