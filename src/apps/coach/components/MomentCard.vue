@@ -19,9 +19,9 @@
     <template #footer>
       <div class="flex flex-row flex-wrap justify-between w-full">
         <ButtonLink
-          v-if="$route.name !== 'coach.training_moment'"
+          v-if="$route.name !== 'coach.training_moment.trainings'"
           class="bg-yellow-500"
-          :route="{ name: 'coach.training_moment', params: { id: moment.id } }"
+          :route="{ name: 'coach.training_moment.trainings', params: { id: moment.id } }"
         >
           <i class="fa fa-calendar mr-2" />Trainingen
         </ButtonLink>
