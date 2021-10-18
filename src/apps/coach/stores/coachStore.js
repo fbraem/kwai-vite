@@ -53,6 +53,9 @@ export const useCoachStore = defineStore('coaches', {
     containsInactiveCoaches: (state) => state.coaches.some((coach) => !coach.active)
   },
   actions: {
+    find(id) {
+      return this.coaches.find(c => c.id === id);
+    },
     /**
      * Load all coaches.
      *
