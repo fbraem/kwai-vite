@@ -12,7 +12,7 @@ const toMomentsModel = (json) => {
         included => included.type === 'teams' && included.id === d.relationships.team.data.id
       );
     }
-    return {
+    const moment = {
       type: d.type,
       id: d.id,
       name: d.attributes.name,
@@ -23,9 +23,15 @@ const toMomentsModel = (json) => {
       end_time: d.attributes.end_time,
       time_zone: d.attributes.time_zone,
       location: d.attributes.location,
-      remark: d.attributes.remark,
-      team
+      remark: d.attributes.remark
     };
+    if (team) {
+      moment.team = {
+        id: team.id,
+        name: team.attributes.name
+      };
+    }
+    return moment;
   };
   if (Array.isArray(json.data)) {
     return json.data.map(map);
