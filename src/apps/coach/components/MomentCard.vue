@@ -7,6 +7,9 @@
         </h2>
         <p class="text-sm text-gray-600">
           {{ weekday }} {{ moment.start_time }} - {{ moment.end_time }}
+          <span v-if="moment.team">
+            &bull; Team {{ moment.team.name }}
+          </span>
         </p>
         <i
           v-if="!moment.active"
