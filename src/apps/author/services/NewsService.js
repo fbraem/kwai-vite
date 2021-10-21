@@ -87,9 +87,9 @@ const save = story => {
         enabled: story.enabled,
         promotion: story.promotion.priority,
         timezone: dayjs.tz.guess(),
-        publish_date: story.publication.start_date?.utc().format('YYYY-MM-DD HH:mm:ss'),
-        end_date: story.publication.end_date?.utc().format('YYYY-MM-DD HH:mm'),
-        promotion_end_date: story.promotion.end_date?.utc().format('YYYY-MM-DD HH:mm:ss'),
+        publish_date: story.publication.start_date?.format('YYYY-MM-DD HH:mm:ss'),
+        end_date: story.publication.end_date?.format('YYYY-MM-DD HH:mm'),
+        promotion_end_date: story.promotion.end_date?.format('YYYY-MM-DD HH:mm:ss'),
         remark: story.remark,
         contents: [
           {
