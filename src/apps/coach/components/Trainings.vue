@@ -1,13 +1,10 @@
 <template>
-  <PageSection
-    v-if="trainings.length > 0"
-    class="max-w-4xl"
-  >
-    <div class="space-y-8">
+  <PageSection v-if="trainings.length > 0">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
       <div
         v-for="training in trainings"
         :key="training.id"
-        class="shadow overflow-hidden sm:rounded-lg bg-white"
+        class="shadow-2xl overflow-hidden sm:rounded-lg w-full"
       >
         <div class="bg-gray-300 px-4 py-5">
           <div class="flex flex-row justify-between items-center">
