@@ -12,7 +12,7 @@
       <div class="shadow sm:rounded-md">
         <div
           :class="formBgColor"
-          class="px-4 py-5 space-y-6 sm:p-6"
+          class="px-2 py-3 sm:p-6"
         >
           <slot />
         </div>
