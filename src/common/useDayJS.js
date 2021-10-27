@@ -13,8 +13,6 @@ dayjs.extend(weekday);
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 
-// dayjs.utc();
-
 import 'dayjs/locale/en';
 import 'dayjs/locale/nl';
 dayjs.locale('nl');
