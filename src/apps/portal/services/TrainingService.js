@@ -1,5 +1,5 @@
 import { useHttp } from '/src/common/useHttp.js';
-import { dateToTimezone, formatDate } from '/src/common/useDayJS.js';
+import dayjs from '/src/common/useDayJS.js';
 
 const toModel = (json) => {
   const map = (d) => {
@@ -16,8 +16,8 @@ const toModel = (json) => {
       title: d.attributes.contents[0].title,
       summary: d.attributes.contents[0].summary,
       location: d.attributes.event.location,
-      start_date: dateToTimezone(d.attributes.event.start_date, d.attributes.event.time_zone),
-      end_date: dateToTimezone(d.attributes.event.end_date, d.attributes.event.time_zone),
+      start_date: dayjs.utc(d.attributes.event.start_date, 'YYYY-MM-DD HH:mm:ss').tz(d.attributes.event.time_zone),
+      end_date: dayjs.utc(d.attributes.event.end_date, 'YYYY-MM-DD HH:mm:ss').tz(d.attributes.event.time_zone),
       time_zone: d.attributes.event.time_zone,
       cancelled: d.attributes.event.cancelled,
       teams: teams.map((team) => ({
@@ -41,8 +41,8 @@ const load = ({ start, end } = {}) => {
   let api = useHttp.url('/trainings');
   if (start) {
     api = api
-      .query({ 'filter[start]': formatDate(start, 'YYYY-MM-DD') })
-      .query({ 'filter[end]': formatDate(end, 'YYYY-MM-DD') })
+      .query({ 'filter[start]': start.format('YYYY-MM-DD') })
+      .query({ 'filter[end]': end.format('YYYY-MM-DD') })
     ;
   }
   return api
