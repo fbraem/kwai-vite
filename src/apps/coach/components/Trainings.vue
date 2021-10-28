@@ -1,6 +1,6 @@
 <template>
   <PageSection v-if="trainings.length > 0">
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
       <div
         v-for="training in trainings"
         :key="training.id"
@@ -8,7 +8,7 @@
       >
         <div class="bg-gray-300 px-4 py-5">
           <div class="flex flex-row justify-between items-center">
-            <h3 class="inline-flex items-end justify-between w-full sm:w-2/3 text-lg leading-6 font-medium text-gray-900">
+            <h3 class="inline-flex items-end justify-between flex-grow text-lg leading-6 font-medium text-gray-900">
               <span class="block">
                 <span class="text-sm">
                   {{ training.start_date.format('ddd') }}
@@ -19,7 +19,7 @@
             </h3>
             <div
               v-if="training.cancelled"
-              class="hidden sm:block bg-red-600 text-white font-bold text-xs uppercase px-3 py-1"
+              class="hidden sm:block bg-red-600 text-white font-bold text-xs uppercase px-3 py-1 ml-2"
             >
               <i class="fa fa-exclamation-triangle mr-2" /> Geannuleerd
             </div>
