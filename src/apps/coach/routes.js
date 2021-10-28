@@ -8,6 +8,8 @@ import TrainingMomentsPage from '/src/apps/coach/pages/TrainingMomentsPage.vue';
 import TrainingMomentPage from '/src/apps/coach/pages/TrainingMomentPage.vue';
 import CoachForm from '/src/apps/coach/pages/CoachForm.vue';
 import TrainingMomentForm from '/src/apps/coach/pages/TrainingMomentForm.vue';
+import TrainingMomentCreateTrainingsPage from '/src/apps/coach/pages/TrainingMomentCreateTrainingsPage.vue';
+import TrainingMomentTrainingsPage from '/src/apps/coach/pages/TrainingMomentTrainingsPage.vue';
 
 export default [
   {
@@ -73,7 +75,25 @@ export default [
         }),
         meta: {
           title: 'Trainingsmoment'
-        }
+        },
+        children: [
+          {
+            name: 'coach.training_moment.trainings.create',
+            path: 'trainings_create',
+            component: TrainingMomentCreateTrainingsPage,
+            props: route => ({
+              id: parseInt(route.params.id)
+            })
+          },
+          {
+            name: 'coach.training_moment.trainings',
+            path: '',
+            component: TrainingMomentTrainingsPage,
+            props: route => ({
+              id: parseInt(route.params.id)
+            })
+          }
+        ]
       },
       {
         name: 'coach.training_moment.edit',
