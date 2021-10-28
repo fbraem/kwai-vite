@@ -22,15 +22,15 @@ const toTrainingModel = (json) => {
         )
       );
     }
-    return {
+    const training = {
       type: d.type,
       id: d.id,
       name: d.name,
       title: d.attributes.contents[0].title,
       summary: d.attributes.contents[0].html_summary,
       location: d.attributes.event.location,
-      start_date: dayjs.tz(d.attributes.event.start_date, 'YYYY-MM-DD HH:mm:ss', d.attributes.event.time_zone),
-      end_date: dayjs.tz(d.attributes.event.end_date, 'YYYY-MM-DD HH:mm:ss', d.attributes.event.time_zone),
+      start_date: dayjs.utc(d.attributes.event.start_date, 'YYYY-MM-DD HH:mm:ss').tz(d.attributes.event.timezone),
+      end_date: dayjs.utc(d.attributes.event.end_date, 'YYYY-MM-DD HH:mm:ss').tz(d.attributes.event.timezone),
       cancelled: d.attributes.event.cancelled,
       teams: teams.map((team) => ({
         id: team.id,
@@ -41,8 +41,17 @@ const toTrainingModel = (json) => {
         name: coach.attributes.name
       }))
     };
+
+    if (d.relationships?.definition) {
+      training.moment = { id: d.relationships.definition.data.id };
+    }
+
+    return training;
   };
-  return json.data.map(mapModel);
+  if (Array.isArray(json.data)) {
+    return json.data.map(mapModel);
+  }
+  return mapModel(json.data);
 };
 
 export const useTrainingStore = defineStore('trainings', {
@@ -86,6 +95,11 @@ export const useTrainingStore = defineStore('trainings', {
         error
       };
     },
+    /**
+     * Load all trainings of a given moment.
+     *
+     * Note: this action can only be executed from setup!
+     */
     loadForMoment(id, {
       start = ref(dayjs().startOf('month')),
       end = ref(dayjs().endOf('month'))
@@ -115,6 +129,64 @@ export const useTrainingStore = defineStore('trainings', {
         loading,
         error
       };
+    },
+    async save(training) {
+      const payload = {
+        data: {
+          type: 'trainings',
+          attributes: {
+            contents: [{
+              title: training.title,
+              summary: training.summary
+            }],
+            event: {
+              location: training.location,
+              start_date: training.start_date.utc().format('YYYY-MM-DD HH:mm:ss'),
+              end_date: training.end_date.utc().format('YYYY-MM-DD HH:mm:ss'),
+              timezone: dayjs.tz.guess(),
+              cancelled: false
+            }
+          },
+          relationships: {
+            definition: {
+              data: {
+                type: 'definitions',
+                id: training.moment.id
+              }
+            }
+          }
+        }
+      };
+      if (training.teams) {
+        payload.data.relationships.teams = {
+          data: training.teams.map(team => ({ type: 'teams', id: team.id }))
+        };
+      }
+      if (training.coaches) {
+        payload.data.relationships.coaches = {
+          data: training.coaches.map(coach => ({ type: 'coaches', id: coach.id }))
+        };
+      }
+
+      let api = useHttpApi.url('/trainings');
+      if (training.id) {
+        payload.data.id = training.id;
+        api = api.url(`/${training.id}`);
+      }
+      api = api.json(payload);
+
+      let savedTraining = training;
+      await (training.id ? api.patch() : api.post())
+        .json()
+        .then(json => {
+          this.training = toTrainingModel(json);
+          savedTraining = this.training;
+        })
+        .catch(e => console.log(e))
+      ;
+
+      return savedTraining;
     }
   }
 });
+
