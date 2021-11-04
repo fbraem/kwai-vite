@@ -19,14 +19,14 @@
         </p>
         <p
             class="text-gray-500"
-            v-html="story.summary"
+            v-html="story.html_summary"
         >
         </p>
       </div>
       <div
           class="mt-10 py-6 border-t border-gray-300 markdown"
           v-if="story.has_more"
-          v-html="story.content"
+          v-html="story.html_content"
       >
       </div>
     </div>
