@@ -50,7 +50,8 @@ export const useCoachStore = defineStore('coaches', {
       const trainingStore = useTrainingStore();
       return trainingStore.trainings;
     },
-    containsInactiveCoaches: (state) => state.coaches.some((coach) => !coach.active)
+    containsInactiveCoaches: (state) => state.coaches.some((coach) => !coach.active),
+    activeCoaches: (state) => state.coaches.filter(coach => coach.active)
   },
   actions: {
     find(id) {
