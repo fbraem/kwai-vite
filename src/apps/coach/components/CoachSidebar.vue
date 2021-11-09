@@ -4,6 +4,7 @@
     <SidebarNavigation>
       <SidebarNavigationItem route-name="coach.home" />
       <SidebarNavigationItem route-name="coach.training_moments" />
+      <SidebarNavigationItem route-name="coach.trainings" />
     </SidebarNavigation>
   </Sidebar>
 </template>
