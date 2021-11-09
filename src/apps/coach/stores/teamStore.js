@@ -20,6 +20,14 @@ export const useTeamStore = defineStore('teams', {
     count: 0,
     teams: []
   }),
+  getters: {
+    asOptions: (state) => state.teams.map(
+      team => ({
+        value: team.id,
+        text: team.name
+      })
+    )
+  },
   actions: {
     load() {
       const { data, loading, error } = useState(
