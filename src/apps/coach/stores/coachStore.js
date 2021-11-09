@@ -6,14 +6,14 @@ import { watch } from 'vue';
 
 const toCoachModel = (json) => {
   const map = (d) => {
-    const member = json.included.find(
+    const member = json.included?.find(
       included => included.type === 'members' &&
         included.id === d.relationships.member.data.id
     );
     return {
       type: d.type,
       id: d.id,
-      name: member.attributes.name,
+      name: member?.attributes.name,
       member,
       active: d.attributes.active,
       bio: d.attributes.bio,
