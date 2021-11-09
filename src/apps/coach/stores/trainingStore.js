@@ -107,7 +107,7 @@ export const useTrainingStore = defineStore('trainings', {
       const formattedStart = computed(() => start.value.format('YYYY-MM-DD'));
       const formattedEnd = computed(() => end.value.format('YYYY-MM-DD'));
       const { data, loading, error } = useState(
-        () => `/coaches/${id}/trainings/${formattedStart.value}/${formattedEnd.value}`,
+        () => `/moments/${id}/trainings/${formattedStart.value}/${formattedEnd.value}`,
         () => useHttpApi
           .url('/trainings')
           .query({ 'filter[definition]': id })
@@ -115,6 +115,44 @@ export const useTrainingStore = defineStore('trainings', {
           .query({ 'filter[end]': formattedEnd.value })
           .get()
           .json()
+      );
+
+      watch(
+        data,
+        (json) => {
+          this.count = json.meta.count;
+          this.trainings = toTrainingModel(json);
+        }
+      );
+
+      return {
+        loading,
+        error
+      };
+    },
+    async load(active = ref(true), {
+      start = ref(dayjs().startOf('month')),
+      end = ref(dayjs().endOf('month'))
+    }) {
+      const formattedStart = computed(() => start.value.format('YYYY-MM-DD'));
+      const formattedEnd = computed(() => end.value.format('YYYY-MM-DD'));
+
+      const { data, loading, error } = useState(
+        () => `/trainings/${formattedStart.value}/${formattedEnd.value}/${active.value}`,
+        () => {
+          let api = useHttpApi
+            .url('/trainings')
+            .query({ 'filter[start]': formattedStart.value })
+            .query({ 'filter[end]': formattedEnd.value })
+          ;
+          if (!active.value) {
+            api = api.query({ 'filter[active]': false });
+          }
+          return api
+            .get()
+            .json()
+          ;
+        }
       );
 
       watch(
