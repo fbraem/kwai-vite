@@ -234,7 +234,7 @@ export default {
     const coachStore = useCoachStore();
     coachStore.load();
     const coaches = computed(
-      () => coachStore.coaches.filter(c => c.active)
+      () => coachStore.activeCoaches
     );
     const selectedCoaches = ref([]);
 
