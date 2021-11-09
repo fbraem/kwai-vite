@@ -10,6 +10,8 @@ import CoachForm from '/src/apps/coach/pages/CoachForm.vue';
 import TrainingMomentForm from '/src/apps/coach/pages/TrainingMomentForm.vue';
 import TrainingMomentCreateTrainingsPage from '/src/apps/coach/pages/TrainingMomentCreateTrainingsPage.vue';
 import TrainingMomentTrainingsPage from '/src/apps/coach/pages/TrainingMomentTrainingsPage.vue';
+import TrainingsPage from '/src/apps/coach/pages/TrainingsPage.vue';
+import TrainingForm from '/src/apps/coach/pages/TrainingForm.vue';
 
 export default [
   {
@@ -112,6 +114,22 @@ export default [
         component: TrainingMomentForm,
         meta: {
           title: 'Maak Trainingsmoment'
+        }
+      },
+      {
+        name: 'coach.trainings',
+        path: '/trainings',
+        component: TrainingsPage,
+        meta: {
+          title: 'Trainingen'
+        }
+      },
+      {
+        name: 'coach.trainings.create',
+        path: '/trainings/create',
+        component: TrainingForm,
+        meta: {
+          title: 'Maak Training'
         }
       }
     ]
