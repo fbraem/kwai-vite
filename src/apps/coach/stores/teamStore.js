@@ -27,9 +27,7 @@ export const useTeamStore = defineStore('teams', {
         text: team.name
       })
     ),
-    find(id) {
-      return this.teams.find(c => c.id === id);
-    }
+    find: (state) => (id) => state.teams.find(c => c.id === id)
   },
   actions: {
     load() {

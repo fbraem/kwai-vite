@@ -70,9 +70,7 @@ export const useCoachStore = defineStore('coaches', {
     /**
      * Search a coach with the given id in the list of coaches.
      */
-    find(id) {
-      return this.coaches.find(c => c.id === id);
-    }
+    find: (state) => (id) => state.coaches.find(c => c.id === id)
   },
   actions: {
 
