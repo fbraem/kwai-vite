@@ -28,7 +28,7 @@ export const useTeamStore = defineStore('teams', {
       })
     ),
     find(id) {
-      return this.coaches.find(c => c.id === id);
+      return this.teams.find(c => c.id === id);
     }
   },
   actions: {
