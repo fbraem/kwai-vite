@@ -42,21 +42,40 @@ export const useCoachStore = defineStore('coaches', {
     containsMember: (state) => (memberId) => {
       return state.coaches.findIndex(c => c.member.id === memberId) !== -1;
     },
+    /**
+     * Returns the number of retrieved trainings of a given period for the
+     * current coach.
+     * @see loadTrainings
+     */
     trainingCount() {
       const trainingStore = useTrainingStore();
       return trainingStore.count;
     },
+    /**
+     * Returns the trainings of a given period for the current coach
+     * @see loadTrainings
+     */
     trainings() {
       const trainingStore = useTrainingStore();
       return trainingStore.trainings;
     },
+    /**
+     * Returns true when there is at least one inactive coach in the list
+     */
     containsInactiveCoaches: (state) => state.coaches.some((coach) => !coach.active),
-    activeCoaches: (state) => state.coaches.filter(coach => coach.active)
-  },
-  actions: {
+    /**
+     * Returns all active coaches
+     */
+    activeCoaches: (state) => state.coaches.filter(coach => coach.active),
+    /**
+     * Search a coach with the given id in the list of coaches.
+     */
     find(id) {
       return this.coaches.find(c => c.id === id);
-    },
+    }
+  },
+  actions: {
+
     /**
      * Load all coaches.
      *
