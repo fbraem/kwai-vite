@@ -182,19 +182,22 @@ export const useTrainingStore = defineStore('trainings', {
               start_date: training.start_date.utc().format('YYYY-MM-DD HH:mm:ss'),
               end_date: training.end_date.utc().format('YYYY-MM-DD HH:mm:ss'),
               timezone: dayjs.tz.guess(),
-              cancelled: false
-            }
+              cancelled: training.cancelled ?? false
+            },
+            active: training.active ?? false
           },
           relationships: {
-            definition: {
-              data: {
-                type: 'definitions',
-                id: training.moment.id
-              }
-            }
           }
         }
       };
+      if (training.moment) {
+        payload.data.relationships.definition = {
+          data: {
+            type: 'definitions',
+            id: training.moment.id
+          }
+        };
+      }
       if (training.teams) {
         payload.data.relationships.teams = {
           data: training.teams.map(team => ({ type: 'teams', id: team.id }))
