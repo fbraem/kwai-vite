@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "test": "testcafe chrome tests/"
   },
   "dependencies": {
     "@casl/ability": "^5.4.0",
@@ -32,9 +33,11 @@
     "eslint-config-standard": "^16.0.3",
     "eslint-config-standard-jsx": "^10.0.0",
     "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-testcafe": "^0.2.1",
     "eslint-plugin-vue": "^7.16.0",
     "postcss": "^8.3.6",
     "standard": "^16.0.3",
+    "testcafe": "^1.17.1",
     "vite": "^2.4.4"
   }
 }

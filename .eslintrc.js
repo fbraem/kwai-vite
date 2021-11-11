@@ -1,4 +1,7 @@
 module.exports = {
+  plugins: [
+    'testcafe'
+  ],
   parserOptions: {
     ecmaVersion: 2021
   },
@@ -9,7 +12,8 @@ module.exports = {
   extends: [
     'standard',
     'standard-jsx',
-    'plugin:vue/vue3-recommended'
+    'plugin:vue/vue3-recommended',
+    'plugin:testcafe/recommended'
   ],
   rules: {
     'import/no-absolute-path': 'off',
