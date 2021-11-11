@@ -19,6 +19,7 @@
     />
     <p
       v-if="error"
+      :id="`${id}_error`"
       class="mt-2 text-sm text-red-600"
     >
       {{ error }}
