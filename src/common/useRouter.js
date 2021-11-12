@@ -20,5 +20,6 @@ router.beforeEach((to, from, next) => {
   } else {
     document.title = website.title;
   }
+  to.meta.prev_route = from;
   next();
 });
