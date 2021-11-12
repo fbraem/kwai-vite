@@ -70,7 +70,7 @@
           </p>
         </template>
         <CheckBox
-          id="active"
+          id="cancelled"
           v-model="cancelled"
           label="Geannuleerd"
           color="text-yellow-500"
@@ -190,6 +190,7 @@
           </div>
           <div>
             <SubmitButton
+              id="submit"
               class="bg-yellow-500 text-black active:bg-gray-700 disabled:bg-gray-300"
               :disabled="isSubmitting"
               @click="submitForm"
@@ -223,7 +224,7 @@ import { useTrainingStore } from '/src/apps/coach/stores/trainingStore.js';
 import { useField, useForm, useFormErrors } from 'vee-validate';
 import { computed, ref, watch } from 'vue';
 import yup from '/src/common/useYup.js';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useCoachStore } from '../stores/coachStore.js';
 import { useTeamStore } from '../stores/teamStore.js';
 
@@ -271,6 +272,7 @@ export default {
     });
 
     const router = useRouter();
+    const route = useRoute();
 
     const submitForm = handleSubmit(async(values) => {
       training.value.title = values.title;
@@ -283,7 +285,12 @@ export default {
       training.value.coaches = selectedCoaches.value.map(id => coachStore.find(id));
       training.value.active = values.active;
       await store.save(training.value);
-      router.back();
+
+      if (route.meta.prev_route) {
+        router.back();
+      } else {
+        router.push({ name: 'coach.trainings' });
+      }
     });
 
     const selectedTeams = ref([]);
