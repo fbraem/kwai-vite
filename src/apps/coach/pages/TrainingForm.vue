@@ -3,7 +3,36 @@
     <Header class="py-4">
       {{ $route.meta.title }}
     </Header>
-    <div class="rounded bg-gray-300">
+    <template v-if="error">
+      <Alert
+        v-if="error.status === 400"
+        title="Niet gevonden"
+        type="danger"
+        icon="fa-2x fas fa-question-circle"
+      >
+        De training met id <span class="font-medium">{{ id }}</span> werd niet gevonden.
+      </Alert>
+      <Alert
+        v-else
+        title="Fout"
+        type="danger"
+        icon="fa-2x fas fa-exclamation-circle"
+        class="text-sm sm:text-base"
+      >
+        Er is een onverwachte fout gebeurd.<br>
+        <div class="text-xs sm:text-sm">
+          <span class="font-medium">code: </span>{{ error.status }}
+          -
+          <span class="font-medium">message: </span>{{ error.response?.statusText ?? '-' }}
+        </div>
+        <div class="text-xs mt-2">
+          Neem contact op met de webmaster wanneer het probleem zich blijft voordoen.
+        </div>
+      </Alert>
+    </template>
+    <div
+      v-else
+      class="rounded bg-gray-300">
       <Form
         title="Training"
         class="p-3"
@@ -22,9 +51,9 @@
           label="Titel"
         />
         <TextArea
-          id="description"
-          v-model="description"
-          :error="errors['description']"
+          id="summary"
+          v-model="summary"
+          :error="errors['summary']"
           placeholder="Geef een omschrijving in"
           label="Omschrijving"
         />
@@ -219,30 +248,52 @@ import InputField from '/src/components/form/InputField.vue';
 import CheckBox from '/src/components/form/CheckBox.vue';
 import SubmitButton from '/src/components/form/SubmitButton.vue';
 import TextArea from '/src/components/form/TextArea.vue';
-import dayjs from '/src/common/useDayJS.js';
+import Alert from '/src/components/Alert.vue';
+
 import { useTrainingStore } from '/src/apps/coach/stores/trainingStore.js';
+import { useCoachStore } from '/src/apps/coach/stores/coachStore.js';
+import { useTeamStore } from '/src/apps/coach/stores/teamStore.js';
+
 import { useField, useForm, useFormErrors } from 'vee-validate';
-import { computed, ref, watch } from 'vue';
 import yup from '/src/common/useYup.js';
+import dayjs from '/src/common/useDayJS.js';
+
+import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useCoachStore } from '../stores/coachStore.js';
-import { useTeamStore } from '../stores/teamStore.js';
 
 export default {
-  components: { TextArea, DatePicker, Header, PageSection, Form, InputField, CheckBox, SubmitButton },
+  components: { Alert, TextArea, DatePicker, Header, PageSection, Form, InputField, CheckBox, SubmitButton },
+  props: {
+    id: {
+      type: Number,
+      required: false,
+      default: null
+    }
+  },
   setup(props) {
     const dateFormat = dayjs().localeData().longDateFormat('L');
 
     const store = useTrainingStore();
-    if (props.id) {
-      store.get(props.id);
-    }
+    const { error } = (props.id) ? store.get(props.id) : { error: ref(null) };
+
+    const training = ref({});
     watch(
       () => store.training,
       (nv) => {
+        if (nv) {
+          training.value = nv;
+          title.value = nv.title;
+          summary.value = nv.summary;
+          date.value = nv.start_date.format(dateFormat);
+          startTime.value = nv.start_date.format('HH:mm');
+          endTime.value = nv.end_date.format('HH:mm');
+          cancelled.value = nv.cancelled;
+          active.value = nv.active;
+          selectedCoaches.value = nv.coaches.map(coach => coach.id);
+          selectedTeams.value = nv.teams.map(coach => coach.id);
+        }
       }
     );
-    const training = ref({});
 
     const teamStore = useTeamStore();
     teamStore.load();
@@ -276,7 +327,7 @@ export default {
 
     const submitForm = handleSubmit(async(values) => {
       training.value.title = values.title;
-      training.value.summary = values.description;
+      training.value.summary = values.summary;
       training.value.cancelled = values.cancelled;
       training.value.start_date = dayjs(values.date + ' ' + values.startTime, dateFormat + ' HH:mm');
       training.value.end_date = dayjs(values.date + ' ' + values.endTime, dateFormat + ' HH:mm');
@@ -289,14 +340,14 @@ export default {
       if (route.meta.prev_route) {
         router.back();
       } else {
-        router.push({ name: 'coach.trainings' });
+        await router.push({ name: 'coach.trainings' });
       }
     });
 
     const selectedTeams = ref([]);
     const selectedCoaches = ref([]);
     const { value: title } = useField('title');
-    const { value: description } = useField('description');
+    const { value: summary } = useField('summary');
     const { value: date } = useField('date');
     const { value: startTime } = useField('startTime');
     const { value: endTime } = useField('endTime');
@@ -309,7 +360,7 @@ export default {
       dateFormat,
       training,
       title,
-      description,
+      summary,
       date,
       startTime,
       endTime,
@@ -324,7 +375,8 @@ export default {
       errors: useFormErrors(),
       handleSubmit,
       isSubmitting,
-      submitForm
+      submitForm,
+      error
     };
   }
 };
