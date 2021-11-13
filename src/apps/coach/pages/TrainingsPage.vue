@@ -148,7 +148,7 @@
               <IconLink
                 v-if="canUpdate(training)"
                 icon="fas fa-edit"
-                :route="{ name: 'coach.trainings.create' }"
+                :route="{ name: 'coach.trainings.update', params: { id: training.id } }"
               />
               <IconLink
                 v-if="canDelete(training)"
@@ -227,7 +227,7 @@
                     <IconLink
                       v-if="canUpdate(training)"
                       icon="fas fa-edit"
-                      :route="{ name: 'coach.trainings.create' }"
+                      :route="{ name: 'coach.trainings.update', params: { id: training.id } }"
                     />
                     <IconLink
                       v-if="canDelete(training)"
