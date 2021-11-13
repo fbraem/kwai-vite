@@ -125,6 +125,17 @@ export default [
         }
       },
       {
+        name: 'coach.trainings.update',
+        path: '/trainings/update/:id(\\d+)',
+        component: TrainingForm,
+        props: route => ({
+          id: parseInt(route.params.id)
+        }),
+        meta: {
+          title: 'Wijzig Training'
+        }
+      },
+      {
         name: 'coach.trainings.create',
         path: '/trainings/create',
         component: TrainingForm,
