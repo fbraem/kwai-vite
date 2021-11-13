@@ -103,7 +103,7 @@ test
 
     await t
       .typeText(Selector('#title'), 'Test')
-      .typeText(Selector('#description'), 'This training is created with testcafe')
+      .typeText(Selector('#summary'), 'This training is created with testcafe')
       .typeText(Selector('#date'), '01-11-2021')
       .typeText(Selector('#start_time'), '19:00')
       .typeText(Selector('#end_time'), '20:00')
@@ -112,5 +112,21 @@ test
       .click(Selector('#active'))
     ;
     await t.click(Selector('#submit'));
+  })
+;
+
+test
+  .before(async t => {
+    await t.useRole(user);
+  })('Update a training that does not exist', async t => {
+    await t
+      .navigateTo('http://localhost:3000/coach.html#/trainings/update/999999')
+    ;
+
+    // A div with role=alert should exist
+    const alertSelector = Selector('div')
+      .withAttribute('role', 'alert')
+    ;
+    await t.expect(alertSelector.exists).ok();
   })
 ;
