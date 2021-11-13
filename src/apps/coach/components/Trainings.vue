@@ -80,12 +80,12 @@
           </dl>
         </div>
         <div
-          v-if="training.summary.length > 0"
+          v-if="training.html_summary.length > 0"
           class="bg-white px-4 py-5 sm:px-6 border-t border-gray-200"
         >
           <dt class="text-sm font-medium text-gray-500" />
           <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            <div v-html="training.summary" />
+            <div v-html="training.html_summary" />
           </dd>
         </div>
       </div>
