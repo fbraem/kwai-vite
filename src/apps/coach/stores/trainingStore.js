@@ -27,11 +27,13 @@ const toTrainingModel = (json) => {
       id: d.id,
       name: d.name,
       title: d.attributes.contents[0].title,
-      summary: d.attributes.contents[0].html_summary,
+      html_summary: d.attributes.contents[0].html_summary,
+      summary: d.attributes.contents[0].summary,
       location: d.attributes.event.location,
       start_date: dayjs.utc(d.attributes.event.start_date, 'YYYY-MM-DD HH:mm:ss').tz(d.attributes.event.timezone),
       end_date: dayjs.utc(d.attributes.event.end_date, 'YYYY-MM-DD HH:mm:ss').tz(d.attributes.event.timezone),
       cancelled: d.attributes.event.cancelled,
+      active: d.attributes.event.active,
       teams: teams.map((team) => ({
         id: team.id,
         name: team.attributes.name
@@ -207,9 +209,9 @@ export const useTrainingStore = defineStore('trainings', {
               start_date: training.start_date.utc().format('YYYY-MM-DD HH:mm:ss'),
               end_date: training.end_date.utc().format('YYYY-MM-DD HH:mm:ss'),
               timezone: dayjs.tz.guess(),
-              cancelled: training.cancelled ?? false
-            },
-            active: training.active ?? false
+              cancelled: training.cancelled ?? false,
+              active: training.active ?? false
+            }
           },
           relationships: {
           }
