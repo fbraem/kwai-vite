@@ -3,3 +3,4 @@
 /src/config/config.development.toml
 /src/config/config.production.toml
 /dist/
+/.testcaferc.js
