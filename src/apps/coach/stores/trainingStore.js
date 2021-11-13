@@ -57,9 +57,34 @@ const toTrainingModel = (json) => {
 export const useTrainingStore = defineStore('trainings', {
   state: () => ({
     count: 0,
+    training: null,
     trainings: []
   }),
   actions: {
+    /**
+     * Load the training with the given id.
+     */
+    get(id) {
+      const { data, loading, error } = useState(
+        () => `/trainings/${id}`,
+        () => useHttpApi
+          .url(`/trainings/${id}`)
+          .get()
+          .json()
+      );
+
+      watch(
+        data,
+        json => {
+          this.training = toTrainingModel(json);
+        }
+      );
+
+      return {
+        loading,
+        error
+      };
+    },
     /**
      * Load all trainings of a coach for the given period
      *
