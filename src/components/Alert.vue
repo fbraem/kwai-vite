@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex border-l-4 p-2"
+    class="flex border-l-4 px-3 py-2"
     :class="cssClass"
     role="alert"
   >
