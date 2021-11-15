@@ -32,7 +32,8 @@
     </template>
     <div
       v-else
-      class="rounded bg-gray-300">
+      class="rounded bg-gray-300"
+    >
       <Form
         title="Training"
         class="p-3"
@@ -133,25 +134,7 @@
             Welke teams kunnen deelnemen aan deze training?
           </p>
         </template>
-        <div class="grid sm:grid-cols-2">
-          <template
-            v-for="team in teams"
-            :key="team.id"
-          >
-            <div class="flex items-center p-2">
-              <input
-                :id="`team_${team.id}`"
-                v-model="selectedTeams"
-                type="checkbox"
-                :value="team.id"
-                class="text-yellow-500"
-              >
-              <div class="ml-3 text-sm text-gray-700">
-                {{ team.name }}
-              </div>
-            </div>
-          </template>
-        </div>
+        <TeamCheckBoxes v-model="selectedTeams" />
       </Form>
       <Form
         title="Coaches"
@@ -162,25 +145,7 @@
             Wie zijn de coaches voor deze training?
           </p>
         </template>
-        <div class="grid sm:grid-cols-2">
-          <template
-            v-for="coach in coaches"
-            :key="coach.id"
-          >
-            <div class="flex items-center p-2">
-              <input
-                :id="`coach_${coach.id}`"
-                v-model="selectedCoaches"
-                type="checkbox"
-                :value="coach.id"
-                class="text-yellow-500"
-              >
-              <div class="ml-3 text-sm text-gray-700">
-                {{ coach.name }}
-              </div>
-            </div>
-          </template>
-        </div>
+        <CoachCheckBoxes v-model="selectedCoaches" />
       </Form>
       <Form
         title="Opmerking"
@@ -249,6 +214,8 @@ import CheckBox from '/src/components/form/CheckBox.vue';
 import SubmitButton from '/src/components/form/SubmitButton.vue';
 import TextArea from '/src/components/form/TextArea.vue';
 import Alert from '/src/components/Alert.vue';
+import TeamCheckBoxes from '/src/apps/coach/components/TeamCheckBoxes.vue';
+import CoachCheckBoxes from '/src/apps/coach/components/CoachCheckBoxes.vue';
 
 import { useTrainingStore } from '/src/apps/coach/stores/trainingStore.js';
 import { useCoachStore } from '/src/apps/coach/stores/coachStore.js';
@@ -258,11 +225,23 @@ import { useField, useForm, useFormErrors } from 'vee-validate';
 import yup from '/src/common/useYup.js';
 import dayjs from '/src/common/useDayJS.js';
 
-import { computed, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 export default {
-  components: { Alert, TextArea, DatePicker, Header, PageSection, Form, InputField, CheckBox, SubmitButton },
+  components: {
+    CoachCheckBoxes,
+    TeamCheckBoxes,
+    Alert,
+    TextArea,
+    DatePicker,
+    Header,
+    PageSection,
+    Form,
+    InputField,
+    CheckBox,
+    SubmitButton
+  },
   props: {
     id: {
       type: Number,
@@ -296,12 +275,7 @@ export default {
     );
 
     const teamStore = useTeamStore();
-    teamStore.load();
-    const teams = computed(() => teamStore.teams);
-
     const coachStore = useCoachStore();
-    coachStore.load();
-    const coaches = computed(() => coachStore.activeCoaches);
 
     const validationSchema = yup.object({
       title: yup.string()
@@ -368,9 +342,7 @@ export default {
       location,
       remark,
       active,
-      teams,
       selectedTeams,
-      coaches,
       selectedCoaches,
       errors: useFormErrors(),
       handleSubmit,
