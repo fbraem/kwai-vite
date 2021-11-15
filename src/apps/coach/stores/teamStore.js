@@ -31,7 +31,7 @@ export const useTeamStore = defineStore('teams', {
   },
   actions: {
     load() {
-      const { data, loading, error } = useState(
+      const { data, loading, error, reload } = useState(
         '/teams',
         () => useHttpApi
           .url('/club/teams')
@@ -49,7 +49,8 @@ export const useTeamStore = defineStore('teams', {
 
       return {
         loading,
-        error
+        error,
+        reload
       };
     }
   }
