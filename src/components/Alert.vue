@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex border-l-4 px-3 py-2"
+    class="border-l-4 px-3 py-2"
     :class="cssClass"
     role="alert"
   >
@@ -17,7 +17,7 @@
           class="mr-4"
           :class="iconClass"
         />
-        <div>
+        <div class="w-full">
           <slot />
         </div>
       </div>
