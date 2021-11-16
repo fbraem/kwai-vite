@@ -40,7 +40,10 @@ const toTrainingModel = (json) => {
       })),
       coaches: coaches.map(coach => ({
         id: coach.id,
-        name: coach.attributes.name
+        name: coach.attributes.name,
+        head: coach.attributes.head,
+        payed: coach.attributes.payed,
+        present: coach.attributes.present
       }))
     };
 
