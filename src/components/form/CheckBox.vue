@@ -3,11 +3,11 @@
     <div class="flex items-center h-5">
       <input
         :id="id"
+        v-model="model"
         type="checkbox"
         class="focus:ring-blue-600 h-4 w-4 rounded"
+        :value="value"
         :class="color"
-        :checked="modelValue"
-        @change="$emit('update:modelValue', $event.target.checked)"
       />
     </div>
     <div class="ml-3 text-sm text-gray-700">
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { computed } from 'vue';
+
 export default {
   props: {
     id: {
@@ -40,8 +42,22 @@ export default {
     color: {
       type: String,
       default: 'text-blue-500'
+    },
+    // eslint-disable-next-line vue/require-prop-types
+    value: {
+      default: true
     }
   },
-  emits: ['update:modelValue']
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
+    const model = computed({
+      get: () => props.modelValue,
+      set: (value) => emit('update:modelValue', value)
+    });
+
+    return {
+      model
+    };
+  }
 };
 </script>
