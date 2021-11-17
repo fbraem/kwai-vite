@@ -80,7 +80,7 @@ export const useCoachStore = defineStore('coaches', {
      * Note: This action can only be executed from setup!
      */
     load() {
-      const { data, loading, error } = useState(
+      const { data, loading, error, reload } = useState(
         '/coaches',
         () => useHttpApi
           .url('/coaches')
@@ -98,7 +98,8 @@ export const useCoachStore = defineStore('coaches', {
 
       return {
         loading,
-        error
+        error,
+        reload
       };
     },
     /**
@@ -116,7 +117,7 @@ export const useCoachStore = defineStore('coaches', {
      * Note: This action can only be executed from setup!
      */
     get(id) {
-      const { data, loading, error } = useState(
+      const { data, loading, error, reload } = useState(
         `/coach/${id}`,
         () => useHttpApi
           .url(`/coaches/${id}`)
@@ -131,7 +132,8 @@ export const useCoachStore = defineStore('coaches', {
       );
       return {
         loading,
-        error
+        error,
+        reload
       };
     },
     /**
