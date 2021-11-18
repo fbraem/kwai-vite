@@ -14,7 +14,7 @@
       <div class="flex items-center">
         <i
           v-if="icon"
-          class="mr-4"
+          class="mr-2"
           :class="iconClass"
         />
         <div class="w-full">
