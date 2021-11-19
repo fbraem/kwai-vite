@@ -145,7 +145,105 @@
             Wie zijn de coaches voor deze training?
           </p>
         </template>
-        <CoachCheckBoxes v-model="selectedCoaches" />
+        <div
+          v-if="assignedCoaches.length > 0"
+          class="divide-y divide-gray-300"
+        >
+          <h4
+            class="text-sm text-gray-700 font-medium mb-4"
+          >
+            Reeds aangestelde Coaches voor deze training
+          </h4>
+          <div
+            v-for="coach in assignedCoaches"
+            :key="coach.id"
+          >
+            <div class="w-full flex flex-row items-center space-x-4 py-4">
+              <div class="flex-none">
+                <img
+                  src="/assets/portal/no_avatar.png"
+                  class="w-16 h-16 rounded-full"
+                  :alt="`Avatar of ${coach.name}`"
+                />
+              </div>
+              <div class="flex-grow">
+                <h4 class="font-medium text-gray-700">
+                  {{ coach.name }}
+                </h4>
+                <div class="flex flex-col flex-wrap space-y-2 sm:flex-row sm:space-y-0 sm:justify-between mt-1">
+                  <div class="mr-2">
+                    <CheckBox
+                      :id="`coach_head_${coach.id}`"
+                      v-model="coach.head"
+                      label="Hoofdcoach"
+                      color="text-yellow-500"
+                    />
+                  </div>
+                  <div class="mr-2">
+                    <CheckBox
+                      :id="`coach_present_${coach.id}`"
+                      v-model="coach.present"
+                      label="Aanwezig"
+                      color="text-yellow-500"
+                    />
+                  </div>
+                  <div>
+                    <CheckBox
+                      :id="`coach_payed_${coach.id}`"
+                      v-model="coach.payed"
+                      label="Betaald"
+                      color="text-yellow-500"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <IconLink
+                  icon="fas fa-trash-alt"
+                  class="text-red-600"
+                  :method="() => removeCoach(coach.id)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <Alert
+          v-else
+          title="Geen Coaches"
+          type="warning"
+          class="text-sm"
+          icon="fas fa-exclamation-circle"
+        >
+          Er zijn nog geen coaches aangesteld voor deze training.
+        </Alert>
+        <div
+          v-if="rest.length > 0"
+          class="border-t-2 border-gray-300 pt-5"
+        >
+          <h4
+            class="text-sm text-gray-700 font-medium mb-4"
+          >
+            Stel volgende coaches aan voor deze training:
+          </h4>
+          <CoachCheckBoxes
+            v-model="newCoaches"
+            :coaches="rest"
+            :error="coachError"
+            :reload="coachReload"
+          />
+        </div>
+        <div
+          v-if="newCoaches.length > 0"
+          class="text-center"
+        >
+          <SubmitButton
+            id="add_coaches"
+            class="bg-yellow-500 text-black active:bg-gray-700 disabled:bg-gray-300"
+            @click="addCoaches"
+          >
+            <i class="fas fa-plus fa-fw" /> Voeg toe
+          </SubmitButton>
+        </div>
       </Form>
       <Form
         title="Opmerking"
@@ -205,6 +303,7 @@
 </template>
 
 <script>
+import IconLink from '/src/components/IconLink.vue';
 import PageSection from '/@theme/components/PageSection.vue';
 import Header from '/@theme/components/Header.vue';
 import Form from '/src/components/form/Form.vue';
@@ -216,7 +315,6 @@ import TextArea from '/src/components/form/TextArea.vue';
 import Alert from '/src/components/Alert.vue';
 import TeamCheckBoxes from '/src/apps/coach/components/TeamCheckBoxes.vue';
 import CoachCheckBoxes from '/src/apps/coach/components/CoachCheckBoxes.vue';
-
 import { useTrainingStore } from '/src/apps/coach/stores/trainingStore.js';
 import { useCoachStore } from '/src/apps/coach/stores/coachStore.js';
 import { useTeamStore } from '/src/apps/coach/stores/teamStore.js';
@@ -225,11 +323,12 @@ import { useField, useForm, useFormErrors } from 'vee-validate';
 import yup from '/src/common/useYup.js';
 import dayjs from '/src/common/useDayJS.js';
 
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 export default {
   components: {
+    IconLink,
     CoachCheckBoxes,
     TeamCheckBoxes,
     Alert,
@@ -250,12 +349,14 @@ export default {
     }
   },
   setup(props) {
+    const creating = computed(() => props.id === null);
     const dateFormat = dayjs().localeData().longDateFormat('L');
 
     const store = useTrainingStore();
     const { error } = (props.id) ? store.get(props.id) : { error: ref(null) };
 
     const training = ref({});
+    const assignedCoaches = ref([]);
     watch(
       () => store.training,
       (nv) => {
@@ -268,14 +369,54 @@ export default {
           endTime.value = nv.end_date.format('HH:mm');
           cancelled.value = nv.cancelled;
           active.value = nv.active;
-          selectedCoaches.value = nv.coaches.map(coach => coach.id);
           selectedTeams.value = nv.teams.map(coach => coach.id);
+          assignedCoaches.value = nv.coaches.map(coach => ({ ...coach }));
         }
       }
     );
 
     const teamStore = useTeamStore();
+    const teamLoad = teamStore.load();
+
     const coachStore = useCoachStore();
+    const {
+      loading: coachLoading,
+      error: coachError,
+      reload: coachReload
+    } = coachStore.load();
+
+    const addCoaches = () => {
+      newCoaches.value.forEach(id => {
+        const coach = coachStore.find(id);
+        assignedCoaches.value.push({
+          id,
+          name: coach.name,
+          head: false,
+          payed: false,
+          present: false
+        });
+      });
+      newCoaches.value.splice(0, newCoaches.value.length);
+    };
+    const removeCoach = (id) => {
+      assignedCoaches.value.splice(
+        assignedCoaches.value.findIndex(coach => coach.id === id),
+        1
+      );
+    };
+
+    const rest = computed(() => {
+      const coaches = coachStore.activeCoaches.map(
+        coach => ({ key: coach.id, value: coach.name })
+      );
+      if (store.training) {
+        return coaches.filter(
+          activeCoach => !assignedCoaches.value.find(coach => coach.id === activeCoach.key)
+        );
+      }
+      return coaches;
+    });
+    const newCoaches = ref([]);
 
     const validationSchema = yup.object({
       title: yup.string()
@@ -307,7 +448,7 @@ export default {
       training.value.end_date = dayjs(values.date + ' ' + values.endTime, dateFormat + ' HH:mm');
       training.value.location = values.location;
       training.value.teams = selectedTeams.value.map(id => teamStore.find(id));
-      training.value.coaches = selectedCoaches.value.map(id => coachStore.find(id));
+      training.value.coaches = newCoaches.value.map(id => coachStore.find(id));
       training.value.active = values.active;
       await store.save(training.value);
 
@@ -319,7 +460,7 @@ export default {
     });
 
     const selectedTeams = ref([]);
-    const selectedCoaches = ref([]);
+
     const { value: title } = useField('title');
     const { value: summary } = useField('summary');
     const { value: date } = useField('date');
@@ -331,6 +472,7 @@ export default {
     const { value: active } = useField('active');
 
     return {
+      creating,
       dateFormat,
       training,
       title,
@@ -343,7 +485,15 @@ export default {
       remark,
       active,
       selectedTeams,
-      selectedCoaches,
+      teamLoad,
+      assignedCoaches,
+      coachLoading,
+      coachError,
+      coachReload,
+      rest,
+      addCoaches,
+      removeCoach,
+      newCoaches,
       errors: useFormErrors(),
       handleSubmit,
       isSubmitting,
