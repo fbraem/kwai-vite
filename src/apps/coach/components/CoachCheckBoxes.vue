@@ -1,6 +1,6 @@
 <template>
   <div v-if="error">
-    {{ error }}
+    {{ error.value }}
   </div>
   <div
     v-else-if="coaches.length === 0"
@@ -38,7 +38,6 @@ import Alert from '/src/components/Alert.vue';
 import IconLink from '/src/components/IconLink.vue';
 
 import { computed } from 'vue';
-import { useCoachStore } from '/src/apps/coach/stores/coachStore.js';
 import CheckBoxes from '/src/components/form/CheckBoxes.vue';
 
 export default {
@@ -49,6 +48,18 @@ export default {
     modelValue: {
       type: Array,
       default: () => []
+    },
+    coaches: {
+      type: Array,
+      required: true
+    },
+    reload: {
+      type: Function,
+      required: true
+    },
+    error: {
+      type: Object,
+      required: false
     }
   },
   emits: [
@@ -63,25 +74,9 @@ export default {
         emit('update:modelValue', value);
       }
     });
-    const store = useCoachStore();
-
-    const { loading, error, reload } = store.load();
-
-    const coaches = computed(
-      () => store.activeCoaches.map(
-        coach => ({
-          key: coach.id,
-          value: coach.name
-        })
-      )
-    );
 
     return {
-      model,
-      loading,
-      error,
-      reload,
-      coaches
+      model
     };
   }
 };
