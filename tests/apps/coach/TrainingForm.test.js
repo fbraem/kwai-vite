@@ -109,6 +109,7 @@ test
       .typeText(Selector('#end_time'), '20:00')
       .typeText(Selector('#remark'), 'This training is created with testcafe')
       .click(Selector('#coach_1'))
+      .click(Selector('#add_coaches'))
       .click(Selector('#active'))
     ;
     await t.click(Selector('#submit'));
