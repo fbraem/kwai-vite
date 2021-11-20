@@ -65,6 +65,9 @@ export const useTrainingStore = defineStore('trainings', {
     training: null,
     trainings: []
   }),
+  getters: {
+    containsInactiveTrainings: (state) => state.trainings.some(training => !training.active)
+  },
   actions: {
     /**
      * Load the training with the given id.
