@@ -38,12 +38,12 @@ const toTrainingModel = (json) => {
         id: team.id,
         name: team.attributes.name
       })),
-      coaches: coaches.map(coach => ({
-        id: coach.id,
-        name: coach.attributes.name,
-        head: coach.attributes.head,
-        payed: coach.attributes.payed,
-        present: coach.attributes.present
+      coaches: d.attributes.coaches.map(trainingCoach => ({
+        id: trainingCoach.id,
+        name: coaches.find(coach => coach.id === trainingCoach.id).attributes.name,
+        head: trainingCoach.head,
+        payed: trainingCoach.payed,
+        present: trainingCoach.present
       }))
     };
 
@@ -237,6 +237,9 @@ export const useTrainingStore = defineStore('trainings', {
         payload.data.relationships.coaches = {
           data: training.coaches.map(coach => ({ type: 'coaches', id: coach.id }))
         };
+        payload.data.coaches = training.coaches;
+      } else {
+        payload.data.coaches = [];
       }
 
       let api = useHttpApi.url('/trainings');
