@@ -237,9 +237,9 @@ export const useTrainingStore = defineStore('trainings', {
         payload.data.relationships.coaches = {
           data: training.coaches.map(coach => ({ type: 'coaches', id: coach.id }))
         };
-        payload.data.coaches = training.coaches;
+        payload.data.attributes.coaches = training.coaches;
       } else {
-        payload.data.coaches = [];
+        payload.data.attributes.coaches = [];
       }
 
       let api = useHttpApi.url('/trainings');
