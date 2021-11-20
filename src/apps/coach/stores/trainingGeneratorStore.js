@@ -25,12 +25,18 @@ export const useTrainingGenerator = defineStore('trainingGenerator', {
           location: moment.location,
           start_date: next.hour(startTime.hour()).minute(startTime.minute()),
           end_date: next.hour(endTime.hour()).minute(endTime.minute()),
+          active: true,
           cancelled: false,
           coaches: [],
           moment: moment,
           teams: [moment.team]
         };
-        training.coaches = [...coaches];
+        training.coaches = coaches.map(coach => ({
+          id: coach.id,
+          head: false,
+          present: false,
+          payed: false
+        }));
         this.trainings.push(training);
         next = next.add(7, 'd');
       }
