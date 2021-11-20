@@ -448,7 +448,12 @@ export default {
       training.value.end_date = dayjs(values.date + ' ' + values.endTime, dateFormat + ' HH:mm');
       training.value.location = values.location;
       training.value.teams = selectedTeams.value.map(id => teamStore.find(id));
-      training.value.coaches = newCoaches.value.map(id => coachStore.find(id));
+      training.value.coaches = assignedCoaches.value.map(coach => ({
+        id: coach.id,
+        head: coach.head,
+        present: coach.present,
+        payed: coach.payed
+      }));
       training.value.active = values.active;
       await store.save(training.value);
 
