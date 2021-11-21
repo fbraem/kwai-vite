@@ -91,10 +91,10 @@ import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
 import Spinner from '/src/components/Spinner.vue';
 import useNews from '/src/apps/portal/composables/useNews.js';
 import { months } from '/src/common/useDayJS.js';
-import useApplication from '/src/apps/portal/composables/useApplication.js';
 import { computed, ref, toRefs, watch } from 'vue';
 import RoutePagination from '/src/components/RoutePagination.vue';
 import { useRoute } from 'vue-router';
+import { useApplicationStore } from '/src/apps/portal/stores/applicationStore.js';
 
 export default {
   components: {
@@ -119,6 +119,8 @@ export default {
     }
   },
   setup(props) {
+    const applicationStore = useApplicationStore();
+
     const limit = ref(10);
     const count = ref(0);
 
@@ -145,7 +147,9 @@ export default {
       offset
     });
 
-    const { application } = useApplication({ id: input.applicationId });
+    const application = computed(
+      () => applicationStore.getById(props.applicationId)
+    );
 
     const archive = computed(() => {
       if (props.year) {

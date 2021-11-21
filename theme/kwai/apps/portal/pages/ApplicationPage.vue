@@ -79,7 +79,7 @@ import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
 import Article from '/@theme/apps/portal/components/Article.vue';
 
-import useApplication from '/src/apps/portal/composables/useApplication.js';
+import { useApplicationStore } from '/src/apps/portal/stores/applicationStore.js';
 import usePages from '/src/apps/portal/composables/usePages.js';
 import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 
@@ -109,9 +109,9 @@ export default {
     }
   },
   setup(props) {
-    // We need a reactive application name to trigger useApplication
-    const applicationName = computed(() => props.name);
-    const { application } = useApplication({ name: applicationName });
+    const store = useApplicationStore();
+
+    const application = computed(() => store.getByName(props.name));
     const { pages, count: pageCount } = usePages(application);
 
     const newsCount = ref(0);

@@ -122,10 +122,11 @@ import ApplicationCard from '/@theme/apps/portal/components/ApplicationCard.vue'
 import Promotion from '/@theme/apps/portal/components/Promotion.vue';
 import Highlight from '/@theme/apps/portal/components/Highlight.vue';
 
-import useApplication from '/src/apps/portal/composables/useApplication.js';
 import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 
 import config from '/@config';
+import { useApplicationStore } from '/src/apps/portal/stores/applicationStore.js';
+import { computed } from 'vue';
 
 export default {
   components: {
@@ -138,9 +139,12 @@ export default {
     IconCard
   },
   setup() {
-    const { application: newsApplication } = useApplication({ name: 'news' });
-    const { application: clubApplication } = useApplication({ name: 'club' });
-    const { application: trainingsApplication } = useApplication({ name: 'trainings' });
+    const applicationStore = useApplicationStore();
+    // applicationStore.load();
+
+    const newsApplication = computed(() => applicationStore.getByName('news'));
+    const clubApplication = computed(() => applicationStore.getByName('club'));
+    const trainingsApplication = computed(() => applicationStore.getByName('trainings'));
 
     const { news } = usePromotedNews();
 
