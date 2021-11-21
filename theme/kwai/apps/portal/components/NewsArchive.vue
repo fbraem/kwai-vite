@@ -1,12 +1,23 @@
 <template>
   <div>
     <slot name="title">
-      <h3 class="text-3xl font-semibold mb-2">Archief</h3>
+      <h3 class="text-3xl font-semibold mb-2">
+        Archief
+      </h3>
     </slot>
-    <template v-for="year in years">
-      <slot name="year" :year="year">
+    <template
+      v-for="year in years"
+      :key="year"
+    >
+      <slot
+        name="year"
+        :year="year"
+      >
         <div class="flex mb-2">
-          <h4 class="flex-grow text-xl hover:cursor-pointer" @click="toggleYear(year)">
+          <h4
+            class="flex-grow text-xl hover:cursor-pointer"
+            @click="toggleYear(year)"
+          >
             {{ year }}
           </h4>
           <IconLink
@@ -14,24 +25,30 @@
             class="hover:bg-gray-200"
             icon="fas fa-angle-up"
             :method="() => toggleYear(year)"
-          ></IconLink>
+          />
           <IconLink
             v-else
             class="hover:bg-gray-200"
             icon="fas fa-angle-right"
             :method="() => toggleYear(year)"
-          ></IconLink>
+          />
         </div>
       </slot>
       <ul
-          class="mb-2 divide-y divide-gray-300"
-          v-if="showYears[year]"
+        v-if="showYears[year]"
+        class="mb-2 divide-y divide-gray-300"
       >
-        <li class="py-1" v-for="month in archive[year]">
-          <slot name="month" :archive="archive[year]">
+        <li
+          v-for="month in archive[year]"
+          :key="`${year}_${month}`"
+          class="py-1"
+        >
+          <slot
+            name="month"
+            :archive="archive[year]"
+          >
             <div class="relative flex leading-6">
-              <CoverLink :route="{ name: 'portal.news.archive', params: { year, month: month.month }}">
-              </CoverLink>
+              <CoverLink :route="{ name: 'portal.news.archive', params: { year, month: month.month }}" />
               <div class="text-blue-600 flex-grow">
                 {{ month.name }} {{ month.year }}
               </div>
@@ -50,33 +67,37 @@
 
 <script>
 import IconLink from '/src/components/IconLink.vue';
-import useNewsArchive from '/src/apps/portal/composables/useNewsArchive.js';
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 
 import CoverLink from '/src/components/CoverLink.vue';
 import Badge from '/src/components/Badge.vue';
+import { useNewsArchiveStore } from '/src/apps/portal/stores/newsArchiveStore.js';
 
 export default {
   components: { IconLink, CoverLink, Badge },
   setup() {
-    const { archive, years } = useNewsArchive();
+    const archiveStore = useNewsArchiveStore();
+    archiveStore.load();
+
+    const archive = computed(() => archiveStore.archive);
+    const years = computed(() => archiveStore.years);
 
     const showYears = ref({});
     watch(
-        years,
-        (nv, ov) => {
-          showYears.value = nv.reduce(
-              (a, year) => {
-                a[year] = false;
-                return a;
-              },
-              {}
-          );
-          showYears.value[years.value[0]] = true;
-          if (years.value.length > 1) {
-            showYears.value[years.value[1]] = true;
-          }
+      years,
+      (years) => {
+        showYears.value = years.reduce(
+          (a, year) => {
+            a[year] = false;
+            return a;
+          },
+          {}
+        );
+        showYears.value[years[0]] = true;
+        if (years.length > 1) {
+          showYears.value[years[1]] = true;
         }
+      }
     );
     const toggleYear = (year) => {
       showYears.value[year] = !showYears.value[year];
@@ -87,7 +108,7 @@ export default {
       years,
       showYears,
       toggleYear
-    }
+    };
   }
-}
+};
 </script>
