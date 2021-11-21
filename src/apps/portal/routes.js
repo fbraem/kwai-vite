@@ -53,7 +53,7 @@ export default [
         name: 'portal.news.application',
         path: '/news/application/:application_id(\\d+)',
         props: route => ({
-          application_id: parseInt(route.params.application_id)
+          applicationId: parseInt(route.params.application_id)
         }),
         component: NewsPage,
         meta: {

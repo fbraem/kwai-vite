@@ -1,16 +1,12 @@
 <template>
-  <ContentLayout
-      image="/assets/portal/news.jpg"
-  >
+  <ContentLayout image="/assets/portal/news.jpg">
     <template #title>
       <h1 class="text-white font-semibold text-4xl mb-2">
-        Nieuws <Spinner v-if="loading"></Spinner>
+        Nieuws <Spinner v-if="loading" />
       </h1>
     </template>
     <div v-if="!loading && story">
-      <div
-          class="text-center my-2"
-      >
+      <div class="text-center my-2">
         <h3 class="text-4xl font-semibold leading-normal text-gray-800">
           {{ story.title }}
         </h3>
@@ -18,17 +14,15 @@
           {{ story.publish_date }}
         </p>
         <p
-            class="text-gray-500"
-            v-html="story.html_summary"
-        >
-        </p>
+          class="text-gray-500"
+          v-html="story.html_summary"
+        />
       </div>
       <div
-          class="mt-10 py-6 border-t border-gray-300 markdown"
-          v-if="story.has_more"
-          v-html="story.html_content"
-      >
-      </div>
+        v-if="story.has_more"
+        class="mt-10 py-6 border-t border-gray-300 markdown"
+        v-html="story.html_content"
+      />
     </div>
   </ContentLayout>
 </template>
@@ -83,21 +77,25 @@
 import ContentLayout from '/@theme/layouts/ContentLayout.vue';
 import Spinner from '/src/components/Spinner.vue';
 
-import useNewsStory from '/src/apps/portal/composables/useNewsStory.js';
+import { useNewsStore } from '/src/apps/portal/stores/newsStore.js';
+import { computed } from 'vue';
 
 export default {
+  components: {
+    ContentLayout,
+    Spinner
+  },
   props: {
     id: {
       type: String,
       required: true
     }
   },
-  components: {
-    ContentLayout,
-    Spinner
-  },
   setup(props) {
-    const { story, loading, error } = useNewsStory(props.id);
+    const store = useNewsStore();
+    const { loading, error } = store.get(props.id);
+
+    const story = computed(() => store.story);
 
     return {
       story,
@@ -105,5 +103,5 @@ export default {
       error
     };
   }
-}
+};
 </script>

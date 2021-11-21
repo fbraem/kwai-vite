@@ -52,7 +52,7 @@
             </router-link>
           </div>
           <div
-            v-for="story in news"
+            v-for="story in stories"
             :key="story.id"
             class="mb-10"
           >
@@ -89,12 +89,12 @@ import Layout from '/@theme/layouts/LandingLayout.vue';
 import NewsArchive from '/@theme/apps/portal/components/NewsArchive.vue';
 import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
 import Spinner from '/src/components/Spinner.vue';
-import useNews from '/src/apps/portal/composables/useNews.js';
 import { months } from '/src/common/useDayJS.js';
-import { computed, ref, toRefs, watch } from 'vue';
+import { computed, toRefs } from 'vue';
 import RoutePagination from '/src/components/RoutePagination.vue';
-import { useRoute } from 'vue-router';
 import { useApplicationStore } from '/src/apps/portal/stores/applicationStore.js';
+import { useNewsStore } from '/src/apps/portal/stores/newsStore.js';
+import useRoutePagination from '../../../../../src/composables/useRoutePagination.js';
 
 export default {
   components: {
@@ -115,41 +115,36 @@ export default {
     },
     applicationId: {
       type: Number,
-      default: null
+      default: 0
     }
   },
   setup(props) {
     const applicationStore = useApplicationStore();
+    const paginator = useRoutePagination();
 
-    const limit = ref(10);
-    const count = ref(0);
+    const newsStore = useNewsStore();
 
-    const route = useRoute();
-    if (!route.query.page) {
-      route.query.page = '1';
-    }
-
-    const offset = ref((parseInt(route.query.page, 10) - 1) * limit.value);
-    watch(
-      () => route.query.page,
-      (nv) => {
-        if (nv) {
-          offset.value = (parseInt(nv, 10) - 1) * limit.value;
-        }
-      }
-    );
-
-    const input = toRefs(props);
-    const { news, error, loading } = useNews({
-      ...input,
-      limit,
-      count,
-      offset
+    const year = toRefs(props).year;
+    const month = toRefs(props).month;
+    const applicationId = toRefs(props).applicationId;
+    const { loading, error } = newsStore.load({
+      year,
+      month,
+      applicationId,
+      offset: paginator.offset,
+      limit: paginator.limit
     });
 
     const application = computed(
-      () => applicationStore.getById(props.applicationId)
+      () => {
+        if (props.applicationId) {
+          return applicationStore.getById(props.applicationId);
+        }
+        return null;
+      }
     );
+
+    const stories = computed(() => newsStore.stories);
 
     const archive = computed(() => {
       if (props.year) {
@@ -162,13 +157,12 @@ export default {
     });
 
     return {
-      news,
+      stories,
       error,
       loading,
       archive,
       application,
-      count,
-      offset
+      count: paginator.count
     };
   }
 };

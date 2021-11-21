@@ -80,10 +80,10 @@ import ButtonLink from '/src/components/ButtonLink.vue';
 import Article from '/@theme/apps/portal/components/Article.vue';
 
 import { useApplicationStore } from '/src/apps/portal/stores/applicationStore.js';
+import { useNewsStore } from '/src/apps/portal/stores/newsStore.js';
 import usePages from '/src/apps/portal/composables/usePages.js';
-import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 export default {
   components: {
@@ -114,8 +114,13 @@ export default {
     const application = computed(() => store.getByName(props.name));
     const { pages, count: pageCount } = usePages(application);
 
-    const newsCount = ref(0);
-    const { news } = usePromotedNews({ count: newsCount, application });
+    const applicationId = computed(() => application.value?.id);
+    const newsStore = useNewsStore();
+    newsStore.loadPromoted({
+      applicationId
+    });
+    const newsCount = computed(() => newsStore.count);
+    const news = computed(() => newsStore.stories);
 
     const article = computed(() => {
       if (props.id) {
