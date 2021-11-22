@@ -2,8 +2,9 @@
   <div class="bg-gray-200 rounded-lg mt-5 py-2">
     <div class="flex flex-row flex-wrap">
       <div
-          v-for="coach in coaches"
-          class="px-2 py-2 w-full xl:w-1/2 flex flex-row items-center"
+        v-for="coach in coaches"
+        :key="coach.id"
+        class="px-2 py-2 w-full xl:w-1/2 flex flex-row items-center"
       >
         <div class="flex-shrink-0 h-10 w-10">
           <img class="h-10 w-10 rounded-full" src="/assets/portal/no_avatar.png" alt="">
@@ -22,13 +23,19 @@
 </template>
 
 <script>
-import useCoaches from '/src/apps/portal/composables/useCoaches.js';
+import { useCoachStore } from '/src/apps/portal/stores/coachStore.js';
+import { computed } from 'vue';
 
 export default {
   setup() {
+    const store = useCoachStore();
+    store.load();
+
+    const coaches = computed(() => store.coaches);
+
     return {
-      ...useCoaches()
+      coaches
     };
   }
-}
+};
 </script>
