@@ -60,12 +60,14 @@ import Header from '/@theme/components/Header.vue';
 import Highlight from '/@theme/apps/portal/components/Highlight.vue';
 import CoachList from '/@theme/apps/portal/components/CoachList.vue';
 import TrainingWeek from '/@theme/apps/portal/components/TrainingWeek.vue';
-import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
 import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
 import usePages from '/src/apps/portal/composables/usePages.js';
 import Article from '/@theme/apps/portal/components/Article.vue';
-import { computed, ref } from 'vue';
+
 import { useApplicationStore } from '/src/apps/portal/stores/applicationStore.js';
+import { useNewsStore } from '/src/apps/portal/stores/newsStore.js';
+
+import { computed } from 'vue';
 
 export default {
   components: {
@@ -79,10 +81,15 @@ export default {
   },
   setup() {
     const applicationStore = useApplicationStore();
-    const application = computed(() => applicationStore.getByName('trainings'));
+    const application = computed(
+      () => applicationStore.getByName('trainings')?.id
+    );
 
-    const count = ref(0);
-    const { news } = usePromotedNews({ count, application });
+    const newsStore = useNewsStore();
+    newsStore.loadPromoted({ application });
+
+    const count = computed(() => newsStore.count);
+    const news = computed(() => newsStore.stories);
 
     const { pages, count: pageCount } = usePages(application);
 

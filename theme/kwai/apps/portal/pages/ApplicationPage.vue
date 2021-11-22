@@ -116,9 +116,7 @@ export default {
 
     const applicationId = computed(() => application.value?.id);
     const newsStore = useNewsStore();
-    newsStore.loadPromoted({
-      applicationId
-    });
+    newsStore.loadPromoted({ application: applicationId });
     const newsCount = computed(() => newsStore.count);
     const news = computed(() => newsStore.stories);
 

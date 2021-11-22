@@ -90,11 +90,11 @@ import NewsArchive from '/@theme/apps/portal/components/NewsArchive.vue';
 import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
 import Spinner from '/src/components/Spinner.vue';
 import { months } from '/src/common/useDayJS.js';
-import { computed, toRefs } from 'vue';
+import { computed, ref, toRefs, watch } from 'vue';
 import RoutePagination from '/src/components/RoutePagination.vue';
 import { useApplicationStore } from '/src/apps/portal/stores/applicationStore.js';
 import { useNewsStore } from '/src/apps/portal/stores/newsStore.js';
-import useRoutePagination from '../../../../../src/composables/useRoutePagination.js';
+import useRoutePagination from '/src/composables/useRoutePagination.js';
 
 export default {
   components: {
@@ -127,13 +127,19 @@ export default {
     const year = toRefs(props).year;
     const month = toRefs(props).month;
     const applicationId = toRefs(props).applicationId;
+
     const { loading, error } = newsStore.load({
       year,
       month,
-      applicationId,
       offset: paginator.offset,
-      limit: paginator.limit
+      limit: paginator.limit,
+      application: applicationId
     });
+
+    watch(
+      () => newsStore.count,
+      (nv) => { paginator.count.value = nv; }
+    );
 
     const application = computed(
       () => {

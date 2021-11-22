@@ -121,11 +121,11 @@ import Hero from '/@theme/apps/portal/components/Hero.vue';
 import ApplicationCard from '/@theme/apps/portal/components/ApplicationCard.vue';
 import Promotion from '/@theme/apps/portal/components/Promotion.vue';
 import Highlight from '/@theme/apps/portal/components/Highlight.vue';
-
-import usePromotedNews from '/src/apps/portal/composables/usePromotedNews.js';
+import { useApplicationStore } from '/src/apps/portal/stores/applicationStore.js';
+import { useNewsStore } from '/src/apps/portal/stores/newsStore.js';
 
 import config from '/@config';
-import { useApplicationStore } from '/src/apps/portal/stores/applicationStore.js';
+
 import { computed } from 'vue';
 
 export default {
@@ -146,7 +146,9 @@ export default {
     const clubApplication = computed(() => applicationStore.getByName('club'));
     const trainingsApplication = computed(() => applicationStore.getByName('trainings'));
 
-    const { news } = usePromotedNews();
+    const newsStore = useNewsStore();
+    newsStore.loadPromoted();
+    const news = computed(() => newsStore.stories);
 
     return {
       newsApplication,
