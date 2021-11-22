@@ -5,7 +5,7 @@
       class="w-24 mx-auto"
       alt="logo"
     >
-    <p class="mt-4 text-md lg:text-xl text-gray-100">
+    <p class="mt-4 text-md xl:text-xl text-gray-100">
       {{ text }}
     </p>
   </div>
