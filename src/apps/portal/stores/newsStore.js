@@ -67,10 +67,10 @@ export const useNewsStore = defineStore('news', {
       limit = ref(10),
       year = ref(0),
       month = ref(0),
-      applicationId = ref(0)
+      application = ref(0)
     } = {}) {
       const { data, loading, error } = useState(
-        () => `/news/${offset.value}/${limit.value}/${year.value}/${month.value}/${applicationId.value}`,
+        () => `/news/${offset.value}/${limit.value}/${year.value}/${month.value}/${application.value}`,
         () => {
           let api = useHttpApi.url('/news/stories');
           if (offset.value > 0) {
@@ -85,8 +85,8 @@ export const useNewsStore = defineStore('news', {
               api = api.query({ 'filter[month]': month.value });
             }
           }
-          if (applicationId.value) {
-            api = api.query({ 'filter[application]': applicationId.value });
+          if (application.value) {
+            api = api.query({ 'filter[application]': application.value });
           }
           return api.get().json();
         }
@@ -105,13 +105,15 @@ export const useNewsStore = defineStore('news', {
         error
       };
     },
-    loadPromoted({
-      offset = ref(0),
-      limit = ref(10),
-      applicationId = ref(0)
-    } = {}) {
-      const { data, loading, error } = useState(
-        () => `/news/${offset.value}/${limit.value}/${applicationId.value}`,
+    loadPromoted(
+      {
+        offset = ref(0),
+        limit = ref(10),
+        application = ref(0)
+      } = {}
+    ) {
+      const { data, loading, error, reload } = useState(
+        () => `/news/promoted/${offset.value}/${limit.value}/${application.value}`,
         () => {
           let api = useHttpApi.url('/news/stories');
           if (offset.value > 0) {
@@ -121,8 +123,8 @@ export const useNewsStore = defineStore('news', {
             api = api.query({ 'page[limit]': limit.value });
           }
           api = api.query({ 'filter[promoted]': true });
-          if (applicationId.value) {
-            api = api.query({ 'filter[application]': applicationId.value });
+          if (application.value) {
+            api = api.query({ 'filter[application]': application.value });
           }
           return api.get().json();
         }
@@ -138,7 +140,8 @@ export const useNewsStore = defineStore('news', {
 
       return {
         loading,
-        error
+        error,
+        reload
       };
     }
   }
