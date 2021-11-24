@@ -12,7 +12,7 @@
       </p>
     </template>
     <section
-      v-if="pageCount > 0"
+      v-if="articleCount > 0"
       class="bg-gray-200"
     >
       <div class="container mx-auto p-8 flex flex-wrap sm:divide-x sm:divide-gray-300">
@@ -21,23 +21,23 @@
             Alle informatie
           </Header>
           <div
-            v-for="page in pages"
-            :key="page.id"
+            v-for="article in articles"
+            :key="article.id"
             class="mt-4"
           >
             <h2 class="text-2xl">
-              {{ page.title }}
+              {{ article.title }}
             </h2>
             <div
               class="text-sm mb-4"
-              v-html="page.summary"
+              v-html="article.summary"
             />
             <ButtonLink
               class="bg-red-700 text-white mt-6"
               :route="{
                 name: 'portal.' + application.name,
                 params: {
-                  id: page.id
+                  id: article.id
                 }
               }"
             >
@@ -81,7 +81,7 @@ import Article from '/@theme/apps/portal/components/Article.vue';
 
 import { useApplicationStore } from '/src/apps/portal/stores/applicationStore.js';
 import { useNewsStore } from '/src/apps/portal/stores/newsStore.js';
-import usePages from '/src/apps/portal/composables/usePages.js';
+import { useArticleStore } from '/src/apps/portal/stores/articleStore.js';
 
 import { computed } from 'vue';
 
@@ -109,12 +109,15 @@ export default {
     }
   },
   setup(props) {
-    const store = useApplicationStore();
-
-    const application = computed(() => store.getByName(props.name));
-    const { pages, count: pageCount } = usePages(application);
-
+    const applicationStore = useApplicationStore();
+    const application = computed(() => applicationStore.getByName(props.name));
     const applicationId = computed(() => application.value?.id);
+
+    const articleStore = useArticleStore();
+    articleStore.load({ application: applicationId });
+    const articles = computed(() => articleStore.articles);
+    const articleCount = computed(() => articleStore.count);
+
     const newsStore = useNewsStore();
     newsStore.loadPromoted({ application: applicationId });
     const newsCount = computed(() => newsStore.count);
@@ -122,20 +125,19 @@ export default {
 
     const article = computed(() => {
       if (props.id) {
-        if (pages.value) {
-          return pages.value.find((p) => p.id === props.id);
-        }
+        const article = articleStore.getById(props.id);
+        if (article) return article;
       }
-      if (pages.value && pages.value.length > 0) {
-        return pages.value[0];
+      if (articles.value.length > 0) {
+        return articles.value[0];
       }
       return null;
     });
 
     return {
       application,
-      pages,
-      pageCount,
+      articles,
+      articleCount,
       newsCount,
       news,
       article

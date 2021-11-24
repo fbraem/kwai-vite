@@ -39,15 +39,15 @@
       </div>
     </section>
     <section
-      v-if="pageCount > 0"
+      v-if="articleCount > 0"
       class="bg-white"
     >
       <div class="container mx-auto p-8 divide-y space-y-8 divide-gray-300">
         <template
-          v-for="page in pages"
-          :key="page.id"
+          v-for="article in articles"
+          :key="article.id"
         >
-          <Article :article="page" />
+          <Article :article="article" />
         </template>
       </div>
     </section>
@@ -61,13 +61,13 @@ import Highlight from '/@theme/apps/portal/components/Highlight.vue';
 import CoachList from '/@theme/apps/portal/components/CoachList.vue';
 import TrainingWeek from '/@theme/apps/portal/components/TrainingWeek.vue';
 import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
-import usePages from '/src/apps/portal/composables/usePages.js';
 import Article from '/@theme/apps/portal/components/Article.vue';
 
 import { useApplicationStore } from '/src/apps/portal/stores/applicationStore.js';
 import { useNewsStore } from '/src/apps/portal/stores/newsStore.js';
 
 import { computed } from 'vue';
+import { useArticleStore } from '/src/apps/portal/stores/articleStore.js';
 
 export default {
   components: {
@@ -85,20 +85,23 @@ export default {
       () => applicationStore.getByName('trainings')?.id
     );
 
+    const articleStore = useArticleStore();
+    articleStore.load({ application });
+    const articles = computed(() => articleStore.articles);
+    const articleCount = computed(() => articleStore.count);
+
     const newsStore = useNewsStore();
     newsStore.loadPromoted({ application });
 
     const count = computed(() => newsStore.count);
     const news = computed(() => newsStore.stories);
 
-    const { pages, count: pageCount } = usePages(application);
-
     return {
       application,
       news,
       count,
-      pages,
-      pageCount
+      articles,
+      articleCount
     };
   }
 };
