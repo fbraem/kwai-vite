@@ -1,38 +1,28 @@
 /* Composable that get the trainings of a week */
 
-import { formatDate, now } from '/src/common/useDayJS.js';
-import useSWRV from 'swrv';
+import dayjs from '/src/common/useDayJS.js';
 import { computed, ref } from 'vue';
-import { useTrainingService } from '/src/apps/portal/services/TrainingService.js';
-
-const service = useTrainingService();
+import { usetrainingStore } from '/src/apps/portal/stores/trainingStore.js';
 
 export default function useTrainingWeek(options = {}) {
-  const current = ref(options.start ?? now());
+  const store = usetrainingStore();
+
+  const current = ref(options.start ?? dayjs());
   const end = computed(() => current.value.add(7, 'day'));
 
-  const format = (date) => formatDate(date, 'L');
-
-  const { data: trainings, isValidating: loading, error } = useSWRV(
-    () => [
-      '/trainings',
-      format(current.value),
-      format(end.value)
-    ].join('/'),
-    () => service.load({ start: current.value, end: end.value })
-  );
+  const { error, loading } = store.load({ start: current, end });
+  const trainings = computed(() => store.trainings);
+  const count = computed(() => store.count);
 
   const trainingDays = computed(() => {
     const days = {};
-    if (trainings.value?.items) {
-      trainings.value.items.forEach((t) => {
-        const date = formatDate(t.start_date, 'YYYY-MM-DD');
-        if (!days[date]) {
-          days[date] = [];
-        }
-        days[date].push(t);
-      });
-    }
+    trainings.value.forEach((t) => {
+      const date = t.start_date.format('YYYY-MM-DD');
+      if (!days[date]) {
+        days[date] = [];
+      }
+      days[date].push(t);
+    });
     return days;
   });
 
@@ -40,20 +30,20 @@ export default function useTrainingWeek(options = {}) {
     current.value = current.value.add(7, 'day');
   };
   const reset = () => {
-    current.value = options.start ?? now();
+    current.value = options.start ?? dayjs();
   };
   const prev = () => {
     current.value = current.value.subtract(7, 'day');
   };
 
   return {
-    trainings: computed(() => trainings.value?.items ?? []),
+    trainings,
     trainingDays,
-    count: computed(() => trainings.value?.meta.count ?? 0),
+    count,
     loading,
     error,
-    current: computed(() => format(current.value)),
-    end: computed(() => format(end.value)),
+    current: computed(() => current.value.format('L')),
+    end: computed(() => end.value.format('L')),
     next,
     reset,
     prev
