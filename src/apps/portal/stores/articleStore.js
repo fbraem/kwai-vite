@@ -53,7 +53,8 @@ export const useArticleStore = defineStore('articles', {
       application = ref(0)
     } = {}) {
       const { data, loading, error } = useState(
-        () => `/articles/${offset.value}/${limit.value}/${application.value}`,
+        () => (application.value === 0 || application.value) &&
+           `/articles/${offset.value}/${limit.value}/${application.value}`,
         () => {
           let api = useHttp.url('/pages');
           if (offset.value > 0) {
@@ -62,9 +63,7 @@ export const useArticleStore = defineStore('articles', {
           if (limit.value) {
             api = api.query({ 'page[limit]': limit.value });
           }
-          if (application.value) {
-            api = api.query({ 'filter[application]': application.value });
-          }
+          api = api.query({ 'filter[application]': application.value });
 
           return api
             .get()
