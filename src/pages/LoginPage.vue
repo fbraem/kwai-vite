@@ -61,8 +61,8 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import * as yup from 'yup';
 import InputField from '/src/components/form/InputField.vue';
-import useAuthentication from '/src/common/useAuthentication.js';
 import Alert from '/src/components/Alert.vue';
+import { useAuthenticationStore } from '/src/stores/authenticationStore.js';
 
 export default {
   components: {
@@ -71,8 +71,8 @@ export default {
     SubmitButton
   },
   setup() {
+    const authenticationStore = useAuthenticationStore();
     const { handleSubmit, isSubmitting } = useForm();
-    const authenticationService = useAuthentication();
     const loginError = ref(0);
 
     const router = useRouter();
@@ -81,7 +81,7 @@ export default {
     const submitForm = handleSubmit(async(values) => {
       loginError.value = 0;
       try {
-        await authenticationService.login(values.email, values.password);
+        await authenticationStore.login(values.email, values.password);
         // Redirect to back, when meta contains a back property
         if (route.meta?.back && route.meta.back.name !== route.name) {
           await router.push(route.meta.back);

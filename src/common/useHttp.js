@@ -1,6 +1,6 @@
 import wretch from 'wretch';
 import { api } from '/@config';
-import useAuthentication from './useAuthentication.js';
+import { useAuthenticationStore } from '/src/stores/authenticationStore.js';
 
 /**
  * The base implementation for calling an API.
@@ -16,8 +16,8 @@ export const useHttp = wretch(api, {
  * Implementation for calling an API with an access token.
  */
 export const useHttpAuth = useHttp.defer(w => {
-  const { accessToken } = useAuthentication();
-  const token = accessToken?.value;
+  const authenticationStore = useAuthenticationStore();
+  const token = authenticationStore.accessToken;
   if (token) {
     return w.auth(`Bearer ${token}`);
   }
@@ -32,12 +32,12 @@ export const useHttpApi = useHttpAuth
   .accept('application/vnd.api+json')
   .content('application/vnd.api+json')
   .catcher(401, async(err, request) => {
-    const { refresh, accessToken } = useAuthentication();
-    await refresh();
-    if (!accessToken?.value) throw err;
+    const authenticationStore = useAuthenticationStore();
+    await authenticationStore.refresh();
+    if (!authenticationStore.accessToken) throw err;
 
     return request
-      .auth(accessToken.value)
+      .auth(authenticationStore.accessToken)
       .replay()
       .unauthorized(err => { throw err; })
       .json()

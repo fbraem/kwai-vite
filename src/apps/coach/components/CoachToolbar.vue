@@ -43,16 +43,15 @@
 <script>
 import Toolbar from '/src/components/sidebar/Toolbar.vue';
 import IconRoundLink from '/src/components/IconRoundLink.vue';
-import useAuthentication from '/src/common/useAuthentication.js';
+import { useAuthenticationStore } from '/src/stores/authenticationStore.js';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
   components: { IconRoundLink, Toolbar },
   setup() {
+    const authenticationStore = useAuthenticationStore();
     const dropdownOpen = ref(false);
-
-    const { isLoggedIn, logout: doLogout } = useAuthentication();
 
     const router = useRouter();
 
@@ -60,13 +59,13 @@ export default {
       await router.push({ name: 'login' });
     };
     const logout = async() => {
-      await doLogout();
+      await authenticationStore.logout();
       await router.push({ name: 'coach.home' });
       dropdownOpen.value = false;
     };
 
     return {
-      isLoggedIn,
+      isLoggedIn: authenticationStore.isLoggedIn,
       gotoLogin,
       logout,
       dropdownOpen

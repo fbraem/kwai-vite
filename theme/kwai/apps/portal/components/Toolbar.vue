@@ -49,17 +49,17 @@
 <script>
 import MainToolbar from '/src/components/sidebar/Toolbar.vue';
 import IconRoundLink from '/src/components/IconRoundLink.vue';
-import useAuthentication from '/src/common/useAuthentication.js';
-import { ref } from 'vue';
+import { useAuthenticationStore } from '/src/stores/authenticationStore.js';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { website, contact } from '/@config';
 
 export default {
   components: { IconRoundLink, MainToolbar },
   setup() {
-    const dropdownOpen = ref(false);
+    const authenticationStore = useAuthenticationStore();
 
-    const { isLoggedIn, logout: doLogout } = useAuthentication();
+    const dropdownOpen = ref(false);
 
     const router = useRouter();
     const gotoLogin = async() => {
@@ -70,7 +70,7 @@ export default {
       }
     };
     const logout = async() => {
-      await doLogout();
+      await authenticationStore.logout();
       if (router.hasRoute('portal.home')) {
         await router.push({ name: 'portal.home' });
       } else {
@@ -78,6 +78,8 @@ export default {
       }
       dropdownOpen.value = false;
     };
+
+    const isLoggedIn = computed(() => authenticationStore.isLoggedIn);
 
     return {
       dropdownOpen,
