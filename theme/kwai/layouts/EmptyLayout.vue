@@ -45,7 +45,6 @@ export default {
   props: {
     image: {
       type: String,
-      required: true,
       default: '/assets/portal/hero.jpg'
     }
   },
