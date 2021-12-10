@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { useHttpApi, useHttpAuth } from '/src/common/useHttp.js';
+import { useHttpApi } from '/src/common/useHttp.js';
 import { watch } from 'vue';
 import useState from '/src/composables/useState.js';
 
