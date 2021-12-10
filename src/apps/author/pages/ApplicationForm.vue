@@ -51,15 +51,15 @@
 </template>
 
 <script>
-import useApplication from '/src/apps/author/composables/useApplication.js';
 import Header from '/@theme/components/Header.vue';
 import Form from '/src/components/form/Form.vue';
 import InputField from '/src/components/form/InputField.vue';
 import SubmitButton from '/src/components/form/SubmitButton.vue';
 import TextArea from '/src/components/form/TextArea.vue';
-import { useApplicationService } from '/src/apps/author/services/ApplicationService.js';
 import { useField, useForm } from 'vee-validate';
-import { watch } from 'vue';
+import { ref, watch } from 'vue';
+import { useApplicationStore } from '/src/apps/author/stores/applicationStore.js';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   components: { TextArea, SubmitButton, InputField, Header, Form },
@@ -71,27 +71,39 @@ export default {
     }
   },
   setup(props) {
-    const { handleSubmit, isSubmitting } = useForm();
-    const submitForm = handleSubmit(async(values) => {
-      const { save } = useApplicationService();
-      await save(application.value.id, {
-        title: title.value,
-        shortDescription: shortDescription.value,
-        description: longDescription.value
-      });
-      await reload();
-    });
+    const store = useApplicationStore();
+    if (props.id) {
+      store.get(props.id);
+    }
 
-    const { application, reload } = useApplication(props.id);
+    const application = ref({});
     watch(
-      application,
+      () => store.application,
       (nv) => {
+        application.value = nv;
         title.value = nv.title;
         shortDescription.value = nv.short_description;
         longDescription.value = nv.description;
-        console.log(nv);
       }
     );
+
+    const router = useRouter();
+    const route = useRoute();
+
+    const { handleSubmit, isSubmitting } = useForm();
+    const submitForm = handleSubmit(async(values) => {
+      application.value.title = values.title;
+      application.value.description = values.longDescription;
+      application.value.short_description = values.shortDescription;
+
+      await store.save(application.value);
+
+      if (route.meta.prev_route) {
+        router.back();
+      } else {
+        await router.push({ name: 'author.applications' });
+      }
+    });
 
     const {
       value: title,

@@ -6,7 +6,7 @@
     </p>
     <div class="grid grid-cols-2 gap-4">
       <div
-        v-for="application in applications"
+        v-for="application in store.applications"
         :key="application.id"
         class="flex flex-col rounded bg-white overflow-hidden shadow-lg"
       >
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import useApplications from '/src/apps/author/composables/useApplications.js';
+import { useApplicationStore } from '/src/apps/author/stores/applicationStore.js';
 import Header from '/@theme/components/Header.vue';
 import Badge from '/src/components/Badge.vue';
 import IconRoundLink from '/src/components/IconRoundLink.vue';
@@ -68,8 +68,11 @@ export default {
     const ability = useAbility();
     const can = ability.can.bind(ability);
 
+    const store = useApplicationStore();
+    store.load();
+
     return {
-      ...useApplications(),
+      store,
       can
     };
   }
