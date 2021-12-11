@@ -79,33 +79,37 @@
         </div>
       </div>
     </section>
-    <section class="bg-gray-700 p-8">
-      <div class="flex flex-wrap items-center mx-auto">
+    <section class="bg-gray-700 p-8 xl:p-14">
+      <div class="container flex flex-wrap items-center mx-auto">
         <div
-          class="w-full grid grid-cols-1 md:grid-cols-2 gap-10 mx-auto"
+          class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 xl:gap-14"
           style="grid-auto-rows: 1fr;"
         >
           <div
             v-for="(board, index) in information_boards"
             :key="index"
           >
-            <IconCard
-              class="h-full"
-              :title="board.title"
+            <div
+              class="relative flex flex-col break-normal w-full mb-8 shadow-lg rounded-lg text-center h-full"
               :class="board['bg-color'] + ' ' + (board['text-color'] ?? 'text-white')"
             >
-              <div class="flex flex-col justify-center h-full">
+              <h6 class="text-xl font-semibold mb-2 px-4 py-5">
+                {{ board.title }}
+              </h6>
+              <div
+                v-if="board.image"
+                class="flex-grow flex items-center"
+              >
                 <img
-                  v-if="board.image"
                   :alt="board.title"
                   :src="board.image"
                   class="max-w-full w-32 mx-auto p-1 bg-white shadow-md rounded-full"
                 >
-                <div class="mt-5 text-opacity-70">
-                  <div v-html="board.text" />
-                </div>
               </div>
-            </IconCard>
+              <div class="mt-5 text-opacity-70 p-4">
+                <div v-html="board.text" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -115,7 +119,6 @@
 
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
-import IconCard from '/src/components/IconCard.vue';
 import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
 import Hero from '/@theme/apps/portal/components/Hero.vue';
 import ApplicationCard from '/@theme/apps/portal/components/ApplicationCard.vue';
@@ -135,8 +138,7 @@ export default {
     Promotion,
     ApplicationCard,
     Layout,
-    Hero,
-    IconCard
+    Hero
   },
   setup() {
     const applicationStore = useApplicationStore();
