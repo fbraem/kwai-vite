@@ -167,7 +167,9 @@ export const useCoachStore = defineStore('coaches', {
       api = api.json(payload);
       return (coach.id ? api.patch() : api.post())
         .json()
-        .then(json => { this.coach = toCoachModel(json); })
+        .then(json => {
+          this.coach = toCoachModel(json);
+        })
       ;
     }
   }
