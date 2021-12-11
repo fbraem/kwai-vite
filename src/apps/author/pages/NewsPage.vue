@@ -89,39 +89,32 @@
 </template>
 
 <script>
-import useNews from '/src/apps/author/composables/useNews.js';
 import StatCard from '/src/components/StatCard.vue';
-import { ref, watch } from 'vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
 import RoutePagination from '/src/components/RoutePagination.vue';
-import { useRoute } from 'vue-router';
+import useRoutePagination from '/src/composables/useRoutePagination.js';
+import { useNewsStore } from '/src/apps/author/stores/newsStore.js';
+import { computed } from 'vue';
 
 export default {
   components: { RoutePagination, ButtonLink, StatCard },
   setup() {
-    const limit = ref(10);
-    const count = ref(0);
+    const store = useNewsStore();
+    const paginator = useRoutePagination();
 
-    const route = useRoute();
-    if (!route.query.page) {
-      route.query.page = '1';
-    }
-    const offset = ref((parseInt(route.query.page, 10) - 1) * limit.value);
-    watch(
-      () => route.query.page,
-      (nv) => {
-        if (nv) {
-          offset.value = (parseInt(nv, 10) - 1) * limit.value;
-        }
-      }
-    );
+    const { loading, error } = store.load({
+      offset: paginator.offset,
+      limit: paginator.limit
+    });
 
-    const { news: stories } = useNews({ limit, count, offset });
+    const stories = computed(() => store.stories);
+    const count = computed(() => store.count);
 
     return {
       stories,
       count,
-      offset
+      loading,
+      error
     };
   }
 };

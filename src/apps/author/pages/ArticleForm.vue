@@ -118,14 +118,13 @@ import TextArea from '/src/components/form/TextArea.vue';
 import Select from '/src/components/form/Select.vue';
 import CheckBox from '/src/components/form/CheckBox.vue';
 import SubmitButton from '/src/components/form/SubmitButton.vue';
-import { useArticle } from '/src/apps/author/composables/useArticle.js';
 import { useField, useForm, useFormErrors } from 'vee-validate';
 import { computed, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import * as yup from 'yup';
 import dayjs from '/src/common/useDayJS.js';
-import useApplications from '/src/apps/author/composables/useApplications.js';
-import { useArticleService } from '/src/apps/author/services/ArticleService.js';
+import { useArticleStore } from '/src/apps/author/stores/articleStore.js';
+import { useApplicationStore } from '/src/apps/author/stores/applicationStore.js';
 
 export default {
   components: { Header, Form, InputField, TextArea, Select, CheckBox, SubmitButton },
@@ -137,25 +136,21 @@ export default {
     }
   },
   setup(props) {
-    const { applications } = useApplications();
-    const articleApplications = computed(() => {
-      if (applications.value) {
-        return applications.value
-          .filter(application => application.has_pages)
-          .map(application => ({
-            value: application.id,
-            text: application.title
-          }));
-      }
-      return [];
-    });
+    const applicationStore = useApplicationStore();
+    applicationStore.load();
+    const articleApplications = computed(() => applicationStore.articleApplications);
 
     const dateFormat = dayjs().localeData().longDateFormat('L') + ' HH:mm';
 
-    const { article } = props.id ? useArticle(props.id) : { article: ref({}) };
+    const store = useArticleStore();
+    if (props.id) {
+      store.get(props.id);
+    }
+    const article = ref({});
     watch(
-      article,
+      () => store.article,
       (nv) => {
+        article.value = nv;
         title.value = nv.title;
         summary.value = nv.summary;
         content.value = nv.content;
@@ -168,7 +163,7 @@ export default {
     const validationSchema = yup.object({
       title: yup.string().required('Dit is een verplicht veld'),
       summary: yup.string().required('Dit is een verplicht veld'),
-      content: yup.string().required('Dit is een verplicht veld'),
+      content: yup.string().required('Dit is een verplicht veld')
     });
 
     const { handleSubmit, isSubmitting } = useForm({
@@ -179,9 +174,9 @@ export default {
     });
 
     const router = useRouter();
+    const route = useRoute();
 
     const submitForm = handleSubmit(async(values) => {
-      const { save } = useArticleService();
       article.value.enabled = values.enabled === true;
       article.value.remark = values.remark;
       article.value.title = values.title;
@@ -191,9 +186,13 @@ export default {
         id: values.application
       };
 
-      await save(article.value);
+      await store.save(article.value);
 
-      router.back();
+      if (route.meta.prev_route) {
+        router.back();
+      } else {
+        await router.push({ name: 'author.articles' });
+      }
     });
 
     const { value: title } = useField('title');
@@ -204,7 +203,6 @@ export default {
     const { value: remark } = useField('remark');
 
     return {
-      article,
       articleApplications,
       handleSubmit,
       isSubmitting,

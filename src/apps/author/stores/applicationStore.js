@@ -31,6 +31,22 @@ export const useApplicationStore = defineStore('applications', {
     applications: []
   }),
   getters: {
+    newsApplications: (state) => {
+      return state.applications
+        .filter(application => application.has_news)
+        .map(application => ({
+          value: application.id,
+          text: application.title
+        }));
+    },
+    articleApplications: (state) => {
+      return state.applications
+        .filter(application => application.has_pages)
+        .map(application => ({
+          value: application.id,
+          text: application.title
+        }));
+    }
   },
   actions: {
     get(id) {

@@ -94,22 +94,28 @@ import ButtonLink from '/src/components/ButtonLink.vue';
 import StatCard from '/src/components/StatCard.vue';
 import useRoutePagination from '/src/composables/useRoutePagination.js';
 import RoutePagination from '/src/components/RoutePagination.vue';
-import useArticles from '/src/apps/author/composables/useArticles.js';
+import { useArticleStore } from '/src/apps/author/stores/articleStore.js';
+import { computed } from 'vue';
 
 export default {
   components: { RoutePagination, ButtonLink, StatCard },
   setup() {
+    const store = useArticleStore();
     const paginator = useRoutePagination();
 
-    const { articles } = useArticles({
+    const { loading, errors } = store.load({
       limit: paginator.limit,
-      count: paginator.count,
       offset: paginator.offset
     });
 
+    const articles = computed(() => store.articles);
+    const count = computed(() => store.count);
+
     return {
-      count: paginator.count,
-      articles
+      count,
+      articles,
+      loading,
+      errors
     };
   }
 };

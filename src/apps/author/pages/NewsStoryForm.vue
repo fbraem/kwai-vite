@@ -174,14 +174,13 @@ import Select from '/src/components/form/Select.vue';
 import Range from '/src/components/form/Range.vue';
 import DatePicker from '/src/components/form/DatePicker.vue';
 
-import useApplications from '/src/apps/author/composables/useApplications.js';
-import useNewsStory from '/src/apps/author/composables/useNewsStory.js';
 import { useField, useForm, useFormErrors } from 'vee-validate';
 import { computed, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import * as yup from 'yup';
 import dayjs from '/src/common/useDayJS.js';
-import { useNewsService } from '/src/apps/author/services/NewsService.js';
+import { useApplicationStore } from '/src/apps/author/stores/applicationStore.js';
+import { useNewsStore } from '/src/apps/author/stores/newsStore.js';
 
 yup.addMethod(yup.date, 'format', function(format) {
   return this.transform(function(value, original) {
@@ -205,25 +204,21 @@ export default {
     }
   },
   setup(props) {
-    const { applications } = useApplications();
-    const newsApplications = computed(() => {
-      if (applications.value) {
-        return applications.value
-          .filter(application => application.has_news)
-          .map(application => ({
-            value: application.id,
-            text: application.title
-          }));
-      }
-      return [];
-    });
+    const applicationStore = useApplicationStore();
+    applicationStore.load();
+    const newsApplications = computed(() => applicationStore.newsApplications);
 
     const dateFormat = dayjs().localeData().longDateFormat('L') + ' HH:mm';
 
-    const { story } = props.id ? useNewsStory(props.id) : { story: ref({ }) };
+    const store = useNewsStore();
+    if (props.id) {
+      store.get(props.id);
+    }
+    const story = ref({});
     watch(
-      story,
+      () => store.story,
       (nv) => {
+        story.value = nv;
         title.value = nv.title;
         summary.value = nv.summary;
         content.value = nv.content;
@@ -290,9 +285,9 @@ export default {
     });
 
     const router = useRouter();
+    const route = useRoute();
 
     const submitForm = handleSubmit(async(values) => {
-      const { save } = useNewsService();
       story.value.enabled = values.enabled === true;
       story.value.promotion = {
         priority: values.promotionPriority,
@@ -310,9 +305,13 @@ export default {
         id: values.application
       };
 
-      await save(story.value);
+      await store.save(story.value);
 
-      router.back();
+      if (route.meta.prev_route) {
+        router.back();
+      } else {
+        await router.push({ name: 'author.news' });
+      }
     });
 
     const { value: title } = useField('title');
