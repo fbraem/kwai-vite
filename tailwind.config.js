@@ -1,10 +1,9 @@
 module.exports = {
-  purge: [
+  content: [
     './index.html',
     './src/**/*.{vue,js,ts,jsx,tsx,toml}',
     './theme/**/*.{vue,js,ts,jsx,tsx}'
   ],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     minHeight: {
       0: '0',
@@ -14,14 +13,6 @@ module.exports = {
       full: '100vh'
     },
     extend: {}
-  },
-  variants: {
-    extend: {
-      margin: ['hover'],
-      cursor: ['hover', 'focus'],
-      borderRadius: ['hover', 'focus'],
-      backgroundColor: ['odd']
-    }
   },
   plugins: [
     require('@tailwindcss/forms')
