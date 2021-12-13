@@ -16,7 +16,7 @@ const toStoryModel = json => {
       summary: d.attributes.contents[0].summary,
       html_summary: d.attributes.contents[0].html_summary,
       publish_date: dayjs.utc(d.attributes.publish_date, 'YYYY-MM-DD HH:mm:ss').tz(d.attributes.timezone).format('D MMMM, YYYY'),
-      has_more: d.attributes.contents[0].html_content?.length,
+      has_more: (d.attributes.contents[0].html_content ?? '').length > 0,
       html_content: d.attributes.contents[0].html_content,
       content: d.attributes.contents[0].content,
       application: {
