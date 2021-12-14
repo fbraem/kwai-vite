@@ -1,5 +1,7 @@
 // Routes for applications on the portal
 import ApplicationPage from '/@theme/apps/portal/pages/ApplicationPage.vue';
+import ArticlePage from '/@theme/apps/portal/pages/ArticlePage.vue';
+
 import judoImage from '/assets/portal/judo.jpg';
 import clubImage from '/assets/portal/club.jpg';
 import tournamentsImage from '/assets/portal/tournaments.jpg';
@@ -8,17 +10,26 @@ import shopImage from '/assets/portal/shop.jpg';
 export default [
   {
     name: 'portal.club',
-    path: '/club/:id(\\d+)?',
+    path: '/club',
     component: ApplicationPage,
     props: (route) => ({
-      id: route.params.id,
       name: 'club',
       image: clubImage
     }),
     meta: {
       title: 'Club',
       application: 'club'
-    }
+    },
+    children: [
+      {
+        path: ':id(\\d+)',
+        props: (route) => ({
+          id: parseInt(route.params.id)
+        }),
+        name: 'portal.club.article',
+        component: ArticlePage
+      }
+    ]
   },
   {
     name: 'portal.tournaments',

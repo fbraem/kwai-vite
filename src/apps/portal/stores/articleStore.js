@@ -31,8 +31,12 @@ export const useArticleStore = defineStore('articles', {
   actions: {
     get(id) {
       const { data, loading, error } = useState(
-        () => `/articles/${id}`,
-        () => useHttp.url('/pages/').get().json()
+        () => `/articles/${id.value}`,
+        () => useHttp
+          .url('/pages/')
+          .url(id.value)
+          .get()
+          .json()
       );
 
       watch(
