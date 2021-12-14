@@ -9,7 +9,7 @@
           <div class="lg:pt-12 pt-6 w-full md:w-4/12 px-4 text-center -mt-32">
             <ApplicationCard
               v-if="clubApplication"
-              class="bg-white"
+              class="bg-white p-3"
               :application="clubApplication"
               :route="{ name: 'portal.club' }"
               icon="fas fa-users"
@@ -19,7 +19,7 @@
           <div class="pt-6 w-full md:w-4/12 px-4 text-center md:-mt-32">
             <ApplicationCard
               v-if="newsApplication"
-              class="bg-white"
+              class="bg-white p-3"
               :application="newsApplication"
               :route="{ name: 'portal.news' }"
               icon="fas fa-newspaper"
@@ -29,7 +29,7 @@
           <div class="lg:pt-12 pt-6 w-full md:w-4/12 px-4 text-center md:-mt-32">
             <ApplicationCard
               v-if="trainingsApplication"
-              class="bg-white"
+              class="bg-white p-3"
               :application="trainingsApplication"
               :route="{ name: 'portal.trainings' }"
               icon="fas fa-university"
@@ -38,14 +38,20 @@
           </div>
         </div>
         <div class="flex flex-wrap flex-col lg:flex-row items-center mt-8">
-          <Promotion class="w-full lg:w-5/12" />
+          <Promotion
+            class="w-full"
+            :class="{
+              'lg:w-2/3': !highlight,
+              'lg:w-1/3': highlight
+            }"
+          />
           <Highlight
             v-if="highlight"
             :title="highlight.title"
             :image="highlight.image"
             bg-color="bg-red-700"
             text-color="text-white"
-            class="w-full mt-4 lg:w-4/12"
+            class="w-full mt-4 lg:w-1/3"
           >
             <div
               class="text-md font-light mt-2 text-white"
@@ -55,32 +61,33 @@
         </div>
       </div>
     </section>
-    <section class="bg-white py-8">
-      <div class="mx-3 lg:mx-36">
-        <div class="text-left md:text-center">
-          <h2 class="mb-2 text-3xl font-extrabold leading-tight text-gray-900">
-            Nieuws
-          </h2>
-          <p class="text-lg text-gray-500">
-            Het belangrijkste nieuws van onze club op een rijtje.
-          </p>
-        </div>
+    <PageSection
+      v-if="news"
+      class="bg-white"
+    >
+      <div class="text-left md:text-center md:mb-10">
+        <h2 class="mb-2 text-3xl font-extrabold leading-tight text-gray-900">
+          Nieuws
+        </h2>
+        <p class="text-lg text-gray-500">
+          Het belangrijkste nieuws van onze club op een rijtje.
+        </p>
+      </div>
+      <div class="xl:columns-2 xl:gap-10">
         <div
-          v-if="news"
-          class="flex flex-col divide-y divide-gray-300"
+          v-for="story in news"
+          :key="story.id"
+          class="break-inside-avoid p-6"
         >
-          <div
-            v-for="story in news"
-            :key="story.id"
-            class="p-6"
-          >
-            <StoryListItem :story="story" />
-          </div>
+          <StoryListItem
+            :story="story"
+            class="bg-gray-200 p-3 rounded-lg"
+          />
         </div>
       </div>
-    </section>
-    <section class="bg-gray-700 p-8 xl:p-14">
-      <div class="container flex flex-wrap items-center mx-auto">
+    </PageSection>
+    <PageSection class="bg-gray-700">
+      <div class="flex flex-wrap items-center">
         <div
           class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 xl:gap-14"
           style="grid-auto-rows: 1fr;"
@@ -113,13 +120,14 @@
           </div>
         </div>
       </div>
-    </section>
+    </PageSection>
   </Layout>
 </template>
 
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
+import PageSection from '/@theme/components/PageSection.vue';
 import Hero from '/@theme/apps/portal/components/Hero.vue';
 import ApplicationCard from '/@theme/apps/portal/components/ApplicationCard.vue';
 import Promotion from '/@theme/apps/portal/components/Promotion.vue';
@@ -133,6 +141,7 @@ import { computed } from 'vue';
 
 export default {
   components: {
+    PageSection,
     StoryListItem,
     Highlight,
     Promotion,
