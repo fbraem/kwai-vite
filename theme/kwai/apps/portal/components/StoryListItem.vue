@@ -30,6 +30,7 @@
       v-html="story.html_summary"
     />
     <ButtonLink
+      v-if="story.has_more"
       class="bg-red-700 text-white"
       :route="{ name: 'portal.news.story', params: { id: story.id }}"
     >
@@ -47,7 +48,8 @@ export default {
   },
   props: {
     story: {
-      required: true
+      required: true,
+      type: Object
     }
   }
 };
