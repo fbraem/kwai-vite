@@ -15,7 +15,7 @@
       v-if="articleCount > 0"
       class="bg-gray-200"
     >
-      <div class="flex justify-center gap-10">
+      <div class="flex flex-wrap justify-center gap-10">
         <div
           v-for="article in articles"
           :key="article.id"
@@ -106,11 +106,6 @@ export default {
     image: {
       type: String,
       required: true
-    },
-    id: {
-      type: String,
-      required: false,
-      default: null
     }
   },
   setup(props) {
@@ -137,7 +132,7 @@ export default {
           id
         }
       });
-      articleSection.value.scrollIntoView();
+      articleSection.value.scrollIntoView(true);
     };
 
     return {
