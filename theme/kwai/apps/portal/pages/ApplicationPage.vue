@@ -50,7 +50,7 @@
         Nieuws
       </Header>
       <div class="text-sm text-gray-700 mt-1">
-        Het belangrijkste nieuws in de categorie &quot;{{application.title}}&quot;
+        Het belangrijkste nieuws in de categorie &quot;{{ application.title }}&quot;
       </div>
       <div class="xl:columns-2 xl:gap-10">
         <div
