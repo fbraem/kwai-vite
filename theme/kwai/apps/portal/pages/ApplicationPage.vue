@@ -66,11 +66,7 @@
       </div>
     </PageSection>
     <div ref="articleSection" />
-    <PageSection
-      class="border-t border-gray-300"
-    >
-      <router-view />
-    </PageSection>
+    <router-view />
   </Layout>
 </template>
 
