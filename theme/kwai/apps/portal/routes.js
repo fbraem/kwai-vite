@@ -12,10 +12,10 @@ export default [
     name: 'portal.club',
     path: '/club',
     component: ApplicationPage,
-    props: (route) => ({
+    props: {
       name: 'club',
       image: clubImage
-    }),
+    },
     meta: {
       title: 'Club',
       application: 'club'
@@ -35,10 +35,10 @@ export default [
     name: 'portal.tournaments',
     path: '/tournaments',
     component: ApplicationPage,
-    props: (route) => ({
+    props: {
       name: 'tournaments',
       image: tournamentsImage
-    }),
+    },
     meta: {
       title: 'Tornooien',
       application: 'tournaments'
@@ -58,11 +58,10 @@ export default [
     name: 'portal.judo',
     path: '/judo',
     component: ApplicationPage,
-    props: (route) => ({
-      id: route.params.id,
+    props: {
       name: 'judo',
       image: judoImage
-    }),
+    },
     meta: {
       title: 'Judo',
       application: 'judo'
@@ -82,11 +81,10 @@ export default [
     name: 'portal.shop',
     path: '/shop',
     component: ApplicationPage,
-    props: (route) => ({
-      id: route.params.id,
+    props: {
       name: 'shop',
       image: shopImage
-    }),
+    },
     meta: {
       title: 'Materiaal',
       application: 'shop'
