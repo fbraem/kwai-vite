@@ -33,21 +33,30 @@ export default [
   },
   {
     name: 'portal.tournaments',
-    path: '/tournaments/:id(\\d+)?',
+    path: '/tournaments',
     component: ApplicationPage,
     props: (route) => ({
-      id: route.params.id,
       name: 'tournaments',
       image: tournamentsImage
     }),
     meta: {
       title: 'Tornooien',
       application: 'tournaments'
-    }
+    },
+    children: [
+      {
+        path: ':id(\\d+)',
+        props: (route) => ({
+          id: parseInt(route.params.id)
+        }),
+        name: 'portal.tournaments.article',
+        component: ArticlePage
+      }
+    ]
   },
   {
     name: 'portal.judo',
-    path: '/judo/:id(\\d+)?',
+    path: '/judo',
     component: ApplicationPage,
     props: (route) => ({
       id: route.params.id,
@@ -57,11 +66,21 @@ export default [
     meta: {
       title: 'Judo',
       application: 'judo'
-    }
+    },
+    children: [
+      {
+        path: ':id(\\d+)',
+        props: (route) => ({
+          id: parseInt(route.params.id)
+        }),
+        name: 'portal.judo.article',
+        component: ArticlePage
+      }
+    ]
   },
   {
     name: 'portal.shop',
-    path: '/shop/:id(\\d+)?',
+    path: '/shop',
     component: ApplicationPage,
     props: (route) => ({
       id: route.params.id,
@@ -71,6 +90,16 @@ export default [
     meta: {
       title: 'Materiaal',
       application: 'shop'
-    }
+    },
+    children: [
+      {
+        path: ':id(\\d+)',
+        props: (route) => ({
+          id: parseInt(route.params.id)
+        }),
+        name: 'portal.shop.article',
+        component: ArticlePage
+      }
+    ]
   }
 ];
