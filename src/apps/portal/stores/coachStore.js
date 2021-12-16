@@ -33,6 +33,7 @@ export const useCoachStore = defineStore('coaches', {
         '/coaches',
         () => useHttpApi
           .url('/coaches')
+          .query({ 'filter[active]': true })
           .get()
           .json()
       );
