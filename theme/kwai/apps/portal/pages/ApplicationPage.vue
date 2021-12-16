@@ -45,6 +45,7 @@
     </PageSection>
     <PageSection
       v-if="newsCount > 0"
+      class="bg-gray-100"
     >
       <Header>
         Nieuws
@@ -60,7 +61,7 @@
         >
           <StoryListItem
             :story="story"
-            class="bg-gray-200 p-3 rounded-lg"
+            class="border border-gray-300 bg-white p-3 rounded-lg"
           />
         </div>
       </div>

@@ -63,7 +63,7 @@
     </section>
     <PageSection
       v-if="news"
-      class="bg-white"
+      class="bg-gray-100"
     >
       <div class="text-left md:text-center md:mb-10">
         <h2 class="mb-2 text-3xl font-extrabold leading-tight text-gray-900">
@@ -81,7 +81,7 @@
         >
           <StoryListItem
             :story="story"
-            class="bg-gray-200 p-3 rounded-lg"
+            class="border border-gray-300 p-3 rounded-lg bg-white"
           />
         </div>
       </div>
