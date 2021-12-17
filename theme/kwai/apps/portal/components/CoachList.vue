@@ -1,13 +1,17 @@
 <template>
-  <div class="bg-gray-200 rounded-lg mt-5 py-2">
+  <div class="py-2">
     <div class="flex flex-row flex-wrap">
       <div
         v-for="coach in coaches"
         :key="coach.id"
-        class="px-2 py-2 w-full xl:w-1/2 flex flex-row items-center"
+        class="px-2 py-2 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex flex-row items-center"
       >
         <div class="flex-shrink-0 h-10 w-10">
-          <img class="h-10 w-10 rounded-full" src="/assets/portal/no_avatar.png" alt="">
+          <img
+            class="h-10 w-10 rounded-full"
+            src="/assets/portal/no_avatar.png"
+            alt="no image"
+          >
         </div>
         <div class="ml-4">
           <div class="text-sm font-medium text-gray-900">
