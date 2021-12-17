@@ -3,7 +3,6 @@ import Page from '/@theme/Page.vue';
 import LoginPage from '/@theme/pages/LoginPage.vue';
 import NewsPage from '/@theme/apps/portal/pages/NewsPage.vue';
 import StoryPage from '/@theme/apps/portal/pages/StoryPage.vue';
-import TrainingsPage from '/@theme/apps/portal/pages/TrainingsPage.vue';
 import EventsPage from '/@theme/apps/portal/pages/EventsPage.vue';
 
 import Sidebar from '/@theme/apps/portal/components/PortalSidebar.vue';
@@ -69,15 +68,6 @@ export default [
         meta: {
           title: 'Nieuws',
           application: 'news'
-        }
-      },
-      {
-        name: 'portal.trainings',
-        path: '/trainings',
-        component: TrainingsPage,
-        meta: {
-          title: 'Trainingen',
-          application: 'trainings'
         }
       },
       {

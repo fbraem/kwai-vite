@@ -1,11 +1,13 @@
 // Routes for applications on the portal
 import ApplicationPage from '/@theme/apps/portal/pages/ApplicationPage.vue';
 import ArticlePage from '/@theme/apps/portal/pages/ArticlePage.vue';
+import TrainingsPage from '/@theme/apps/portal/pages/TrainingsPage.vue';
 
 import judoImage from '/assets/portal/judo.jpg';
 import clubImage from '/assets/portal/club.jpg';
 import tournamentsImage from '/assets/portal/tournaments.jpg';
 import shopImage from '/assets/portal/shop.jpg';
+import trainingImage from '/assets/portal/training.jpg';
 
 export default [
   {
@@ -27,6 +29,29 @@ export default [
           id: parseInt(route.params.id)
         }),
         name: 'portal.club.article',
+        component: ArticlePage
+      }
+    ]
+  },
+  {
+    name: 'portal.trainings',
+    path: '/trainings',
+    component: TrainingsPage,
+    props: {
+      name: 'trainings',
+      image: trainingImage
+    },
+    meta: {
+      title: 'Trainingen',
+      application: 'trainings'
+    },
+    children: [
+      {
+        path: ':id(\\d+)',
+        props: (route) => ({
+          id: parseInt(route.params.id)
+        }),
+        name: 'portal.trainings.article',
         component: ArticlePage
       }
     ]
