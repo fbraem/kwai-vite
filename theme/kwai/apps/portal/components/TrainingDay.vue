@@ -2,19 +2,20 @@
   <tr>
     <td class="text-center px-6 py-3">
       <div class="font-semibold">
-        {{ day }}
+        {{ nameOfDay }}
       </div>
       <div class="text-sm">
-        {{ formattedDate}}
+        {{ formattedDate }}
       </div>
     </td>
     <td class="pl-6">
       <div class="divide-y divide-y-4 divide-gray-400 w-full">
         <div
-            v-for="training in trainings"
-            class="py-3"
+          v-for="training in trainings"
+          :key="training.id"
+          class="py-3"
         >
-          <TrainingPeriod :training="training"></TrainingPeriod>
+          <TrainingPeriod :training="training" />
         </div>
       </div>
     </td>
@@ -42,12 +43,12 @@ export default {
   setup(props) {
     const date = createDateFromFormat(props.day, 'YYYY-MM-DD');
     const formattedDate = formatDate(date, 'L');
-    const day = formatDate(date, 'dddd');
+    const nameOfDay = formatDate(date, 'dddd');
 
     return {
       formattedDate,
-      day
+      nameOfDay
     };
   }
-}
+};
 </script>
