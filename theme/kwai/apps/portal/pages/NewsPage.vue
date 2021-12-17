@@ -12,75 +12,83 @@
         regelmatig eens kijken om op de hoogte te blijven!
       </p>
     </template>
-    <section class="bg-gray-200">
-      <div class="container mx-auto p-8">
-        <div class="hidden sm:block float-right bg-gray-200 ml-3 w-1/3 rounded-lg">
-          <NewsArchive />
-        </div>
-        <div class="mx-auto w-full">
-          <div
-            v-if="applicationId && application"
-            class="mb-5"
+    <PageSection class="bg-gray-200">
+      <div class="float-right">
+        <Popover
+          v-slot="{ open }"
+          class="relative"
+        >
+          <PopoverButton
+            class="inline-flex items-center px-3 py-2 text-base font-medium text-white bg-red-700 rounded-md group hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
           >
-            <h1 class="text-2xl md:text-4xl pt-3 font-extrabold mb-2">
-              {{ application.title }}
-            </h1>
-            <h2 class="text-sm italic mb-2">
-              Alle nieuwsberichten gepubliceerd voor "{{ application.title }}"
-            </h2>
-            <router-link
-              class="text-sm text-blue-600"
-              :to="{ name: 'portal.news' }"
-            >
-              <i class="far fa-arrow-alt-circle-left" />
-              Terug naar het nieuws van de dag
-            </router-link>
-          </div>
-          <div
-            v-if="archive"
-            class="mb-4"
-          >
-            <h1 class="text-2xl md:text-4xl font-extrabold">
-              Archief van {{ archive.month }} {{ archive.year }}
-            </h1>
-            <router-link
-              class="text-sm text-blue-600"
-              :to="{ name: 'portal.news' }"
-            >
-              <i class="far fa-arrow-alt-circle-left" />
-              Terug naar het nieuws van de dag
-            </router-link>
-          </div>
-          <div
-            v-for="story in stories"
-            :key="story.id"
-            class="mb-10"
-          >
-            <StoryListItem :story="story" />
-          </div>
-          <RoutePagination
-            class="mt-10 bg-white"
-            :count="count"
-            previous_text="Vorige"
-            next_text="Volgende"
-          >
-            <template #showing="{ from, to, count }">
-              <p class="text-sm text-gray-700">
-                <span class="font-medium">{{ from }}</span>
-                tot
-                <span class="font-medium">{{ to }}</span>
-                nieuwsberichten van in totaal
-                <span class="font-medium">{{ count }}</span>.
-              </p>
-            </template>
-          </RoutePagination>
-        </div>
-        <div class="sm:hidden bg-gray-200 p-3 mt-5 w-full rounded-lg">
-          <NewsArchive />
-        </div>
+            <i class="fas fa-archive mr-2" />Archief
+          </PopoverButton>
+          <PopoverOverlay
+            class="bg-black"
+            :class="open ? 'opacity-30 fixed inset-0' : 'opacity-0'"
+          />
+          <PopoverPanel class="absolute right-0 z-10 bg-white px-3 py-2 mt-1 rounded-md w-screen max-w-lg">
+            <NewsArchive />
+          </PopoverPanel>
+        </Popover>
       </div>
-      <div class="hidden sm:block clear-both" />
-    </section>
+      <div
+        v-if="applicationId && application"
+        class="mb-5"
+      >
+        <h1 class="text-2xl md:text-4xl pt-3 font-extrabold mb-2">
+          {{ application.title }}
+        </h1>
+        <h2 class="text-sm italic mb-2">
+          Alle nieuwsberichten gepubliceerd voor "{{ application.title }}"
+        </h2>
+        <router-link
+          class="text-sm text-blue-600"
+          :to="{ name: 'portal.news' }"
+        >
+          <i class="far fa-arrow-alt-circle-left" />
+          Terug naar het nieuws van de dag
+        </router-link>
+      </div>
+      <div
+        v-if="archive"
+        class="mb-4"
+      >
+        <h1 class="text-2xl md:text-4xl font-extrabold">
+          Archief van {{ archive.month }} {{ archive.year }}
+        </h1>
+        <router-link
+          class="text-sm text-blue-600"
+          :to="{ name: 'portal.news' }"
+        >
+          <i class="far fa-arrow-alt-circle-left" />
+          Terug naar het nieuws van de dag
+        </router-link>
+      </div>
+      <div
+        v-for="story in stories"
+        :key="story.id"
+        class="mb-10"
+      >
+        <StoryListItem :story="story" />
+      </div>
+      <RoutePagination
+        class="mt-10 bg-white"
+        :count="count"
+        previous_text="Vorige"
+        next_text="Volgende"
+      >
+        <template #showing="{ from, to, count }">
+          <p class="text-sm text-gray-700">
+            <span class="font-medium">{{ from }}</span>
+            tot
+            <span class="font-medium">{{ to }}</span>
+            nieuwsberichten van in totaal
+            <span class="font-medium">{{ count }}</span>.
+          </p>
+        </template>
+      </RoutePagination>
+    </PageSection>
   </Layout>
 </template>
 
@@ -95,14 +103,21 @@ import RoutePagination from '/src/components/RoutePagination.vue';
 import { useApplicationStore } from '/src/apps/portal/stores/applicationStore.js';
 import { useNewsStore } from '/src/apps/portal/stores/newsStore.js';
 import useRoutePagination from '/src/composables/useRoutePagination.js';
+import PageSection from '/@theme/components/PageSection.vue';
+import { Popover, PopoverButton, PopoverPanel, PopoverOverlay } from '@headlessui/vue';
 
 export default {
   components: {
+    PageSection,
     RoutePagination,
     StoryListItem,
     Layout,
     NewsArchive,
-    Spinner
+    Spinner,
+    Popover,
+    PopoverButton,
+    PopoverPanel,
+    PopoverOverlay
   },
   props: {
     year: {
