@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td class="text-center px-6 py-3">
+    <td class="text-left px-6 py-3">
       <div class="font-semibold">
         {{ nameOfDay }}
       </div>
@@ -9,7 +9,7 @@
       </div>
     </td>
     <td class="pl-6">
-      <div class="divide-y divide-y-4 divide-gray-400 w-full">
+      <div class="divide-y divide-y-1 divide-gray-400 w-full">
         <div
           v-for="training in trainings"
           :key="training.id"
@@ -24,7 +24,7 @@
 
 <script>
 import TrainingPeriod from '/@theme/apps/portal/components/TrainingPeriod.vue';
-import { createDateFromFormat, formatDate } from '/src/common/useDayJS.js';
+import dayjs from '/src/common/useDayJS.js';
 
 export default {
   components: {
@@ -41,9 +41,9 @@ export default {
     }
   },
   setup(props) {
-    const date = createDateFromFormat(props.day, 'YYYY-MM-DD');
-    const formattedDate = formatDate(date, 'L');
-    const nameOfDay = formatDate(date, 'dddd');
+    const date = dayjs(props.day, 'YYYY-MM-DD');
+    const formattedDate = date.format('L');
+    const nameOfDay = date.format('dddd');
 
     return {
       formattedDate,
