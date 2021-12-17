@@ -1,3 +1,4 @@
+/* eslint-disable import/first */
 import dayjs from 'dayjs';
 
 import utc from 'dayjs/plugin/utc';
