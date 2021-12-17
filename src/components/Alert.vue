@@ -13,7 +13,7 @@
       </h3>
       <div class="flex items-center">
         <i
-          v-if="icon"
+          v-if="iconClass"
           class="mr-2"
           :class="iconClass"
         />
@@ -45,22 +45,22 @@ const icons = {
 
 const css = {
   danger: {
-    'bg-red-100': true,
+    'bg-red-200': true,
     'border-red-500': true,
     'text-red-700': true
   },
   warning: {
-    'bg-yellow-100': true,
+    'bg-yellow-200': true,
     'border-yellow-500': true,
     'text-yellow-700': true
   },
   info: {
-    'bg-blue-100': true,
+    'bg-blue-200': true,
     'border-blue-500': true,
     'text-blue-700': true
   },
   success: {
-    'bg-green-100': true,
+    'bg-green-200': true,
     'border-green-500': true,
     'text-green-700': true
   }
@@ -91,6 +91,7 @@ export default {
       if (props.type) {
         return css[props.type];
       }
+      return false;
     });
 
     const iconClass = computed(() => {
@@ -100,6 +101,7 @@ export default {
       if (props.type) {
         return icons[props.type];
       }
+      return false;
     });
 
     return {
