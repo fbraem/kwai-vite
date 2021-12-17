@@ -5,7 +5,7 @@
         Trainingen
         <Spinner v-if="loading" />
       </Header>
-      <p class="text-sm text-gray-600">
+      <p class="text-sm text-gray-700 mt-1">
         Trainingen van
         <span class="font-semibold">{{ current }}</span>
         tot
@@ -35,14 +35,13 @@
     <Alert
       v-if="count === 0"
       type="info"
-      icon="fas fa-info"
       class="mb-5"
     >
       Er zijn geen trainingen gepland voor deze periode.
     </Alert>
     <table
       v-if="count > 0"
-      class="divide-y divide-gray-400 w-full bg-gray-200 rounded-lg"
+      class="divide-y divide-gray-400 w-full bg-gray-200 rounded-lg mb-3"
     >
       <thead>
         <tr>
@@ -50,7 +49,7 @@
             Datum
           </th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Informatie
+            Tijdstip
           </th>
         </tr>
       </thead>
@@ -64,6 +63,15 @@
         />
       </template>
     </table>
+    <p class="text-sm text-gray-700">
+      Bekijk de volledige maand in onze
+      <router-link
+        :to="{ name: 'portal.events' }"
+        class="text-blue-500 underline"
+      >
+        activiteiten kalender
+      </router-link>
+    </p>
   </div>
 </template>
 
