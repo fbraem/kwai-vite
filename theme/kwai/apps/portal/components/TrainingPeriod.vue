@@ -1,9 +1,15 @@
 <template>
   <div class="flex flex-col lg:flex-row flex-wrap">
     <div class="flex w-full sm:w-1/2">
-      <div>{{ startHour }}</div>
-      <div class="mx-2"><i class="fas fa-arrows-alt-h"></i></div>
-      <div>{{ endHour }}</div>
+      <div>
+        {{ startHour }}u
+      </div>
+      <div class="mx-2">
+        <i class="fas fa-arrows-alt-h" />
+      </div>
+      <div>
+        {{ endHour }}u
+      </div>
     </div>
     <div class="w-full md:w-1/2">
       <ul>
@@ -35,7 +41,7 @@ export default {
     return {
       startHour,
       endHour
-    }
+    };
   }
-}
+};
 </script>
