@@ -12,6 +12,7 @@
         :id="id"
         class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         :value="modelValue"
+        v-bind="$attrs"
         @change="$emit('update:modelValue', $event.target.value)"
       >
         <option

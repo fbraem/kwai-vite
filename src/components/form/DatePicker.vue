@@ -12,7 +12,7 @@
         :id="id"
         ref="input"
         type="text"
-        :placeholder="placeholder"
+        v-bind="$attrs"
         class="rounded w-full"
         :class="{ 'border-red-600': error }"
         :value="modelValue"
@@ -219,10 +219,6 @@ export default {
     label: {
       type: String,
       default: null
-    },
-    placeholder: {
-      type: String,
-      default: ''
     },
     // eslint-disable-next-line vue/require-prop-types
     modelValue: {

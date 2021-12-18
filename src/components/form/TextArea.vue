@@ -10,11 +10,11 @@
     <!--suppress HtmlFormInputWithoutLabel -->
     <textarea
       :id="id"
-      :placeholder="placeholder"
       class="rounded w-full rounded-md block mt-1 sm:text-sm shadow-sm"
       :class="{ 'border-red-600': error }"
       :value="modelValue"
       :rows="rows"
+      v-bind="$attrs"
       @input="$emit('update:modelValue', $event.target.value)"
     />
     <p
@@ -45,10 +45,6 @@ export default {
     label: {
       type: String,
       default: null
-    },
-    placeholder: {
-      type: String,
-      default: ''
     },
     rows: {
       type: Number,

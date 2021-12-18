@@ -19,10 +19,10 @@
         <input
           :id="id"
           :type="type"
-          :placeholder="placeholder"
           class="rounded w-full"
           :class="{ 'border-red-600': error, 'pl-10': leftIcon, 'pr-10': rightIcon }"
           :value="modelValue"
+          v-bind="$attrs"
           @input="$emit('update:modelValue', $event.target.value)"
         >
         <span
@@ -45,6 +45,7 @@
 
 <script>
 export default {
+  inheritAttrs: false,
   props: {
     id: {
       type: String,
@@ -61,10 +62,6 @@ export default {
     label: {
       type: String,
       default: null
-    },
-    placeholder: {
-      type: String,
-      default: ''
     },
     type: {
       type: String,

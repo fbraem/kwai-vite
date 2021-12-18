@@ -7,6 +7,7 @@
         type="checkbox"
         class="focus:ring-blue-600 h-4 w-4 rounded"
         :value="value"
+        v-bind="$attrs"
         :class="color"
       />
     </div>

@@ -13,6 +13,7 @@
         :id="id"
         type="range"
         :value="modelValue"
+        v-bind="$attrs"
         class="appearance-none range-slider__range"
         @input="$emit('update:modelValue', $event.target.value)"
       >
