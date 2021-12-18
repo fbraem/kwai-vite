@@ -15,33 +15,10 @@
       v-if="articleCount > 0"
       class="bg-gray-200"
     >
-      <div class="flex flex-wrap justify-center gap-10">
-        <div
-          v-for="article in articles"
-          :key="article.id"
-          class="w-1/3"
-        >
-          <IconCard
-            :title="article.title"
-            class="bg-white h-full p-3"
-          >
-            <div class="flex flex-col justify-between h-full">
-              <div
-                class="grow text-sm"
-                v-html="article.summary"
-              />
-              <div class="mt-2">
-                <ButtonLink
-                  class="bg-red-700 text-white mt-6"
-                  :method="() => gotoArticle(article.id)"
-                >
-                  <i class="fas fa-angle-right mr-2" />Lees verder
-                </ButtonLink>
-              </div>
-            </div>
-          </IconCard>
-        </div>
-      </div>
+      <ArticleCards
+        :articles="articles"
+        :goto-article="(id) => gotoArticle(id)"
+      />
     </PageSection>
     <PageSection class="bg-white">
       <TrainingWeek />
@@ -101,9 +78,11 @@ import { useNewsStore } from '/src/apps/portal/stores/newsStore.js';
 import { computed, ref } from 'vue';
 import { useArticleStore } from '/src/apps/portal/stores/articleStore.js';
 import { useRouter } from 'vue-router';
+import ArticleCards from '../components/ArticleCards.vue';
 
 export default {
   components: {
+    ArticleCards,
     StoryListItem,
     TrainingWeek,
     CoachList,
