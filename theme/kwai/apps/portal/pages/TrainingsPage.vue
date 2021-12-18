@@ -65,8 +65,6 @@
 <script>
 import Layout from '/@theme/layouts/LandingLayout.vue';
 import Header from '/@theme/components/Header.vue';
-import IconCard from '/src/components/IconCard.vue';
-import ButtonLink from '/src/components/ButtonLink.vue';
 import CoachList from '/@theme/apps/portal/components/CoachList.vue';
 import TrainingWeek from '/@theme/apps/portal/components/TrainingWeek.vue';
 import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
@@ -87,8 +85,6 @@ export default {
     TrainingWeek,
     CoachList,
     Header,
-    ButtonLink,
-    IconCard,
     Layout,
     PageSection
   },
