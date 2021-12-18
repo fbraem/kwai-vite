@@ -12,16 +12,17 @@
         regelmatig eens kijken om op de hoogte te blijven!
       </p>
     </template>
-    <PageSection class="bg-gray-200">
-      <div class="float-right">
+    <PageSection class="relative bg-gray-200">
+      <div class="absolute right-0 top-4 mr-2">
         <Popover
           v-slot="{ open }"
           class="relative"
         >
           <PopoverButton
-            class="inline-flex items-center px-3 py-2 text-base font-medium text-white bg-red-700 rounded-md group hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            class="bg-red-700 text-white font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1 hover:text-opacity-80"
           >
             <i class="fas fa-archive mr-2" />Archief
+            <i class="fas fa-chevron-down ml-6" />
           </PopoverButton>
           <PopoverOverlay
             class="bg-black"
@@ -65,12 +66,17 @@
           Terug naar het nieuws van de dag
         </router-link>
       </div>
-      <div
-        v-for="story in stories"
-        :key="story.id"
-        class="mb-10"
-      >
-        <StoryListItem :story="story" />
+      <div class="xl:columns-2 xl:gap-10">
+        <div
+          v-for="story in stories"
+          :key="story.id"
+          class="break-inside-avoid py-6"
+        >
+          <StoryListItem
+            :story="story"
+            class="border border-gray-300 bg-white p-3 rounded-lg"
+          />
+        </div>
       </div>
       <RoutePagination
         class="mt-10 bg-white"
