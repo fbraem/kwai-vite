@@ -77,7 +77,7 @@
         <div
           v-for="story in news"
           :key="story.id"
-          class="break-inside-avoid p-6"
+          class="break-inside-avoid py-3 md:py-6"
         >
           <StoryListItem
             :story="story"
