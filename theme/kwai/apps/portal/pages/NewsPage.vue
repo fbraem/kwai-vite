@@ -80,7 +80,7 @@
       </div>
       <RoutePagination
         class="mt-10 bg-white"
-        :count="count"
+        :count="newsCount"
         previous_text="Vorige"
         next_text="Volgende"
       >
@@ -144,6 +144,8 @@ export default {
     const paginator = useRoutePagination();
 
     const newsStore = useNewsStore();
+    const stories = computed(() => newsStore.stories);
+    const newsCount = computed(() => newsStore.count);
 
     const year = toRefs(props).year;
     const month = toRefs(props).month;
@@ -171,8 +173,6 @@ export default {
       }
     );
 
-    const stories = computed(() => newsStore.stories);
-
     const archive = computed(() => {
       if (props.year) {
         return {
@@ -189,7 +189,7 @@ export default {
       loading,
       archive,
       application,
-      count: paginator.count
+      newsCount
     };
   }
 };
