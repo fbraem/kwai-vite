@@ -28,7 +28,7 @@
             class="bg-black"
             :class="open ? 'opacity-30 fixed inset-0' : 'opacity-0'"
           />
-          <PopoverPanel class="absolute right-0 z-10 bg-white px-3 py-2 mt-1 rounded-md w-screen max-w-lg">
+          <PopoverPanel class="absolute right-0 z-10 bg-white px-3 py-2 mt-1 rounded-md w-screen max-w-xs">
             <NewsArchive />
           </PopoverPanel>
         </Popover>
