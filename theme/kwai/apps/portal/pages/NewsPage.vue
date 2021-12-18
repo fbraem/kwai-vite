@@ -13,7 +13,7 @@
       </p>
     </template>
     <PageSection class="relative bg-gray-200">
-      <div class="absolute right-2 top-2 lg:top-4 mr-2">
+      <div class="float-right">
         <Popover
           v-slot="{ open }"
           class="relative"
@@ -55,7 +55,7 @@
         v-if="archive"
         class="mb-4"
       >
-        <h1 class="text-2xl md:text-4xl font-extrabold">
+        <h1 class="text-2xl md:text-4xl font-extrabold mb-2">
           Archief van {{ archive.month }} {{ archive.year }}
         </h1>
         <router-link
