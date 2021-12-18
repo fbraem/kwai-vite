@@ -208,6 +208,7 @@ import { computed, ref, watch } from 'vue';
 import SubmitButton from '/src/components/form/SubmitButton.vue';
 
 export default {
+  inheritAttrs: false,
   components: {
     SubmitButton, Popover, PopoverButton, PopoverPanel, PopoverOverlay
   },
