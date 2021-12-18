@@ -13,7 +13,7 @@
       </p>
     </template>
     <PageSection class="relative bg-gray-200">
-      <div class="absolute right-0 top-4 mr-2">
+      <div class="absolute right-0 top-2 lg:top-4 mr-2">
         <Popover
           v-slot="{ open }"
           class="relative"
@@ -34,7 +34,7 @@
         </Popover>
       </div>
       <div
-        v-if="applicationId && application"
+        v-if="application"
         class="mb-5"
       >
         <h1 class="text-2xl md:text-4xl pt-3 font-extrabold mb-2">
@@ -165,7 +165,7 @@ export default {
     const application = computed(
       () => {
         if (props.applicationId) {
-          return applicationStore.getById(props.applicationId);
+          return applicationStore.getById(props.applicationId.toString());
         }
         return null;
       }
