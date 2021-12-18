@@ -9,7 +9,7 @@
         :value="value"
         v-bind="$attrs"
         :class="color"
-      />
+      >
     </div>
     <div class="ml-3 text-sm text-gray-700">
       <label
