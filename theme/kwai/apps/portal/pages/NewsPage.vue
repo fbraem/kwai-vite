@@ -13,7 +13,7 @@
       </p>
     </template>
     <PageSection class="relative bg-gray-200">
-      <div class="absolute right-0 top-2 lg:top-4 mr-2">
+      <div class="absolute right-2 top-2 lg:top-4 mr-2">
         <Popover
           v-slot="{ open }"
           class="relative"
@@ -66,11 +66,11 @@
           Terug naar het nieuws van de dag
         </router-link>
       </div>
-      <div class="xl:columns-2 xl:gap-10">
+      <div class="xl:columns-2 xl:gap-10 py-6 sm:py-0">
         <div
           v-for="story in stories"
           :key="story.id"
-          class="break-inside-avoid py-6"
+          class="break-inside-avoid py-3 md:py-6"
         >
           <StoryListItem
             :story="story"
@@ -79,7 +79,7 @@
         </div>
       </div>
       <RoutePagination
-        class="mt-10 bg-white"
+        class="bg-white"
         :count="newsCount"
         previous_text="Vorige"
         next_text="Volgende"
