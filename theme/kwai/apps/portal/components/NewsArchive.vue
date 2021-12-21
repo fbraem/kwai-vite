@@ -86,16 +86,16 @@ export default {
     watch(
       years,
       (nv) => {
-        showYears.value = years.value.reduce(
+        showYears.value = nv.reduce(
           (a, year) => {
             a[year] = false;
             return a;
           },
           {}
         );
-        showYears.value[years.value[0]] = true;
-        if (years.value.length > 1) {
-          showYears.value[years.value[1]] = true;
+        showYears.value[nv[0]] = true;
+        if (nv.length > 1) {
+          showYears.value[nv[1]] = true;
         }
       },
       { immediate: true }
