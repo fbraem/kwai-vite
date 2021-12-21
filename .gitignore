@@ -2,5 +2,6 @@
 /public
 /src/config/config.development.toml
 /src/config/config.production.toml
+/src/config/config.acc.toml
 /dist/
 /.testcaferc.js
