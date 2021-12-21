@@ -67,7 +67,7 @@
 
 <script>
 import IconLink from '/src/components/IconLink.vue';
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import CoverLink from '/src/components/CoverLink.vue';
 import Badge from '/src/components/Badge.vue';
@@ -82,20 +82,25 @@ export default {
     const archive = computed(() => archiveStore.archive);
     const years = computed(() => archiveStore.years);
 
-    const showYears = computed(() => {
-      const allYears = years.value.reduce(
-        (a, year) => {
-          a[year] = false;
-          return a;
-        },
-        {}
-      );
-      allYears[years.value[0]] = true;
-      if (years.value.length > 1) {
-        allYears[years.value[1]] = true;
-      }
-      return allYears;
-    });
+    const showYears = ref({});
+    watch(
+      years,
+      (nv) => {
+        showYears.value = years.value.reduce(
+          (a, year) => {
+            a[year] = false;
+            return a;
+          },
+          {}
+        );
+        showYears.value[years.value[0]] = true;
+        if (years.value.length > 1) {
+          showYears.value[years.value[1]] = true;
+        }
+      },
+      { immediate: true }
+    );
+
     const toggleYear = (year) => {
       showYears.value[year] = !showYears.value[year];
     };
