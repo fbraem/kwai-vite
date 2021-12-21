@@ -13,7 +13,7 @@
       </p>
     </template>
     <PageSection class="relative bg-gray-200">
-      <div class="float-right">
+      <div class="flex justify-end">
         <Popover
           v-slot="{ open }"
           class="relative"
