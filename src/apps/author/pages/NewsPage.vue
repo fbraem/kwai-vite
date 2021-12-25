@@ -20,13 +20,11 @@
           icon="fas fa-hashtag"
           class="bg-white"
         >
-          <div class="mx-5">
-            <h4 class="text-2xl font-semibold text-gray-700">
-              {{ count }}
-            </h4>
-            <div class="text-gray-500">
-              Berichten
-            </div>
+          <h4 class="text-2xl font-semibold text-gray-700">
+            {{ count }}
+          </h4>
+          <div class="text-gray-500">
+            Berichten
           </div>
         </StatCard>
       </div>
