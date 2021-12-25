@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center px-5 py-6 shadow-sm rounded-md">
+  <div class="flex items-center px-5 py-6 shadow-md rounded-md">
     <div
       class="p-3 rounded-full bg-opacity-75"
       :class="iconBgColor"
