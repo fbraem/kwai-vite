@@ -1,4 +1,7 @@
 module.exports = {
+  env: {
+    node: true
+  },
   plugins: [
     'testcafe'
   ],
@@ -10,16 +13,14 @@ module.exports = {
     defineEmits: 'readonly'
   },
   extends: [
-    'standard',
-    'standard-jsx',
     'plugin:vue/vue3-recommended',
+    'eslint:recommended',
     'plugin:testcafe/recommended'
   ],
   rules: {
     'import/no-absolute-path': 'off',
     semi: ['error', 'always'],
     'space-before-function-paren': ['error', 'never'],
-    'vue/script-setup-uses-vars': 'off',
     'vue/no-v-html': 'off'
   }
 };
