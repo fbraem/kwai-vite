@@ -21,7 +21,8 @@ export default ({ mode }) => {
         input: {
           main: resolve(__dirname, 'index.html'),
           author: resolve(__dirname, 'author.html'),
-          coach: resolve(__dirname, 'coach.html')
+          coach: resolve(__dirname, 'coach.html'),
+          admin: resolve(__dirname, 'admin.html')
         }
       }
     }
