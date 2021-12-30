@@ -3,7 +3,7 @@
     :is="tag"
     :[to]="route"
     :[href]="link"
-    class="inline-flex items-center justify-center block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none hover:cursor-pointer"
+    class="inline-flex items-center justify-center block h-8 w-8 rounded-full overflow-hidden focus:outline-none hover:cursor-pointer"
     @[clickEvent]="method"
   >
     <i :class="icon" />
