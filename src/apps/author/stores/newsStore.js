@@ -116,7 +116,7 @@ export const useNewsStore = defineStore('news', {
           type: 'stories',
           attributes: {
             enabled: story.enabled,
-            promotion: story.promotion.priority,
+            promotion: Number(story.promotion.priority),
             timezone: dayjs.tz.guess(),
             publish_date: story.publication.start_date?.utc().format('YYYY-MM-DD HH:mm:ss'),
             end_date: story.publication.end_date?.utc().format('YYYY-MM-DD HH:mm'),

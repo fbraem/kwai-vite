@@ -172,7 +172,9 @@
                 v-for="(coach, coachIndex) in training.coaches"
                 :key="coachIndex"
               >
-                <div class="text-sm">{{ coach.name }}</div>
+                <div class="text-sm">
+                  {{ findCoach(coach.id)?.name }}
+                </div>
               </template>
             </td>
             <td class="px-2 py-1 sm:px-6 sm:py-4 text-lg text-gray-700 border-b">
@@ -237,6 +239,7 @@ export default {
       () => coachStore.activeCoaches
     );
     const selectedCoaches = ref([]);
+    const findCoach = (id) => coachStore.find(id);
 
     const dateFormat = dayjs().localeData().longDateFormat('L');
 
@@ -297,6 +300,7 @@ export default {
       store,
       coaches,
       selectedCoaches,
+      findCoach,
       dateFormat,
       startPeriod,
       endPeriod,
