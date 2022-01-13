@@ -19,7 +19,7 @@
       </div>
     </PageSection>
     <PageSection>
-      <div class="space-y-10">
+      <div class="grid gap-10 xl:grid-cols-2">
         <div
           v-for="user in users"
           :key="user.id"
@@ -115,6 +115,7 @@
           </div>
         </div>
       </div>
+      <RoutePagination :count="count" />
     </PageSection>
   </div>
 </template>
@@ -129,9 +130,16 @@ import StatCard from '/src/components/StatCard.vue';
 import { useAbility } from '/src/common/useAbility.js';
 import ColorIcon from '/src/components/ColorIcon.vue';
 import ButtonLink from '/src/components/ButtonLink.vue';
+import RoutePagination from '/src/components/RoutePagination.vue';
+import useRoutePagination from '/src/composables/useRoutePagination.js';
+
+const paginator = useRoutePagination();
 
 const userStore = useUserStore();
-const { loading } = userStore.load();
+userStore.load({
+  offset: paginator.offset,
+  limit: paginator.limit
+});
 
 const users = computed(() => userStore.users);
 const count = computed(() => userStore.count);

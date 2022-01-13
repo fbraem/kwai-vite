@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { watch } from 'vue';
+import { watch, ref } from 'vue';
 import { useRequest } from 'vue-request';
 import { useHttpApi } from '/src/common/useHttp.js';
 import dayjs from '/src/common/useDayJS.js';
@@ -44,7 +44,7 @@ export const useUserStore = defineStore('admin.users', {
           .json(),
         {
           cacheKey: `/admin/users/${uuid}`,
-          errorRetryCount: 5,
+          errorRetryCount: 5
         }
       );
       watch(
@@ -59,12 +59,25 @@ export const useUserStore = defineStore('admin.users', {
         error
       };
     },
-    load() {
+    load({
+      offset = ref(0),
+      limit = ref(10)
+    } = {}) {
       const { data, loading, error } = useRequest(
-        () => useHttpApi.url('/users/accounts').get().json(),
+        () => {
+          let api = useHttpApi.url('/users/accounts');
+          if (offset.value > 0) {
+            api = api.query({ 'page[offset]': offset.value });
+          }
+          if (limit.value) {
+            api = api.query({ 'page[limit]': limit.value });
+          }
+          return api.get().json();
+        },
         {
-          cacheKey: '/admin/users',
-          errorRetryCount: 5
+          cacheKey: '/admin/users/',
+          errorRetryCount: 5,
+          refreshDeps: [ offset, limit ]
         }
       );
 
