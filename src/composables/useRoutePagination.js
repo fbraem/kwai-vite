@@ -5,8 +5,6 @@ export default function useRoutePagination({
   limit = ref(10),
   parameter = 'page'
 } = {}) {
-  const count = ref(0);
-
   const route = useRoute();
   if (!route.query[parameter]) {
     route.query[parameter] = '1';
@@ -23,8 +21,7 @@ export default function useRoutePagination({
   );
 
   return {
-    count,
     limit,
     offset
   };
-};
+}
