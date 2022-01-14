@@ -17,8 +17,7 @@ const toUserModel = json => {
       last_unsuccessful_login: d.attributes.last_unsuccessful_login ? dayjs.utc(d.attributes.last_unsuccessful_login, 'YYYY-MM-DD HH:mm:ss').format('L LTS') : null,
       revoked: d.attributes.revoked,
       remark: d.attributes.remark,
-      owner: d.attributes.owner,
-      uuid: d.attributes.uuid
+      owner: d.attributes.owner
     };
   };
 
@@ -107,7 +106,7 @@ export const useUserStore = defineStore('admin.users', {
       };
       return useHttpApi
         .url('/users')
-        .url(user.uuid)
+        .url(user.id)
         .json(payload)
         .patch()
         .json()
