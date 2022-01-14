@@ -84,7 +84,10 @@
         </tbody>
       </table>
     </div>
-    <RoutePagination :count="count" />
+    <RoutePagination
+      class="border-t border-gray-200"
+      :count="count"
+    />
   </div>
 </template>
 

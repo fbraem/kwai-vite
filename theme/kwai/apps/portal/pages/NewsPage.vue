@@ -79,7 +79,7 @@
         </div>
       </div>
       <RoutePagination
-        class="bg-white"
+        class="bg-white border-t border-gray-200"
         :count="newsCount"
         previous_text="Vorige"
         next_text="Volgende"
