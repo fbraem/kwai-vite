@@ -97,6 +97,7 @@ export const useUserStore = defineStore('admin.users', {
       const payload = {
         data: {
           type: 'users',
+          id: user.id,
           attributes: {
             first_name: user.first_name,
             last_name: user.last_name,
@@ -105,7 +106,7 @@ export const useUserStore = defineStore('admin.users', {
         }
       };
       return useHttpApi
-        .url('/users')
+        .url('/users/')
         .url(user.id)
         .json(payload)
         .patch()
