@@ -69,7 +69,6 @@
           </div>
         </Form>
       </div>
-      {{ user }}
     </PageSection>
   </div>
 </template>
@@ -88,13 +87,13 @@ import { useRoute, useRouter } from 'vue-router';
 import * as yup from 'yup';
 
 const props = defineProps({
-  uuid: {
+  id: {
     type: String,
     required: true
   }
 });
 const store = useUserStore();
-store.get(props.uuid);
+store.get(props.id);
 
 const user = computed(() => store.user);
 watch(

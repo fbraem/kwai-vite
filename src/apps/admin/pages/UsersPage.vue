@@ -105,7 +105,7 @@
                 :route="{
                   name: 'admin.users.edit',
                   params: {
-                    uuid: user.uuid
+                    id: user.id
                   }
                 }"
               >
@@ -115,7 +115,10 @@
           </div>
         </div>
       </div>
-      <RoutePagination :count="count" />
+      <RoutePagination
+        class="border-t border-gray-200 mt-10"
+        :count="count"
+      />
     </PageSection>
   </div>
 </template>
