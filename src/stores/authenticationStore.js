@@ -5,7 +5,10 @@ import Lockr from 'lockr';
 
 function toRuleModel(data) {
   return {
-    action: data.attributes.action,
+    can_update: data.attributes.can_update,
+    can_view: data.attributes.can_view,
+    can_create: data.attributes.can_create,
+    can_delete: data.attributes.can_delete,
     name: data.attributes.name,
     remark: data.attributes.remark,
     subject: data.attributes.subject
@@ -88,10 +91,30 @@ export const useAuthenticationStore = defineStore('authentication', {
       this.userRules = [];
       for (const role of this.user.roles) {
         for (const rule of role.rules) {
-          this.userRules.push({
-            action: rule.action,
-            subject: rule.subject
-          });
+          if (rule.can_update) {
+            this.userRules.push({
+              action: 'update',
+              subject: rule.subject
+            });
+          }
+          if (rule.can_view) {
+            this.userRules.push({
+              action: 'view',
+              subject: rule.subject
+            });
+          }
+          if (rule.can_delete) {
+            this.userRules.push({
+              action: 'delete',
+              subject: rule.subject
+            });
+          }
+          if (rule.can_create) {
+            this.userRules.push({
+              action: 'create',
+              subject: rule.subject
+            });
+          }
         }
       }
       Lockr.set(USER_RULES_KEYS, this.userRules);
