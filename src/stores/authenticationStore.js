@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { useAbility } from '../common/useAbility.js';
-import { useHttp, useHttpAuth } from '../common/useHttp.js';
+import { useAbility } from '/src/common/useAbility.js';
+import { useHttp, useHttpAuth } from '/src/common/useHttp.js';
 import Lockr from 'lockr';
 
 function toRuleModel(data) {
