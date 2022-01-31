@@ -12,10 +12,11 @@ function toRuleModel(data) {
   };
 }
 
-function toAbilityModel(data, included) {
+function toRoleModel(data, included) {
   return {
     name: data.attributes.name,
     remark: data.attributes.remark,
+    description: data.attributes.description,
     rules: data.relationships.rules.data.map(
       r => toRuleModel(included.find(i => i.type === 'rules' && i.id === r.id))
     )
@@ -26,8 +27,8 @@ function toUserModel(data, included) {
   return {
     email: data.attributes.email,
     username: data.attributes.username,
-    abilities: data.relationships.abilities.data.map(
-      r => toAbilityModel(included.find(i => i.type === 'abilities' && i.id === r.id), included)
+    roles: data.relationships.roles.data.map(
+      r => toRoleModel(included.find(i => i.type === 'roles' && i.id === r.id), included)
     )
   };
 }
@@ -85,8 +86,8 @@ export const useAuthenticationStore = defineStore('authentication', {
 
       Lockr.set(USER_KEY, this.user);
       this.userRules = [];
-      for (const ability of this.user.abilities) {
-        for (const rule of ability.rules) {
+      for (const role of this.user.roles) {
+        for (const rule of role.rules) {
           this.userRules.push({
             action: rule.action,
             subject: rule.subject
