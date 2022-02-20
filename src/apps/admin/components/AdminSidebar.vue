@@ -4,6 +4,7 @@
     <SidebarNavigation>
       <SidebarNavigationItem route-name="admin.home" />
       <SidebarNavigationItem route-name="admin.users" />
+      <SidebarNavigationItem route-name="admin.user_invitations" />
     </SidebarNavigation>
   </Sidebar>
 </template>
