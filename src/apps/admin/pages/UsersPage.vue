@@ -1,7 +1,9 @@
 <template>
   <div>
     <PageSectionTitle>
-      {{ $route.meta.title }}
+      <PageSectionHeader>
+        {{ $route.meta.title }}
+      </PageSectionHeader>
     </PageSectionTitle>
     <PageSection>
       <div class="w-full sm:w-1/2 xl:w-1/3">
@@ -125,6 +127,7 @@
 
 <script setup>
 import PageSection from '/@theme/components/PageSection.vue';
+import PageSectionHeader from '/@theme/components/PageSectionHeader.vue';
 import PageSectionTitle from '/@theme/components/PageSectionTitle.vue';
 import { defineAbility } from '@casl/ability';
 import { computed } from 'vue';
