@@ -1,5 +1,5 @@
 import { ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 export default function useRoutePagination({
   limit = ref(10),
@@ -20,8 +20,14 @@ export default function useRoutePagination({
     }
   );
 
+  const router = useRouter();
+  const reset = async() => {
+    await router.replace({ query: { ... route.query, [parameter]: '1' } });
+  };
+
   return {
     limit,
-    offset
+    offset,
+    reset
   };
 }
