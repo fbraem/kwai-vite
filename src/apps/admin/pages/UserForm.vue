@@ -1,7 +1,9 @@
 <template>
   <div>
     <PageSectionTitle>
-      {{ $route.meta.title }}
+      <PageSectionHeader>
+        {{ $route.meta.title }}
+      </PageSectionHeader>
     </PageSectionTitle>
     <PageSection>
       <div class="rounded bg-gray-300">
@@ -79,6 +81,7 @@ import { computed, watch } from 'vue';
 import { useUserStore } from '/src/apps/admin/stores/userStore.js';
 import PageSection from '/@theme/components/PageSection.vue';
 import PageSectionTitle from '/@theme/components/PageSectionTitle.vue';
+import PageSectionHeader from '/@theme/components/PageSectionHeader.vue';
 import Form from '/src/components/form/Form.vue';
 import InputField from '/src/components/form/InputField.vue';
 import SubmitButton from '/src/components/form/SubmitButton.vue';
