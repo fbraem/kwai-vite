@@ -94,6 +94,23 @@ export const useUserInvitationStore = defineStore('admin.user_invitations', {
           this.invitation = toUserInvitationModel(json);
         })
       ;
+    },
+    remove(invitation) {
+      useHttpApi
+        .url('/users/invitations/')
+        .url(invitation.id)
+        .delete()
+        .forbidden(error => console.log(error))
+        .error(500, error => console.log(error))
+        .res()
+        .then(() => {
+          const index = this.invitations.findIndex(item => item.id === invitation.id);
+          if (index !== -1) {
+            this.invitations.splice(index, 1);
+            this.count--;
+          }
+        })
+      ;
     }
   }
 });

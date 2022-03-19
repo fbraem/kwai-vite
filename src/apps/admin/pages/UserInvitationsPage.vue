@@ -13,11 +13,9 @@
         </ButtonLink>
       </div>
     </PageSectionTitle>
-    <PageSection
-      class="divide-y"
-    >
+    <PageSection>
       <div
-        class="flex items-center justify-end pb-3"
+        class="flex items-center justify-end pb-3 divide-y"
       >
         <div class="mr-2 text-sm">
           Toon actieve uitnodigingen
@@ -34,17 +32,23 @@
           />
         </Switch>
       </div>
-      <div
-        v-for="invitation in invitations"
-        :key="invitation.id"
-        class="grid grid-col-1 gap-4 sm:gap-2 sm:grid-cols-12 p-4 items-center"
-      >
-        <InvitationListItem :invitation="invitation" />
+      <div class="divide-y">
+        <div
+          v-for="invitation in invitations"
+          :key="invitation.id"
+          class="grid grid-col-1 gap-4 md:gap-1 md:grid-cols-12 p-4 items-center"
+        >
+          <InvitationListItem
+            :invitation="invitation"
+            @remove-invitation="removeInvitation(invitation)"
+            @renew-invitation="renewInvitation(invitation)"
+          />
+        </div>
+        <RoutePagination
+          class="border-t border-gray-200"
+          :count="count"
+        />
       </div>
-      <RoutePagination
-        class="border-t border-gray-200"
-        :count="count"
-      />
     </PageSection>
   </div>
 </template>
@@ -78,4 +82,11 @@ watch(showActiveInvites, () => {
 
 const invitations = computed(() => store.invitations);
 const count = computed(() => store.count);
+
+const removeInvitation = (invitation) => {
+  store.remove(invitation);
+};
+const renewInvitation = (invitation) => {
+  console.log('renew', invitation);
+};
 </script>
