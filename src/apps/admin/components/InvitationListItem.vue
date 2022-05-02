@@ -42,14 +42,14 @@
   <div class="md:col-span-2 flex flex-row flex-wrap justify-end">
     <div class="self-end md:items-stretch">
       <ButtonLink
-        v-if="!isConfirmed && isExpired"
+        v-if="canUpdate && (!isConfirmed && isExpired)"
         class="bg-green-700 text-white md:w-full"
         @click="() => emit('renewInvitation', invitation)"
       >
         <i class="fas fa-power-off mr-2" />Hernieuw
       </ButtonLink>
       <ButtonLink
-        v-if="!isConfirmed"
+        v-if="canDelete && !isConfirmed"
         class="bg-red-600 text-white md:w-full"
         @click="() => emit('removeInvitation', invitation)"
       >
@@ -70,6 +70,14 @@ const props = defineProps({
   invitation: {
     type: Object,
     required: true
+  },
+  canUpdate: {
+    type: Boolean,
+    default: false
+  },
+  canDelete: {
+    type: Boolean,
+    default: false
   }
 });
 const emit = defineEmits([

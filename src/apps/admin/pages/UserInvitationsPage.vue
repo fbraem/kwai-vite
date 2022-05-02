@@ -40,6 +40,8 @@
         >
           <InvitationListItem
             :invitation="invitation"
+            :can-update="canUpdate(invitation)"
+            :can-delete="canDelete(invitation)"
             @remove-invitation="removeInvitation(invitation)"
             @renew-invitation="renewInvitation(invitation)"
           />
@@ -65,6 +67,8 @@ import { useUserInvitationStore } from '/src/apps/admin/stores/userInvitationSto
 import RoutePagination from '/src/components/RoutePagination.vue';
 import useRoutePagination from '/src/composables/useRoutePagination.js';
 import { computed, ref, watch } from 'vue';
+import { useAbility } from '/src/common/useAbility.js';
+import dayjs from '/src/common/useDayJS.js';
 
 const paginator = useRoutePagination();
 
@@ -87,6 +91,10 @@ const removeInvitation = (invitation) => {
   store.remove(invitation);
 };
 const renewInvitation = (invitation) => {
-  console.log('renew', invitation);
+  invitation.expired_at = dayjs().add(15, 'day');
+  store.save(invitation);
 };
+const ability = useAbility();
+const canUpdate = invitation => ability.can('update', invitation);
+const canDelete = invitation => ability.can('delete', invitation);
 </script>
