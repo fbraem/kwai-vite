@@ -104,7 +104,7 @@ import NewsArchive from '/@theme/apps/portal/components/NewsArchive.vue';
 import StoryListItem from '/@theme/apps/portal/components/StoryListItem.vue';
 import Spinner from '/src/components/Spinner.vue';
 import { months } from '/src/common/useDayJS.js';
-import { computed, toRefs, watch } from 'vue';
+import { computed, toRefs } from 'vue';
 import RoutePagination from '/src/components/RoutePagination.vue';
 import { useApplicationStore } from '/src/apps/portal/stores/applicationStore.js';
 import { useNewsStore } from '/src/apps/portal/stores/newsStore.js';
