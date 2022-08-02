@@ -159,11 +159,6 @@ export default {
       application: applicationId
     });
 
-    watch(
-      () => newsStore.count,
-      (nv) => { paginator.count.value = nv; }
-    );
-
     const application = computed(
       () => {
         if (props.applicationId) {
