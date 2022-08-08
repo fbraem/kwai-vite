@@ -1,0 +1,31 @@
+{
+  "name": "kwai-vite",
+  "private": true,
+  "version": "0.0.1",
+  "description": "SPA for Kwai",
+  "type": "module",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --no-cache --parallel --continue"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fbraem/kwai-vite.git"
+  },
+  "keywords": [
+    "kwai"
+  ],
+  "author": "Franky Braem",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fbraem/kwai-vite/issues"
+  },
+  "homepage": "https://github.com/fbraem/kwai-vite#readme",
+  "devDependencies": {
+    "turbo": "latest"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ]
+}
