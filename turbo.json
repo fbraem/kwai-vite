@@ -1,6 +1,5 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "baseBranch": "origin/monorepo",
   "pipeline": {
     "build": {
       "outputs": [
@@ -9,6 +8,9 @@
       "dependsOn": [
         "^build"
       ]
+    },
+    "lint": {
+      "outputs": []
     },
     "dev": {
       "cache": false
