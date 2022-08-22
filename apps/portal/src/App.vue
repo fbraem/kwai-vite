@@ -1,5 +1,5 @@
 <template>
-  <h1>Portal: Hello World</h1>
+  <router-view />
 </template>
 
 <script setup lang="ts">
