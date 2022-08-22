@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Date library for kwai",
   "private": true,
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "module": "dist/index.es.js",
