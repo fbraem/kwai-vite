@@ -13,6 +13,7 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "baseUrl": "./src",
+    "outDir": "dist",
     "paths": {
       "@theme/*": [
         "theme/kwai/*",
@@ -26,5 +27,15 @@
     "src/**/*.tsx",
     "src/**/*.vue"
   ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "exclude": [
+    "./dist/**"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json",
+    },
+    {
+      "path": "../../packages/kwai-ui"
+    }
+  ],
 }
