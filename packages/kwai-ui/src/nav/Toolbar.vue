@@ -8,8 +8,14 @@
       >
         <BarsIcon class="w-4 h-4" />
       </button>
+      <slot name="left" />
     </div>
-    <slot />
+    <div>
+      <slot />
+    </div>
+    <div>
+      <slot name="right" />
+    </div>
   </header>
 </template>
 
