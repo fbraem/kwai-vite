@@ -36,6 +36,9 @@
     },
     {
       "path": "../../packages/kwai-ui"
+    },
+    {
+      "path": "../../packages/kwai-http"
     }
   ],
 }
