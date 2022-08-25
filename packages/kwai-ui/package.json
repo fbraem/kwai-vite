@@ -30,7 +30,7 @@
     "vitest": "^0.21.0",
     "vue": "^3.2.37"
   },
-  "dependencies": {
+  "peerDependencies": {
     "vue-router": "^4.0.13"
   }
 }
