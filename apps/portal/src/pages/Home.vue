@@ -38,7 +38,6 @@
 
 <script setup lang="ts">
 import ApplicationList from "../components/ApplicationList.vue"
-import "@kwai/ui/style.css"
 import { Card, CardRouterLinkedTitle } from "@kwai/ui"
 import { ref, ShallowReactive, shallowReactive } from "vue"
 import ClubIcon from "@theme/icons/ClubIcon.vue"
