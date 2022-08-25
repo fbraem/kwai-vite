@@ -12,4 +12,5 @@ import { useSidebar } from "./nav/useSidebar"
 export { Toolbar, Sidebar, useSidebar }
 
 import PortalLayout from './layout/PortalLayout.vue'
-export { PortalLayout }
+import FullpageLayout from './layout/FullpageLayout.vue'
+export { PortalLayout, FullpageLayout }
