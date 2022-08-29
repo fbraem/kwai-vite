@@ -21,6 +21,7 @@
     "build": "vite build --config ./vite.config.ts"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.2",
     "@vitejs/plugin-vue": "^3.0.1",
     "autoprefixer": "^10.4.8",
     "postcss": "^8.4.16",
@@ -31,6 +32,7 @@
     "vue": "^3.2.37"
   },
   "peerDependencies": {
-    "vue-router": "^4.0.13"
+    "vue-router": "^4.0.13",
+    "vee-validate": "^4.6.7"
   }
 }
