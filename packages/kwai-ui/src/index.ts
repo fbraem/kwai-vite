@@ -14,3 +14,7 @@ export { Toolbar, Sidebar, useSidebar }
 import PortalLayout from './layout/PortalLayout.vue'
 import DialogLayout from './layout/DialogLayout.vue'
 export { PortalLayout, DialogLayout }
+
+import InputField from './form/InputField.vue'
+import Button from './form/Button.vue'
+export { InputField, Button }
