@@ -1,12 +1,12 @@
 <template>
-  <main class="absolute w-full h-full">
+  <main class="w-full h-full">
     <div
         class="absolute top-0 w-full h-full bg-gray-900 bg-cover bg-center"
         :style="styles"
     >
       <div class="w-full h-full absolute opacity-60 bg-black" />
       <div class="flex flex-col content-center items-center justify-center h-full">
-        <div class="w-full px-8 lg:w-2/3 xl:w-2/5 relative">
+        <div class="w-auto px-8 xl:max-w-5xl relative">
           <router-view />
         </div>
       </div>
