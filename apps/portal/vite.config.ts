@@ -18,8 +18,10 @@ const resolveTheme = (path: string) => {
 }
 
 export default defineConfig({
+    base: '/',
     server:  {
-        port: 3001
+        host: '0.0.0.0',
+        port: 3000,
     },
     plugins: [
         vue()

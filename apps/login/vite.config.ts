@@ -18,8 +18,9 @@ const resolveTheme = (path: string) => {
 }
 
 export default defineConfig({
+    base: '/login/',
     server:  {
-        port: 3002
+        port: 3002,
     },
     plugins: [
         vue()
