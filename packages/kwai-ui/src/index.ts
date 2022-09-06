@@ -1,4 +1,9 @@
 import './index.css'
+
+import Alert from './alerts/Alert.vue'
+import ErrorAlert from './alerts/ErrorAlert.vue'
+export { Alert, ErrorAlert }
+
 import Card from './card/Card.vue'
 import CardTitle from './card/CardTitle.vue'
 import CardLinkedTitle from './card/CardLinkedTitle.vue'
