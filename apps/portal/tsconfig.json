@@ -38,7 +38,7 @@
       "path": "../../packages/kwai-ui"
     },
     {
-      "path": "../../packages/kwai-http"
+      "path": "../../packages/kwai-api"
     }
   ],
 }
