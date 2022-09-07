@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { ref, watch } from "vue"
 import type { Ref } from "vue"
-import { useHttp } from "../composables/http.js"
+import { useHttp } from "@kwai/api"
 import { useRequest } from "vue-request"
 
 interface JSONDataType<DataType> {
@@ -53,7 +53,8 @@ export const useApplicationStore = defineStore(
         const load = () => {
             const { data, loading, error } = useRequest(
                 () => {
-                    let api = useHttp.url('/portal/applications')
+                    let api = useHttp()
+                        .url('/portal/applications')
                     return api.get().json()
                 },
                 {
