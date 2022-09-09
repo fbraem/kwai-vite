@@ -6,7 +6,7 @@
     >
       <div class="w-full h-full absolute opacity-60 bg-black" />
       <div class="flex flex-col content-center items-center justify-center h-full">
-        <div class="w-auto px-8 xl:max-w-5xl relative">
+        <div class="w-auto px-8 relative">
           <router-view />
         </div>
       </div>
