@@ -2,7 +2,7 @@
   <div class="flex flex-col sm:flex-row-reverse mb-6 shadow-lg rounded-lg bg-white max-w-6xl">
     <div class="bg-red-700 w-full sm:w-1/2 md:w-1/3 sm:p-12 p-4 sm:rounded-r-lg">
       <div class="flex flex-row sm:flex-col items-center">
-        <div class="w-16 mr-2">
+        <div class="w-16 mr-2 sm:mb-4">
           <img src="logo.png" />
         </div>
         <h1 class="text-white text-2xl sm:text-center font-bold uppercase">
