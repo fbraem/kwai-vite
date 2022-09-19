@@ -11,6 +11,9 @@ import CardRouterLinkedTitle from './card/CardRouterLinkedTitle.vue'
 
 export { Card, CardTitle, CardLinkedTitle, CardRouterLinkedTitle }
 
+import InformationDialog from './dialogs/InformationDialog.vue'
+export { InformationDialog }
+
 import Toolbar from './nav/Toolbar.vue'
 import Sidebar from './nav/Sidebar.vue'
 import { useSidebar } from "./nav/useSidebar"
