@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import toml from '@fbraem/rollup-plugin-toml'
 
 import { existsSync } from 'fs'
 import { resolve } from 'path'
@@ -23,7 +24,8 @@ export default defineConfig({
         port: 3002,
     },
     plugins: [
-        vue()
+        vue(),
+        toml()
     ],
     resolve: {
         alias: [
@@ -31,6 +33,10 @@ export default defineConfig({
                 find: '@theme',
                 replacement: '',
                 customResolver: resolveTheme
+            },
+            {
+                find:  /^@root\/(.*)/,
+                replacement: `${resolve(__dirname, '../..')}/$1`
             }
         ]
     }
