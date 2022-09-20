@@ -7,3 +7,4 @@ node_modules
 /apps/portal/dist/
 /packages/kwai-date/dist
 /packages/kwai-ui/dist
+/config.toml
