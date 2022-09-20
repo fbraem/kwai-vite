@@ -6,7 +6,7 @@
           <img src="logo.png" />
         </div>
         <h1 class="text-white text-2xl sm:text-center font-bold uppercase">
-          Judokwai Kemzeke
+          {{ config.website.title }}
         </h1>
       </div>
       <p class="text-gray-300 my-6">
@@ -20,7 +20,7 @@
     <div class="mb-6">
       <div class="mb-3">
         <h6 class="text-gray-900 text-2xl font-bold">
-          Login into your club
+          {{ t('login.title') }}
         </h6>
         <p class="text-sm text-gray-500">
           Need an account? <a class="text-blue-400 font-medium" href="#">Contact us</a>
@@ -68,17 +68,19 @@
       </div>
     </form>
     <p class="mt-12 mb-3 text-center text-xs text-gray-500">
-      &copy; Judokwai Kemzeke. All rights reserved
+      &copy; {{ config.website.copyright }}
     </p>
   </InformationDialog>
 </template>
 
 <script setup lang="ts">
-import { InputField, Button, ErrorAlert, InformationDialog } from '@kwai/ui'
+import config from "@root/config.toml"
+import { InputField, Button, ErrorAlert, InformationDialog } from "@kwai/ui"
 import { useForm } from "vee-validate"
 import { useHttpLogin } from "@kwai/api"
 import { ref } from "vue"
 import type { Ref } from "vue"
+import { useI18n } from "vue-i18n"
 
 function isRequired(value: string): string|boolean {
   if (value && value.trim()) {
@@ -115,4 +117,6 @@ const onSubmitForm = handleSubmit(async values => {
     }
   });
 })
+
+const { t } = useI18n({ useScope: 'global' })
 </script>

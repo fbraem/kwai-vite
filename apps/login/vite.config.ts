@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import toml from '@fbraem/rollup-plugin-toml'
+import vueI18n from '@intlify/vite-plugin-vue-i18n'
 
 import { existsSync } from 'fs'
 import { resolve } from 'path'
@@ -25,7 +26,11 @@ export default defineConfig({
     },
     plugins: [
         vue(),
-        toml()
+        toml(),
+        vueI18n({
+            include: resolve(__dirname, './src/locales/**'),
+            compositionOnly: true
+        })
     ],
     resolve: {
         alias: [
