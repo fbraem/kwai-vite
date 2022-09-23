@@ -8,4 +8,5 @@ node_modules
 /packages/kwai-date/dist
 /packages/kwai-ui/dist
 /packages/kwai-config/src/config.toml
+/packages/kwai-config/dist
 *.tsbuildinfo
