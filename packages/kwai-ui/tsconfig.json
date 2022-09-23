@@ -12,7 +12,8 @@
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
     "outDir": "./dist",
-    "declaration": true
+    "declaration": true,
+    "composite": true
   },
   "include": [
     "src/**/*.ts",
