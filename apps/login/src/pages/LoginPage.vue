@@ -10,11 +10,10 @@
         </h1>
       </div>
       <p class="text-gray-300 my-6">
-        A club account is available for members of the board and coaches.
+        {{ t('login.description.intro') }}
       </p>
       <p class="text-gray-300">
-        Depending on the role in the club you will be able to manage several parts of the club.
-        Such as adding news, writing content, add trainings, etc.
+        {{ t('login.description.text') }}
       </p>
     </template>
     <div class="mb-6">
@@ -23,33 +22,37 @@
           {{ t('login.title') }}
         </h6>
         <p class="text-sm text-gray-500">
-          Need an account? <a class="text-blue-400 font-medium" href="#">Contact us</a>
+          {{ t('login.need_account') }} <a class="text-blue-400 font-medium" href="#">{{ t('login.contact_us') }}</a>
         </p>
       </div>
     </div>
     <form class="flex-auto">
       <InputField
           name="email"
-          placeholder="Geef uw email adres in"
+          :placeholder="t('login.form.email.placeholder')"
           class="mb-6"
           :required="true"
       >
-        <template #label>Email</template>
+        <template #label>
+          {{ t('login.form.email.label') }}
+        </template>
       </InputField>
       <InputField
           name="password"
           type="password"
-          placeholder="Geef uw paswoord in"
+          :placeholder="t('login.form.password.placeholder')"
           :required="true"
       >
-        <template #label>Paswoord</template>
+        <template #label>
+          {{ t('login.form.password.label') }}
+        </template>
       </InputField>
       <p class="text-right text-sm mt-1">
         <a
             class="text-blue-400"
             href="#"
         >
-          Forgot password?
+          {{ t('login.forgotten') }}
         </a>
       </p>
       <ErrorAlert v-if="errorMessage">
@@ -63,7 +66,7 @@
               class="bg-gray-700 text-white focus:bg-gray-900 z-20"
               @click="onSubmitForm"
           >
-            Login
+            {{ t('login.form.submit.label') }}
           </Button>
       </div>
     </form>
@@ -74,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import config from "@root/config.toml"
+import config from "@kwai/config"
 import { InputField, Button, ErrorAlert, InformationDialog } from "@kwai/ui"
 import { useForm } from "vee-validate"
 import { useHttpLogin } from "@kwai/api"
@@ -82,17 +85,19 @@ import { ref } from "vue"
 import type { Ref } from "vue"
 import { useI18n } from "vue-i18n"
 
+const { t } = useI18n({ useScope: 'global' })
+
 function isRequired(value: string): string|boolean {
   if (value && value.trim()) {
     return true
   }
-  return 'Dit is een verplicht veld'
+  return t('login.required')
 }
 
 function isEmail(value: string): string|boolean {
   const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
   if (!regex.test(value)) {
-    return 'Dit is geen geldig emailadres'
+    return t('login.invalid_email')
   }
   return true
 }
@@ -117,6 +122,4 @@ const onSubmitForm = handleSubmit(async values => {
     }
   });
 })
-
-const { t } = useI18n({ useScope: 'global' })
 </script>

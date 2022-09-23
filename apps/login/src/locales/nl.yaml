@@ -1,2 +1,21 @@
 login:
-  title: 'Log in op jouw club'
+  title: Log in op jouw club
+  description:
+    intro: Toegang tot de club website is beschikbaar voor bestuursleden en trainers
+    text: | 
+      Afhankelijk van je rol in de club zal je verschillende onderdelen van de club kunnen beheren.
+      Zoals daar zijn toevoegen van nieuws, teksten schrijven, trainingen toevoegen, etc...
+  need_account: Wil je toegang?
+  contact_us: Contacteer ons
+  form:
+    email:
+      label: Email
+      placeholder: Geef uw email in
+    password:
+      label: Paswoord
+      placeholder: Geef uw paswoord in
+    submit:
+      label: Login
+  forgotten: Paswoord vergeten?
+  required: Dit is een verplicht veld.
+  invalid_email: Dit is geen geldig email adres
