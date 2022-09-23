@@ -19,3 +19,4 @@ login:
   forgotten: Paswoord vergeten?
   required: Dit is een verplicht veld.
   invalid_email: Dit is geen geldig email adres
+  failed: Log in mislukt. Controleer uw email en/of paswoord.

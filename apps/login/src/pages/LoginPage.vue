@@ -120,7 +120,7 @@ const onSubmitForm = handleSubmit(async values => {
   }
   await useHttpLogin(formData).catch(error => {
     if (error.response.status == 401) {
-      errorMessage.value = 'Login failed. Check your email and/or password.'
+      errorMessage.value = t('login.failed')
     }
   });
 })
