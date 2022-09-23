@@ -13,7 +13,7 @@
       "require": "./dist/index.umd.js"
     }
   },
-  "types": "./dist/index.d.ts",
+  "types": "./src/config.d.ts",
   "license": "MIT",
   "scripts": {
     "build": "vite build --config ./vite.config.ts"
