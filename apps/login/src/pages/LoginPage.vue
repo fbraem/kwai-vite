@@ -3,7 +3,7 @@
     <template #information>
       <div class="flex flex-row sm:flex-col items-center">
         <div class="w-16 mr-2 sm:mb-4">
-          <img src="logo.png" />
+          <img :src="logoUrl" alt="logo" />
         </div>
         <h1 class="text-white text-2xl sm:text-center font-bold uppercase">
           {{ config.website.title }}
@@ -77,6 +77,8 @@
 </template>
 
 <script setup lang="ts">
+import logoUrl from '/logo.png'
+
 import config from "@kwai/config"
 import { InputField, Button, ErrorAlert, InformationDialog } from "@kwai/ui"
 import { useForm } from "vee-validate"
