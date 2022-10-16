@@ -57,7 +57,7 @@ reset_password:
   required: Dit is een verplicht veld.
   not_same: Het paswoord is niet gelijk
   failed: |
-    Er is iets mis gelopen bij het instellen van het nieuwe paswoord. Probeer opnieuw of
+    Er is iets misgelopen bij het instellen van het nieuwe paswoord. Probeer opnieuw of
     contacteer onze webmaster.
   expired: De gebruikte code is vervallen. Gelieve een nieuwe code te genereren.
   generate_code: Genereer nieuwe code
