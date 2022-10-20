@@ -1,6 +1,7 @@
 import { DialogLayout } from "@kwai/ui"
 import { RouteRecordRaw } from "vue-router"
 import LoginPage from "./pages/LoginPage.vue"
+import InvitedPage from "./pages/InvitedPage.vue"
 import RecoverPasswordPage from "./pages/RecoverPasswordPage.vue"
 import ResetPasswordPage from "./pages/ResetPasswordPage.vue"
 
@@ -18,6 +19,11 @@ export const routes: RouteRecordRaw[] = [
                 name: 'login',
                 path: '/',
                 component: LoginPage
+            },
+            {
+                name: 'invited',
+                path: '/invited',
+                component: InvitedPage
             },
             {
                 name: 'recover',
