@@ -23,7 +23,8 @@
   "homepage": "https://github.com/fbraem/kwai-vite#readme",
   "devDependencies": {
     "turbo": "latest",
-    "eslint": "8.22.0"
+    "eslint": "8.22.0",
+    "eslint-config-kwai": "*"
   },
   "engines": {
     "npm": ">=7.0.0",
