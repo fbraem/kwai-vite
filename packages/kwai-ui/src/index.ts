@@ -30,6 +30,7 @@ export { InputField, Button };
 
 import BarsIcon from './icons/BarsIcon.vue';
 import CheckIcon from './icons/CheckIcon.vue';
+import CloseIcon from './icons/CloseIcon.vue';
 import ErrorIcon from './icons/ErrorIcon.vue';
 import RequiredIcon from './icons/RequiredIcon.vue';
-export { BarsIcon, CheckIcon, ErrorIcon, RequiredIcon };
+export { BarsIcon, CheckIcon, CloseIcon, ErrorIcon, RequiredIcon };
