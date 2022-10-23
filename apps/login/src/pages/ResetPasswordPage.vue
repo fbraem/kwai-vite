@@ -121,12 +121,12 @@
 // eslint-disable-next-line import/no-absolute-path
 import logoUrl from '/logo.png';
 import config from '@kwai/config';
+import { useHttp } from '@kwai/api';
 import { InputField, Button, ErrorAlert, InformationDialog } from '@kwai/ui';
 import { useI18n } from 'vue-i18n';
 import { useTitle } from '@vueuse/core';
 import { useForm } from 'vee-validate';
 import { ref, Ref } from 'vue';
-import { useHttp } from '@root/packages/kwai-api';
 import { useRoute, useRouter } from 'vue-router';
 
 const { t } = useI18n({ useScope: 'global' });
