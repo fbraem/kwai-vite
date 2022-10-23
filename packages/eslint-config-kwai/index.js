@@ -7,6 +7,7 @@ module.exports = {
   extends: ['standard', 'plugin:vue/vue3-recommended'],
   rules: {
     semi: [2, 'always'],
-    'comma-dangle': ['error', 'never']
+    'comma-dangle': ['error', 'never'],
+    'space-before-function-paren': [2, 'never']
   }
 };
