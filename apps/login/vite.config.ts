@@ -41,7 +41,7 @@ export default defineConfig({
       },
       {
         find: /^@root\/(.*)/,
-        replacement: `${resolve(__dirname)}/$1`
+        replacement: `${resolve(__dirname)}/src/$1`
       }
     ]
   }
