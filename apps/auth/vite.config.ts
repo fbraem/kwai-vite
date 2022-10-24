@@ -20,7 +20,7 @@ const resolveTheme = (path: string) => {
 };
 
 export default defineConfig({
-  base: '/login/',
+  base: '/auth/',
   server: {
     port: 3002
   },

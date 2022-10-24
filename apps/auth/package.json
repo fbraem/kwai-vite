@@ -1,8 +1,8 @@
 {
-  "name": "@kwai/login",
+  "name": "@kwai/auth",
   "version": "0.0.1",
   "private": true,
-  "description": "The login/registration application for kwai",
+  "description": "The authentication application for kwai",
   "scripts": {
     "dev": "vite --config ./vite.config.ts",
     "build": "vue-tsc --noEmit && vite build --config ./vite.config.ts",
