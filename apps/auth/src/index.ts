@@ -1,31 +1,31 @@
-import { createApp} from "vue"
+import { createApp } from 'vue';
 // Create app
-import App from "./App.vue"
-import "./index.css"
-const app = createApp(App)
+import App from './App.vue';
+import './index.css';
 
 // Setup i18n
-import { createI18n } from "vue-i18n"
-import messages from '@intlify/vite-plugin-vue-i18n/messages'
-const i18n = createI18n({
-    legacy: false,
-    locale: 'nl',
-    messages
-})
-app.use(i18n)
+import { createI18n } from 'vue-i18n';
+import messages from '@intlify/vite-plugin-vue-i18n/messages';
 
 // Setup pinia store
-import { createPinia } from "pinia"
-const pinia = createPinia()
-app.use(pinia)
+import { createPinia } from 'pinia';
 
 // Setup router
-import { createRouter, createWebHistory } from "vue-router"
-import { routes } from "./routes"
+import { createRouter, createWebHistory } from 'vue-router';
+import { routes } from './routes';
+const app = createApp(App);
+const i18n = createI18n({
+  legacy: false,
+  locale: 'nl',
+  messages
+});
+app.use(i18n);
+const pinia = createPinia();
+app.use(pinia);
 const router = createRouter({
-    history: createWebHistory('login'),
-    routes
-})
-app.use(router)
+  history: createWebHistory('auth'),
+  routes
+});
+app.use(router);
 
-app.mount("#app")
+app.mount('#app');
