@@ -1,5 +1,13 @@
 <template>
   <InformationDialog>
+    <NotificationMessage
+      v-if="showNotification"
+      :can-be-closed="true"
+      @close="closeNotification"
+    >
+      <CheckIcon class="w-8 h-8 mr-2 fill-green-600" />
+      Your password has been changed.
+    </NotificationMessage>
     <template #information>
       <div class="flex flex-row sm:flex-col items-center">
         <div class="w-16 mr-2 sm:mb-4">
@@ -90,12 +98,13 @@
 import logoUrl from '/logo.png';
 
 import config from '@kwai/config';
-import { InputField, Button, ErrorAlert, InformationDialog } from '@kwai/ui';
+import { CheckIcon, InputField, Button, ErrorAlert, InformationDialog } from '@kwai/ui';
 import { useForm } from 'vee-validate';
 import { useHttpLogin } from '@kwai/api';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import NotificationMessage from '@root/components/NotificationMessage.vue';
 
 const { t } = useI18n({ useScope: 'global' });
 
@@ -133,5 +142,14 @@ const onSubmitForm = handleSubmit(async values => {
       errorMessage.value = t('login.failed');
     }
   });
+  showNotification.value = true;
+  setTimeout(() => {
+    showNotification.value = false;
+  }, 3000);
 });
+
+const showNotification = ref(false);
+const closeNotification = () => {
+  showNotification.value = false;
+};
 </script>
