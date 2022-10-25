@@ -10,3 +10,4 @@ node_modules
 /packages/kwai-config/src/config.toml
 /packages/kwai-config/dist
 *.tsbuildinfo
+/apps/auth/dist/
