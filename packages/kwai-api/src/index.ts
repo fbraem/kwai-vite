@@ -84,7 +84,8 @@ export const useHttpApi = (options: Options = {}) => useHttpAuth(options)
         .url('/auth/access_token')
         .formData(form)
         .post()
-        .json();
+        .json()
+      ;
       accessToken.value = json.access_token;
       refreshToken.value = json.refresh_token;
     }
@@ -100,7 +101,7 @@ export const useHttpApi = (options: Options = {}) => useHttpAuth(options)
   })
 ;
 
-const useHttpLogout = async(options: Options = {}) => {
+export const useHttpLogout = async(options: Options = {}) => {
   const accessToken = options.accessToken ?? localStorage.accessToken;
   const refreshToken = options.refreshToken ?? localStorage.refreshToken;
 
