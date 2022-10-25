@@ -3,9 +3,9 @@ import type { Ref } from 'vue';
 import { useLocalStorage } from '@vueuse/core';
 import FormDataAddon from 'wretch/addons/formData';
 import QueryStringAddon from 'wretch/addons/queryString';
+import config from '@kwai/config';
 
-// TODO: get it from config
-const api = 'http://api.kwai.com';
+const api = config.api.base_url;
 
 interface LocalStorage {
     accessToken: Ref<string|null>,
@@ -73,6 +73,7 @@ export const useHttpLogin = (formData: LoginFormData, options: Options = {}) => 
 export const useHttpApi = (options: Options = {}) => useHttpAuth(options)
   .accept('application/vnd.api+json')
   .content('application/vnd.api+json')
+  // eslint-disable-next-line n/handle-callback-err
   .catcher(401, async(err, request) => {
     const accessToken = options.accessToken ?? localStorage.accessToken;
     const refreshToken = options.refreshToken ?? localStorage.refreshToken;
@@ -80,14 +81,21 @@ export const useHttpApi = (options: Options = {}) => useHttpAuth(options)
       const form = {
         refresh_token: refreshToken
       };
-      const json: AccessTokenJSON = await useHttp(options)
+      await useHttp(options)
         .url('/auth/access_token')
         .formData(form)
         .post()
         .json()
+        .then((json: AccessTokenJSON) => {
+          accessToken.value = json.access_token;
+          refreshToken.value = json.refresh_token;
+        })
+        .catch(error => {
+          accessToken.value = null;
+          refreshToken.value = null;
+          console.log(error);
+        })
       ;
-      accessToken.value = json.access_token;
-      refreshToken.value = json.refresh_token;
     }
 
     return request
