@@ -61,3 +61,33 @@ reset_password:
     contact our webmaster.
   expired: The code used has expired. Please generate a new code.
   generate_code: Generate a new code
+invited:
+  title: Registration
+  problem: Problems with the registration?
+  contact_us: Contact us
+  form:
+    uuid:
+      label: Code
+      placeholder: Enter the code here
+      help: This is the code you received with an email.
+    first_name:
+      label: Firstname
+      placeholder: Enter your firstname
+    last_name:
+      label: Lastname
+      placeholder: Enter your lastname
+    password:
+      label: Password
+      placeholder: Enter your password
+      help: |
+        The password must contain at least one number, one uppercase and one lowercase character.
+        The password must be at least 8 characters long.
+      strength: The password is not strong enough.
+    repeat_password:
+      label: Repeat password
+      placeholder: Repeat the password
+  required: This is a required field.
+  not_same: The passwords are not the same
+  failed: |
+    Something went wrong with the registration. Try again or contact our webmaster.
+  expired: The invitation is expired. Contact our webmaster.
