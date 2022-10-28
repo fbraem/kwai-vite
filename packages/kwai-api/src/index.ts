@@ -4,9 +4,7 @@ import type { Ref } from 'vue';
 import { useLocalStorage } from '@vueuse/core';
 import FormDataAddon from 'wretch/addons/formData';
 import QueryStringAddon from 'wretch/addons/queryString';
-import config from '@kwai/config';
-
-const api = config.api.base_url;
+import { api } from '@kwai/config';
 
 interface LocalStorage {
     accessToken: Ref<string|null>,
@@ -26,7 +24,7 @@ interface Options {
 }
 
 export const useHttp = (options: Options = {}) => wretch(
-  options.baseUrl ?? api,
+  options.baseUrl ?? api.base_url,
   {
     credentials: 'include',
     mode: 'cors',

@@ -5,6 +5,8 @@ declare module '@kwai/config' {
         copyright: string
         email: string
     };
+}
+declare module '@kwai/config' {
     const api: {
         base_url: string
     };
