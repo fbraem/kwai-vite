@@ -13,7 +13,7 @@ interface LocalStorage {
 }
 const localStorage: LocalStorage = {
   accessToken: useLocalStorage('access_token', null),
-  refreshToken: useLocalStorage('refresh_token', null)
+  refreshToken: useLocalStorage('refresh_token', null),
 };
 
 export const isLoggedIn = (): boolean => {
@@ -30,7 +30,7 @@ export const useHttp = (options: Options = {}) => wretch(
   options.baseUrl ?? api,
   {
     credentials: 'include',
-    mode: 'cors'
+    mode: 'cors',
   }
 ).addon(FormDataAddon).addon(QueryStringAddon);
 
@@ -79,7 +79,7 @@ export const useHttpApi = (options: Options = {}) => useHttpAuth(options)
     const refreshToken = options.refreshToken ?? localStorage.refreshToken;
     if (refreshToken.value) {
       const form = {
-        refresh_token: refreshToken
+        refresh_token: refreshToken,
       };
       await useHttp(options)
         .url('/auth/access_token')
@@ -114,7 +114,7 @@ export const useHttpLogout = async(options: Options = {}) => {
   const refreshToken = options.refreshToken ?? localStorage.refreshToken;
 
   const form = {
-    refresh_token: refreshToken.value
+    refresh_token: refreshToken.value,
   };
 
   await useHttpAuth(options)
