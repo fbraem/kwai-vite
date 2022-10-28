@@ -1,4 +1,5 @@
 import wretch from 'wretch';
+import { computed } from 'vue';
 import type { Ref } from 'vue';
 import { useLocalStorage } from '@vueuse/core';
 import FormDataAddon from 'wretch/addons/formData';
@@ -16,9 +17,7 @@ const localStorage: LocalStorage = {
   refreshToken: useLocalStorage('refresh_token', null),
 };
 
-export const isLoggedIn = (): boolean => {
-  return localStorage.accessToken.value != null;
-};
+export const isLoggedIn = computed((): boolean => localStorage.accessToken.value != null);
 
 interface Options {
     baseUrl?: string,
@@ -86,9 +85,10 @@ export const useHttpApi = (options: Options = {}) => useHttpAuth(options)
         .formData(form)
         .post()
         .json()
-        .then((json: AccessTokenJSON) => {
-          accessToken.value = json.access_token;
-          refreshToken.value = json.refresh_token;
+        .then(json => {
+          const token = <AccessTokenJSON> json;
+          accessToken.value = token.access_token;
+          refreshToken.value = token.refresh_token;
         })
         .catch(error => {
           accessToken.value = null;
