@@ -1,41 +1,41 @@
-import { DialogLayout } from '@kwai/ui';
 import { RouteRecordRaw } from 'vue-router';
+import IndexPage from './pages/IndexPage.vue';
+import HomePage from './pages/HomePage.vue';
 import LoginPage from './pages/LoginPage.vue';
 import InvitedPage from './pages/InvitedPage.vue';
 import RecoverPasswordPage from './pages/RecoverPasswordPage.vue';
 import ResetPasswordPage from './pages/ResetPasswordPage.vue';
 
-// eslint-disable-next-line import/no-absolute-path
-import heroImageUrl from '/hero.jpg';
-
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: DialogLayout,
-    props: {
-      image: heroImageUrl
-    },
+    component: IndexPage,
     children: [
       {
-        name: 'login',
+        name: 'home',
         path: '/',
-        component: LoginPage
+        component: HomePage,
+      },
+      {
+        name: 'login',
+        path: '/login',
+        component: LoginPage,
       },
       {
         name: 'invited',
         path: '/invited',
-        component: InvitedPage
+        component: InvitedPage,
       },
       {
         name: 'recover',
         path: '/recover',
-        component: RecoverPasswordPage
+        component: RecoverPasswordPage,
       },
       {
         name: 'reset',
         path: '/reset',
-        component: ResetPasswordPage
-      }
-    ]
-  }
+        component: ResetPasswordPage,
+      },
+    ],
+  },
 ];
