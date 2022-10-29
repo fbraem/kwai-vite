@@ -5,7 +5,7 @@
     @close="closeNotification"
   >
     <CheckIcon class="w-8 h-8 mr-2 fill-green-600" />
-    Your password has been changed.
+    {{ t('login.notifications.logged_in') }}
   </NotificationMessage>
   <div class="mb-6">
     <div class="mb-3">
@@ -73,6 +73,7 @@
 import { CheckIcon, InputField, Button, ErrorAlert } from '@kwai/ui';
 import { useForm } from 'vee-validate';
 import { useHttpLogin } from '@kwai/api';
+import { website } from '@kwai/config';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -117,6 +118,7 @@ const onSubmitForm = handleSubmit(async values => {
   showNotification.value = true;
   setTimeout(() => {
     showNotification.value = false;
+    window.location.replace(website.url);
   }, 3000);
 });
 
