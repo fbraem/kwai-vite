@@ -20,54 +20,44 @@
       </h2>
       <ul>
         <li v-if="isLoggedIn">
-          <a
-            class="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 hover:cursor-pointer"
-            @click="logout"
-          >
-            <div class="font-semibold">Uitloggen</div>
-            <span class="text-sm font-light text-gray-500 dark:text-gray-400">
-              Je wil niet meer actief zijn op onze website.
-            </span>
-          </a>
+          <ActionPanel :method="logout">
+            <template #title>
+              {{ t('home.logout.title') }}
+            </template>
+            <template #description>
+              {{ t('home.logout.description') }}
+            </template>
+          </ActionPanel>
         </li>
         <li v-else>
-          <router-link
-            :to="{ name: 'login' }"
-            class="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 hover:cursor-pointer"
-          >
-            <div class="font-semibold">
-              Inloggen
-            </div>
-            <span class="text-sm font-light text-gray-500 dark:text-gray-400">
-              Je wil inloggen op onze website.
-            </span>
-          </router-link>
+          <ActionPanel :route="{ name: 'login' }">
+            <template #title>
+              {{ t('home.login.title') }}
+            </template>
+            <template #description>
+              {{ t('home.login.description') }}
+            </template>
+          </ActionPanel>
         </li>
         <li v-if="isLoggedIn">
-          <router-link
-            :to="{ name: 'reset' }"
-            class="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
-          >
-            <div class="font-semibold">
-              Paswoord wijzigen
-            </div>
-            <span class="text-sm font-light text-gray-500 dark:text-gray-400">
-              Je wilt uw paswoord wijzigen?
-            </span>
-          </router-link>
+          <ActionPanel :route="{ name: 'change' }">
+            <template #title>
+              {{ t('home.change_password.title') }}
+            </template>
+            <template #description>
+              {{ t('home.change_password.description') }}
+            </template>
+          </ActionPanel>
         </li>
         <li v-if="!isLoggedIn">
-          <router-link
-            :to="{ name: 'recover' }"
-            class="block p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
-          >
-            <div class="font-semibold">
-              Paswoord vergeten?
-            </div>
-            <span class="text-sm font-light text-gray-500 dark:text-gray-400">
-              Je bent uw paswoord vergeten? Met een code kan je het paswoord wijzigen.
-            </span>
-          </router-link>
+          <ActionPanel :route="{ name: 'recover' }">
+            <template #title>
+              {{ t('home.forgot_password.title') }}
+            </template>
+            <template #description>
+              {{ t('home.forgot_password.description') }}
+            </template>
+          </ActionPanel>
         </li>
       </ul>
     </div>
@@ -77,6 +67,7 @@
 <script setup lang="ts">
 import { isLoggedIn, useHttpLogout } from '@kwai/api';
 import { useI18n } from 'vue-i18n';
+import ActionPanel from '@root/components/ActionPanel.vue';
 const { t } = useI18n({ useScope: 'global' });
 
 const logout = () => {
