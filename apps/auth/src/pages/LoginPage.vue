@@ -98,8 +98,8 @@ function isEmail(value: string): string|boolean {
 const { handleSubmit } = useForm({
   validationSchema: {
     email: [isRequired, isEmail],
-    password: isRequired
-  }
+    password: isRequired,
+  },
 });
 
 const errorMessage: Ref<string|null> = ref(null);
@@ -107,7 +107,7 @@ const onSubmitForm = handleSubmit(async values => {
   errorMessage.value = null;
   const formData = {
     username: values.email,
-    password: values.password
+    password: values.password,
   };
   await useHttpLogin(formData).catch(error => {
     if (error.response.status === 401) {
