@@ -102,7 +102,7 @@
         class="bg-gray-700 text-white focus:bg-gray-900 z-20"
         @click="onSubmitForm"
       >
-        {{ t('recover_password.form.submit.label') }}
+        {{ t('invited.form.submit.label') }}
       </Button>
     </div>
   </form>
@@ -161,15 +161,15 @@ const { handleSubmit } = useForm({
     firstName: [isRequired],
     lastName: [isRequired],
     password: [isRequired, isStrong],
-    repeat_password: [isRequired, isSame]
+    repeat_password: [isRequired, isSame],
   },
   initialValues: {
     uuid: uuid.value,
     firstName: '',
     lastName: '',
     password: '',
-    repeat_password: ''
-  }
+    repeat_password: '',
+  },
 });
 
 const router = useRouter();
@@ -187,13 +187,13 @@ const onSubmitForm = handleSubmit(async values => {
           first_name: values.firstName,
           last_name: values.lastName,
           password: values.password,
-          remark: ''
-        }
-      }
+          remark: '',
+        },
+      },
     })
     .post()
     .res(() => router.push({
-      path: '/'
+      path: '/',
     }))
     .catch(error => {
       if (error.response?.status === 401) {

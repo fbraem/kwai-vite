@@ -86,6 +86,8 @@ invited:
     repeat_password:
       label: Repeat password
       placeholder: Repeat the password
+    submit:
+      label: Submit
   required: This is a required field.
   not_same: The passwords are not the same
   failed: |
