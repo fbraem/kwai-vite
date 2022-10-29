@@ -2,6 +2,18 @@ home:
   title: Authenticatie
   problem: Heb je problemen met authenticatie?
   contact_us: Contacteer ons
+  login:
+    title: Inloggen
+    description: Je wil inloggen op onze website.
+  logout:
+    title: Uitloggen
+    description: Je wil niet meer actief zijn op de website.
+  change_password:
+    title: Paswoord Wijzigen
+    description: Je wil jouw paswoord wijzigen.
+  forgot_password:
+    title: Paswoord Vergeten?
+    description: Je bent jouw paswoord vergeten? Met een code kan je het paswoord wijzigen.
 login:
   title: Log in op jouw club
   description:
@@ -24,6 +36,8 @@ login:
   required: Dit is een verplicht veld.
   invalid_email: Dit is geen geldig email adres
   failed: Log in mislukt. Controleer uw email en/of paswoord.
+  notifications:
+    logged_in: Je bent ingelogd.
 recover_password:
   title: Paswoord vergeten?
   problem: Kan het probleem niet opgelost worden?
@@ -90,9 +104,36 @@ invited:
     repeat_password:
       label: Herhaal paswoord
       placeholder: Herhaal het nieuwe paswoord
+    submit:
+      label: Verstuur
   required: Dit is een verplicht veld.
   not_same: Het paswoord is niet gelijk
   failed: |
     Er is iets misgelopen bij de registratie. Probeer opnieuw of
     contacteer onze webmaster.
   expired: De uitnodiging is vervallen. Neem contact op met onze webmaster.
+change_password:
+  title: Wijzigen paswoord
+  problem: Lukt het niet om jouw paswoord te wijzigen?
+  contact_us: Contacteer ons
+  password_changed: Jouw paswoord is gewijzigd.
+  form:
+    password:
+      label: Nieuw paswoord
+      placeholder: Geef een nieuw paswoord in
+      help: |
+        Het paswoord moet minstens één cijfer bevatten, alsook één hoofd- en kleine letter.
+        Het paswoord moet minstens 8 karakters lang zijn.
+      strength: Het paswoord is niet sterk genoeg.
+    repeat_password:
+      label: Herhaal paswoord
+      placeholder: Herhaal het nieuwe paswoord
+    submit:
+      label: Verstuur
+  required: Dit is een verplicht veld.
+  not_same: Het paswoord is niet gelijk
+  failed: |
+    Er is iets misgelopen bij het instellen van het nieuwe paswoord. Probeer opnieuw of
+    contacteer onze webmaster.
+  notifications:
+    password_changed: Jouw paswoord werd succesvol gewijzigd.

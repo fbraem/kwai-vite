@@ -3,6 +3,7 @@ import IndexPage from './pages/IndexPage.vue';
 import HomePage from './pages/HomePage.vue';
 import LoginPage from './pages/LoginPage.vue';
 import InvitedPage from './pages/InvitedPage.vue';
+import ChangePasswordPage from './pages/ChangePasswordPage.vue';
 import RecoverPasswordPage from './pages/RecoverPasswordPage.vue';
 import ResetPasswordPage from './pages/ResetPasswordPage.vue';
 
@@ -15,6 +16,11 @@ export const routes: RouteRecordRaw[] = [
         name: 'home',
         path: '/',
         component: HomePage,
+      },
+      {
+        name: 'change',
+        path: '/change',
+        component: ChangePasswordPage,
       },
       {
         name: 'login',
