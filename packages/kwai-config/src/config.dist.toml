@@ -2,3 +2,7 @@
 title = ""
 copyright = ""
 email = ""
+url = ""
+
+[api]
+base_url = ""
