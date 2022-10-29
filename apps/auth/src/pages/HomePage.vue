@@ -25,7 +25,7 @@
             @click="logout"
           >
             <div class="font-semibold">Uitloggen</div>
-            <span class="text-sm text-gray-500 dark:text-gray-400">
+            <span class="text-sm font-light text-gray-500 dark:text-gray-400">
               Je wil niet meer actief zijn op onze website.
             </span>
           </a>
