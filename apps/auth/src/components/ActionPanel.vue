@@ -16,14 +16,14 @@
 
 <script setup lang="ts">
 import { computed, defineProps } from 'vue';
-import { RouteRecord } from 'vue-router';
+import { LocationQuery } from 'vue-router';
 
 const props = defineProps<{
-  route?: RouteRecord,
+  route?: LocationQuery,
   method?: Function
 }>();
 
-const tag = computed(() => props.route ? 'router-link' : 'button');
+const tag = computed(() => props.route ? 'router-link' : 'a');
 const to = computed(() => props.route ? 'to' : null);
 const click = computed(() => props.method ? 'click' : null);
 </script>
