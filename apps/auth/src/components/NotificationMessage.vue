@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { CloseIcon } from '@kwai/ui';
 defineProps({
-  canBeClosed: Boolean
+  canBeClosed: Boolean,
 });
 const emit = defineEmits(['close']);
 const close = () => {
