@@ -31,7 +31,7 @@ export const useHttp = (options: Options = {}) => wretch(
   }
 ).addon(FormDataAddon).addon(QueryStringAddon);
 
-export const useHttpAuth = (options: Options) => useHttp(options).defer(
+export const useHttpAuth = (options: Options = {}) => useHttp(options).defer(
   w => {
     const accessToken = options.accessToken ?? localStorage.accessToken;
     if (accessToken.value) {
@@ -76,7 +76,7 @@ export const useHttpApi = (options: Options = {}) => useHttpAuth(options)
     const refreshToken = options.refreshToken ?? localStorage.refreshToken;
     if (refreshToken.value) {
       const form = {
-        refresh_token: refreshToken,
+        refresh_token: refreshToken.value,
       };
       await useHttp(options)
         .url('/auth/access_token')
