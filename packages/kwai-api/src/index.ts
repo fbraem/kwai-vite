@@ -31,6 +31,11 @@ export const useHttp = (options: Options = {}) => wretch(
   }
 ).addon(FormDataAddon).addon(QueryStringAddon);
 
+interface AccessTokenJSON {
+  access_token: string,
+  refresh_token: string
+}
+
 export const useHttpAuth = (options: Options = {}) => useHttp(options).defer(
   w => {
     const accessToken = options.accessToken ?? localStorage.accessToken;
@@ -38,38 +43,10 @@ export const useHttpAuth = (options: Options = {}) => useHttp(options).defer(
       return w.auth(`Bearer ${accessToken.value}`);
     }
     return w;
-  }
-);
+  })
+;
 
-interface AccessTokenJSON {
-    access_token: string,
-    refresh_token: string
-}
-interface LoginFormData {
-    username: string,
-    password: string
-}
-
-export const useHttpLogin = (formData: LoginFormData, options: Options = {}) => {
-  const accessToken = options.accessToken ?? localStorage.accessToken;
-  accessToken.value = null;
-  const refreshToken = options.refreshToken ?? localStorage.refreshToken;
-  refreshToken.value = null;
-
-  return useHttp(options)
-    .url('/auth/login')
-    .formData(formData)
-    .post()
-    .json<AccessTokenJSON>()
-    .then(json => {
-      accessToken.value = json.access_token;
-      refreshToken.value = json.refresh_token;
-    });
-};
-
-export const useHttpApi = (options: Options = {}) => useHttpAuth(options)
-  .accept('application/vnd.api+json')
-  .content('application/vnd.api+json')
+export const useHttpWithAuthCatcher = (options: Options = {}) => useHttpAuth(options)
   // eslint-disable-next-line n/handle-callback-err
   .catcher(401, async(err, request) => {
     const accessToken = options.accessToken ?? localStorage.accessToken;
@@ -105,6 +82,33 @@ export const useHttpApi = (options: Options = {}) => useHttpAuth(options)
       .json()
     ;
   })
+;
+
+interface LoginFormData {
+    username: string,
+    password: string
+}
+
+export const useHttpLogin = (formData: LoginFormData, options: Options = {}) => {
+  const accessToken = options.accessToken ?? localStorage.accessToken;
+  accessToken.value = null;
+  const refreshToken = options.refreshToken ?? localStorage.refreshToken;
+  refreshToken.value = null;
+
+  return useHttp(options)
+    .url('/auth/login')
+    .formData(formData)
+    .post()
+    .json<AccessTokenJSON>()
+    .then(json => {
+      accessToken.value = json.access_token;
+      refreshToken.value = json.refresh_token;
+    });
+};
+
+export const useHttpApi = (options: Options = {}) => useHttpWithAuthCatcher(options)
+  .accept('application/vnd.api+json')
+  .content('application/vnd.api+json')
 ;
 
 export const useHttpLogout = async(options: Options = {}) => {
