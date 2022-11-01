@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center py-4 px-6">
     <div class="flex items-center">
       <button
-        class="focus:outline-none lg:hidden"
+        class="focus:outline-none md:hidden"
         :class="fillColor"
         @click="isOpen = true"
       >
