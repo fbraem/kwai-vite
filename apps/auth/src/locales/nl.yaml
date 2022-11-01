@@ -116,7 +116,6 @@ change_password:
   title: Wijzigen paswoord
   problem: Lukt het niet om jouw paswoord te wijzigen?
   contact_us: Contacteer ons
-  password_changed: Jouw paswoord is gewijzigd.
   form:
     password:
       label: Nieuw paswoord
