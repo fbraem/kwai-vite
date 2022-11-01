@@ -3,10 +3,10 @@
 </template>
 
 <script setup lang="ts">
-import { useApplicationStore } from "../stores/applicationStore"
-import { computed } from "vue"
+import { useApplicationStore } from '../stores/applicationStore';
+import { computed } from 'vue';
 
-const store = useApplicationStore()
-store.load()
-const applications = computed(() => store.applications)
+const store = useApplicationStore();
+store.load();
+const applications = computed(() => store.applications);
 </script>
