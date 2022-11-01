@@ -70,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import { useHttpApi } from '@kwai/api';
+import { useHttpWithAuthCatcher } from '@kwai/api';
 import { CheckIcon, InputField, Button, ErrorAlert } from '@kwai/ui';
 import { useI18n } from 'vue-i18n';
 import { useTitle } from '@vueuse/core';
@@ -117,7 +117,6 @@ function isStrong(value: string) {
 
 const { handleSubmit } = useForm({
   validationSchema: {
-    uuid: [isRequired],
     password: [isRequired, isStrong],
     repeat_password: [isRequired, isSame],
   },
@@ -134,10 +133,10 @@ const onSubmitForm = handleSubmit(async values => {
   const formData = {
     password: values.password,
   };
-  await useHttpApi()
+  await useHttpWithAuthCatcher()
     .url('/auth/change')
     .formData(formData)
-    .patch()
+    .post()
     .res(() => {
       showNotification.value = true;
       setTimeout(() => {
@@ -145,7 +144,7 @@ const onSubmitForm = handleSubmit(async values => {
         router.push({
           path: '/',
         });
-      });
+      }, 3000);
     })
     .catch(error => {
       if (error.response?.status !== 200) {
