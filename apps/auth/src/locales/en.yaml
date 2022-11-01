@@ -1,3 +1,19 @@
+home:
+  title: Authentication
+  problem: Having problems with authentication?
+  contact_us: Contact us
+  login:
+    title: Login
+    description: You want to login in our website.
+  logout:
+    title: Logout
+    description: You want to logout from our website.
+  change_password:
+    title: Change Password
+    description: You want to change your password.
+  forgot_password:
+    title: Forgotten Password?
+    description: You have forgotten your password? With a code you can reset it.
 login:
   title: Login to your account
   description:
@@ -95,3 +111,28 @@ invited:
   failed: |
     Something went wrong with the registration. Try again or contact our webmaster.
   expired: The invitation is expired. Contact our webmaster.
+change_password:
+  title: Change password
+  problem: Are you unable to change your password?
+  contact_us: Contact us
+  password_changed: Your password has been changed.
+  form:
+    password:
+      label: New password
+      placeholder: Enter a new password
+      help: |
+        The password must contain at least one number, as well as one uppercase and lowercase letter.
+        The password must be at least 8 characters long.
+      strength: The password is not strong enough.
+    repeat_password:
+      label: Repeat Password
+      placeholder: Repeat the new password
+    submit:
+      label: Submit
+  required: This field is required.
+  not_same: The passwords are not the same
+  failed: |
+    Something went wrong while changing the password. Try again or contact
+    our webmaster.
+  notifications:
+    password_changed: The password has been changed.
