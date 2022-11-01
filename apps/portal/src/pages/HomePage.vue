@@ -1,4 +1,33 @@
 <template>
+  <section>
+    <div
+      class="relative"
+      style="height:600px;"
+    >
+      <div
+        class="absolute top-0 w-full h-full bg-center xl:bg-top bg-cover"
+        :style="{ 'background-image': 'url(' + heroUrl + ')' }"
+      >
+        <span class="w-full h-full absolute opacity-50 bg-gradient-to-br from-black to-red-600" />
+        <div class="container lg:max-w-5xl relative mx-auto h-full flex items-center">
+          <div class="max-w-md flex flex-col space-y-5">
+            <h1 class="text-5xl font-semibold text-white">
+              Judokwai Kemzeke
+            </h1>
+            <p class="text-gray-200">
+              Judokwai Kemzeke biedt in de gemeente Stekene judo aan op recreatief en competitief niveau, voor 5- tot plus 60- jarigen.
+            </p>
+            <p class="text-gray-200">
+              Bovendien organiseert de club nevenactiviteiten zodat iedereen optimaal kan genieten van een aangename en positieve groepssfeer.
+            </p>
+            <p class="text-gray-200">
+              Kom gerust een kijkje nemen tijdens een training.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <div>
     <div class="container mx-auto p-4">
       <div class="grid gap-8 sm:grid-cols-1 sm:grid-rows-3 md:grid-cols-3 md:grid-rows-1 justify-items-center">
@@ -38,6 +67,8 @@
 </template>
 
 <script setup lang="ts">
+import heroUrl from '/hero.jpg';
+
 import ApplicationList from '../components/ApplicationList.vue';
 import { Card, CardRouterLinkedTitle } from '@kwai/ui';
 import { ref, ShallowReactive, shallowReactive } from 'vue';
