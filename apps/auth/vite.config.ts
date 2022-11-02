@@ -22,27 +22,27 @@ const resolveTheme = (path: string) => {
 export default defineConfig({
   base: '/auth/',
   server: {
-    port: 3002
+    port: 3002,
   },
   plugins: [
     vue(),
     toml(),
     vueI18n({
       include: resolve(__dirname, './src/locales/**'),
-      compositionOnly: true
-    })
+      compositionOnly: true,
+    }),
   ],
   resolve: {
     alias: [
       {
         find: '@theme',
         replacement: '',
-        customResolver: resolveTheme
+        customResolver: resolveTheme,
       },
       {
         find: /^@root\/(.*)/,
-        replacement: `${resolve(__dirname)}/src/$1`
-      }
-    ]
-  }
+        replacement: `${resolve(__dirname)}/src/$1`,
+      },
+    ],
+  },
 });
