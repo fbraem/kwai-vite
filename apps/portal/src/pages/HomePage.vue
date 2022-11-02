@@ -10,7 +10,7 @@
       >
         <span class="w-full h-full absolute opacity-50 bg-gradient-to-br from-black to-red-600" />
         <div class="container lg:max-w-5xl relative mx-auto h-full flex items-center">
-          <div class="max-w-md flex flex-col space-y-5">
+          <div class="max-w-md flex flex-col space-y-5 px-4">
             <h1 class="text-5xl font-semibold text-white">
               Judokwai Kemzeke
             </h1>
@@ -67,6 +67,7 @@
 </template>
 
 <script setup lang="ts">
+// eslint-disable-next-line import/no-absolute-path
 import heroUrl from '/hero.jpg';
 
 import ApplicationList from '../components/ApplicationList.vue';
