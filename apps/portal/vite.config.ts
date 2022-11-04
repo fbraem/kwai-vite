@@ -33,6 +33,10 @@ export default defineConfig({
         replacement: '',
         customResolver: resolveTheme,
       },
+      {
+        find: /^@root\/(.*)/,
+        replacement: `${resolve(__dirname)}/src/$1`,
+      },
     ],
   },
 });
