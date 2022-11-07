@@ -9,41 +9,34 @@
               class="w-16 mr-4"
             >
             <div class="text-xl font-medium uppercase text-center">
-              Judokwai<br>Kemzeke
+              {{ website.title }}
             </div>
           </div>
         </a>
       </div>
-      <a href="https://www.facebook.com/judokwai.kemzeke">
-        <div class="md:py-4 flex items-center mb-2">
-          <div>
-            <FacebookIcon class="w-8 fill-red-600" />
+      <template
+        v-for="socialMedia in portal.social_media"
+        :key="socialMedia.title"
+      >
+        <a :href="socialMedia.url">
+          <div class="md:py-4 flex items-center mb-2">
+            <div>
+              <component
+                :is="loadIcon(socialMedia.icon)"
+                class="w-8 fill-red-600"
+              />
+            </div>
+            <div class="flex flex-col pl-4">
+              <h2 class="font-semibold">
+                {{ socialMedia.title }}
+              </h2>
+              <span class="text-gray-600">
+                {{ socialMedia.account }}
+              </span>
+            </div>
           </div>
-          <div class="flex flex-col pl-4">
-            <h2 class="font-semibold">
-              Facebook
-            </h2>
-            <span class="text-gray-600">
-              judokwai.kemzeke
-            </span>
-          </div>
-        </div>
-      </a>
-      <a href="https://www.instagram.com/judokwai_kemzeke/">
-        <div class="md:py-4 flex items-center mb-2">
-          <div>
-            <InstagramIcon class="w-8 fill-red-600" />
-          </div>
-          <div class="flex flex-col pl-4">
-            <h2 class="font-semibold">
-              Instagram
-            </h2>
-            <span class="text-gray-600">
-              judokwai_kemzeke
-            </span>
-          </div>
-        </div>
-      </a>
+        </a>
+      </template>
       <div class="md:py-4 justify-self-end">
         <a
           href="http://localhost/auth/#login"
@@ -88,13 +81,16 @@
 import logoUrl from '/logo.png';
 
 import { BarsIcon } from '@kwai/ui';
-import FacebookIcon from './icons/FacebookIcon.vue';
-import InstagramIcon from './icons/InstagramIcon.vue';
+import { website, portal } from '@kwai/config';
 import ApplicationList from './ApplicationList.vue';
-import { ref } from 'vue';
+import { defineAsyncComponent, ref } from 'vue';
 
 const open = ref(false);
 const toggleMenu = () => {
   open.value = !open.value;
+};
+
+const loadIcon = (name: string) => {
+  return defineAsyncComponent(() => import(`@root/components/icons/${name}.vue`));
 };
 </script>
