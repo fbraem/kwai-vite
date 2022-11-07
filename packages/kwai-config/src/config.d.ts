@@ -4,7 +4,17 @@ declare module '@kwai/config' {
         title: string
         copyright: string
         email: string,
-        url: string
+        url: string,
+    };
+}
+declare module '@kwai/config' {
+    const portal: {
+        social_media: [{
+            title: string,
+            account: string,
+            icon: string,
+            url: string,
+        }]
     };
 }
 declare module '@kwai/config' {

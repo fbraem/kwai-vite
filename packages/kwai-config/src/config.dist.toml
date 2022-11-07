@@ -4,5 +4,12 @@ copyright = ""
 email = ""
 url = ""
 
+[portal]
+[[portal.social_media]]
+title = ""
+account = ""
+icon = ""
+url = ""
+
 [api]
 base_url = ""
