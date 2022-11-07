@@ -7,6 +7,7 @@
             <img
               :src="logoUrl"
               class="w-16 mr-4"
+              alt="logo"
             >
             <div class="text-xl font-medium uppercase text-center">
               {{ website.title }}
