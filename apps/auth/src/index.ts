@@ -17,14 +17,14 @@ const app = createApp(App);
 const i18n = createI18n({
   legacy: false,
   locale: 'nl',
-  messages
+  messages,
 });
 app.use(i18n);
 const pinia = createPinia();
 app.use(pinia);
 const router = createRouter({
   history: createWebHistory('auth'),
-  routes
+  routes,
 });
 app.use(router);
 
