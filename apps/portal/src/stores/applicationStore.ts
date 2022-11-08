@@ -19,16 +19,18 @@ interface JSONAPI<DataType> {
 }
 
 interface JSONAPIApplication {
-    name: string,
-    title: string,
-    short_description: string
+  name: string,
+  title: string,
+  short_description: string,
+  description: string
 }
 
 interface Application {
-    id: string,
-    name: string,
-    title: string,
-    short_description: string
+  id: string,
+  name: string,
+  title: string,
+  short_description: string,
+  description: string
 }
 
 export const useApplicationStore = defineStore(
@@ -43,6 +45,7 @@ export const useApplicationStore = defineStore(
         title: d.attributes.title,
         name: d.attributes.name,
         short_description: d.attributes.short_description,
+        description: d.attributes.description,
       });
       if (Array.isArray(json.data)) {
         return json.data.map(mapModel);
