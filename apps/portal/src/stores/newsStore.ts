@@ -3,22 +3,9 @@ import { defineStore } from 'pinia';
 import { ref, unref } from 'vue';
 import { useRequest } from 'vue-request';
 import { useHttpApi } from '@kwai/api';
+import type { JSONAPI, JSONDataType } from '@kwai/api';
 import { createDateTimeFromUTC } from '@kwai/date';
 import type { DateType } from '@kwai/date';
-
-interface JSONDataType<DataType> {
-  id: string,
-  type: string,
-  attributes: DataType
-}
-interface JSONAPI<DataType> {
-  meta?: {
-    count: number,
-    limit: number,
-    offset: number
-  },
-  data: JSONDataType<DataType>[] | JSONDataType<DataType>
-}
 
 interface JSONAPINewsStoryContent {
   locale: string,

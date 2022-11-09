@@ -2,21 +2,8 @@ import { defineStore } from 'pinia';
 import { ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import { useHttp } from '@kwai/api';
+import type { JSONAPI, JSONDataType } from '@kwai/api';
 import { useRequest } from 'vue-request';
-
-interface JSONDataType<DataType> {
-    id: string,
-    type: string,
-    attributes: DataType
-}
-interface JSONAPI<DataType> {
-    meta: {
-        count: number,
-        limit: number,
-        offset: number
-    }
-    data: JSONDataType<DataType>[] | JSONDataType<DataType>
-}
 
 interface JSONAPIApplication {
   name: string,
