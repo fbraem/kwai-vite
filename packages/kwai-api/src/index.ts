@@ -5,6 +5,39 @@ import { useLocalStorage } from '@vueuse/core';
 import FormDataAddon from 'wretch/addons/formData';
 import QueryStringAddon from 'wretch/addons/queryString';
 import { api } from '@kwai/config';
+import { z } from 'zod';
+
+const jsonApiRelationshipData = z.object({
+  id: z.string(),
+  type: z.string(),
+});
+
+export const jsonApiRelationship = z.object({
+  data: z.union([jsonApiRelationshipData, z.array(jsonApiRelationshipData)]),
+});
+
+export const jsonApiData = z.object({
+  id: z.string(),
+  type: z.string(),
+  attributes: z.record(
+    z.string(),
+    z.any()
+  ),
+  relationships: z.record(
+    z.string(),
+    z.union([jsonApiRelationship, z.array(jsonApiRelationship)])
+  ).optional(),
+});
+
+export const jsonApiDocument = z.object({
+  meta: z.object({
+    count: z.number(),
+    limit: z.number(),
+    offset: z.number(),
+  }).optional(),
+  data: z.union([jsonApiData, z.array(jsonApiData)]),
+  included: z.array(jsonApiData).optional(),
+});
 
 interface LocalStorage {
     accessToken: Ref<string|null>,
