@@ -7,16 +7,16 @@ import QueryStringAddon from 'wretch/addons/queryString';
 import { api } from '@kwai/config';
 import { z } from 'zod';
 
-const jsonApiRelationshipData = z.object({
+const JsonApiRelationshipData = z.object({
   id: z.string(),
   type: z.string(),
 });
 
-export const jsonApiRelationship = z.object({
-  data: z.union([jsonApiRelationshipData, z.array(jsonApiRelationshipData)]),
+export const JsonApiRelationship = z.object({
+  data: z.union([JsonApiRelationshipData, z.array(JsonApiRelationshipData)]),
 });
 
-export const jsonApiData = z.object({
+export const JsonApiData = z.object({
   id: z.string(),
   type: z.string(),
   attributes: z.record(
@@ -25,18 +25,18 @@ export const jsonApiData = z.object({
   ),
   relationships: z.record(
     z.string(),
-    z.union([jsonApiRelationship, z.array(jsonApiRelationship)])
+    z.union([JsonApiRelationship, z.array(JsonApiRelationship)])
   ).optional(),
 });
 
-export const jsonApiDocument = z.object({
+export const JsonApiDocument = z.object({
   meta: z.object({
     count: z.number(),
     limit: z.number(),
     offset: z.number(),
   }).optional(),
-  data: z.union([jsonApiData, z.array(jsonApiData)]),
-  included: z.array(jsonApiData).optional(),
+  data: z.union([JsonApiData, z.array(JsonApiData)]),
+  included: z.array(JsonApiData).optional(),
 });
 
 interface LocalStorage {
