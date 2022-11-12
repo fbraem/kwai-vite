@@ -5,6 +5,9 @@ email = ""
 url = ""
 
 [portal]
+promotion = [
+    ""
+]
 [[portal.social_media]]
 title = ""
 account = ""

@@ -14,7 +14,8 @@ declare module '@kwai/config' {
             account: string,
             icon: string,
             url: string,
-        }]
+        }],
+        promotion: string[]
     };
 }
 declare module '@kwai/config' {
