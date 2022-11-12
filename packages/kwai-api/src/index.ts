@@ -7,13 +7,14 @@ import QueryStringAddon from 'wretch/addons/queryString';
 import { api } from '@kwai/config';
 import { z } from 'zod';
 
-const JsonApiRelationshipData = z.object({
+const JsonResourceIdentifier = z.object({
   id: z.string(),
   type: z.string(),
 });
+export type JsonResourceIdentifierType = z.infer<typeof JsonResourceIdentifier>;
 
 export const JsonApiRelationship = z.object({
-  data: z.union([JsonApiRelationshipData, z.array(JsonApiRelationshipData)]),
+  data: z.union([JsonResourceIdentifier, z.array(JsonResourceIdentifier)]),
 });
 
 export const JsonApiData = z.object({
