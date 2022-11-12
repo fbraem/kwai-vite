@@ -1,16 +1,21 @@
 import { defineStore } from 'pinia';
 import { ref, watch } from 'vue';
 import type { Ref } from 'vue';
-import { useHttp } from '@kwai/api';
-import type { JSONAPI, JSONDataType } from '@kwai/api';
+import { JsonApiDataType, JsonApiDocumentType, useHttp } from '@kwai/api';
 import { useRequest } from 'vue-request';
+import { z } from 'zod';
 
-interface JSONAPIApplication {
-  name: string,
-  title: string,
-  short_description: string,
-  description: string
-}
+const JsonApiApplication = z.object({
+  id: z.string(),
+  type: z.literal('applications'),
+  attributes: z.object({
+    name: z.string(),
+    title: z.string(),
+    short_description: z.string(),
+    description: z.string(),
+  }),
+});
+type JsonApiApplicationType = z.infer<typeof JsonApiApplication>;
 
 interface Application {
   id: string,
@@ -26,14 +31,17 @@ export const useApplicationStore = defineStore(
     const application: Ref<Application|null> = ref(null);
     const applications: Ref<Application[]> = ref([]);
 
-    const toModel = (json: JSONAPI<JSONAPIApplication>): Application | Application[] => {
-      const mapModel = (d: JSONDataType<JSONAPIApplication>): Application => ({
-        id: d.id,
-        title: d.attributes.title,
-        name: d.attributes.name,
-        short_description: d.attributes.short_description,
-        description: d.attributes.description,
-      });
+    const toModel = (json: JsonApiDocumentType): Application | Application[] => {
+      const mapModel = (d: JsonApiDataType): Application => {
+        const application = <JsonApiApplicationType>d;
+        return {
+          id: application.id,
+          title: application.attributes.title,
+          name: application.attributes.name,
+          short_description: application.attributes.short_description,
+          description: application.attributes.description,
+        };
+      };
       if (Array.isArray(json.data)) {
         return json.data.map(mapModel);
       }
@@ -56,7 +64,7 @@ export const useApplicationStore = defineStore(
       watch(
         data,
         json => {
-          applications.value = toModel(json as JSONAPI<JSONAPIApplication>) as Application[];
+          applications.value = <Application[]> toModel(<JsonApiDocumentType> json);
         }
       );
     };

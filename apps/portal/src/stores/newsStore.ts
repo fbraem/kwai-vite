@@ -2,28 +2,33 @@ import type { Ref } from 'vue';
 import { defineStore } from 'pinia';
 import { ref, unref } from 'vue';
 import { useRequest } from 'vue-request';
-import { useHttpApi } from '@kwai/api';
-import type { JSONAPI, JSONDataType } from '@kwai/api';
+import { JsonApiDataType, JsonApiDocumentType, useHttpApi } from '@kwai/api';
 import { createDateTimeFromUTC } from '@kwai/date';
 import type { DateType } from '@kwai/date';
+import { z } from 'zod';
 
-interface JSONAPINewsStoryContent {
-  locale: string,
-  title: string,
-  html_summary: string,
-  html_content?: string
-}
+const JsonApiContent = z.object({
+  locale: z.string(),
+  title: z.string(),
+  html_summary: z.string(),
+  html_content: z.string().optional(),
+});
 
-interface JSONAPINewStory {
-  enabled: boolean,
-  remark?: string,
-  publish_date: string,
-  end_date?: string,
-  timezone: string,
-  promotion: number,
-  promotion_end_date?: string,
-  contents: JSONAPINewsStoryContent[]
-}
+const JsonApiNewsStory = z.object({
+  id: z.string(),
+  type: z.literal('stories'),
+  attributes: z.object({
+    enabled: z.boolean(),
+    remark: z.string().optional(),
+    publish_date: z.string(),
+    end_date: z.string().optional(),
+    timezone: z.string(),
+    promotion: z.number(),
+    promotion_end_date: z.string(),
+    contents: z.array(JsonApiContent),
+  }),
+});
+type JsonApiNewsStoryType = z.infer<typeof JsonApiNewsStory>;
 
 interface NewsStoryContent {
   locale: string,
@@ -39,18 +44,21 @@ interface NewsStory {
   contents: NewsStoryContent[]
 }
 
-const toModel = (json: JSONAPI<JSONAPINewStory>): NewsStory | NewsStory[] => {
-  const mapModel = (d: JSONDataType<JSONAPINewStory>): NewsStory => ({
-    id: d.id,
-    enabled: d.attributes.enabled,
-    publish_date: createDateTimeFromUTC(d.attributes.publish_date, d.attributes.timezone),
-    contents: d.attributes.contents.map(content => ({
-      locale: content.locale,
-      title: content.title,
-      summary: content.html_summary,
-      content: content.html_content,
-    })),
-  });
+const toModel = (json: JsonApiDocumentType): NewsStory | NewsStory[] => {
+  const mapModel = (d: JsonApiDataType): NewsStory => {
+    const story = <JsonApiNewsStoryType> d;
+    return {
+      id: story.id,
+      enabled: story.attributes.enabled,
+      publish_date: createDateTimeFromUTC(story.attributes.publish_date, d.attributes.timezone),
+      contents: story.attributes.contents.map(content => ({
+        locale: content.locale,
+        title: content.title,
+        summary: content.html_summary,
+        content: content.html_content,
+      })),
+    };
+  };
   if (Array.isArray(json.data)) {
     return json.data.map(mapModel);
   }
@@ -85,7 +93,7 @@ const setupNewsStore = () => {
         errorRetryCount: 5,
         refreshOnWindowFocus: false,
         onSuccess: (data) => {
-          items.value = toModel(data as JSONAPI<JSONAPINewStory>) as NewsStory[];
+          items.value = <NewsStory[]> toModel(<JsonApiDocumentType> data);
         },
       }
     );
