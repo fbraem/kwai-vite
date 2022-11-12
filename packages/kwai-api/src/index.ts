@@ -25,7 +25,7 @@ export const JsonApiData = z.object({
   ),
   relationships: z.record(
     z.string(),
-    z.union([JsonApiRelationship, z.array(JsonApiRelationship)])
+    JsonApiRelationship
   ).optional(),
 });
 export type JsonApiDataType = z.infer<typeof JsonApiData>;
