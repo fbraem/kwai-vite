@@ -4,16 +4,17 @@
   "description": "HTTP library for kwai",
   "private": true,
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/kwai-api.umd.cjs",
   "types": "dist/index.d.ts",
+  "module": "dist/kwai-api.js",
   "exports": {
     ".": {
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.umd.js"
+      "import": "./dist/kwai-api.js",
+      "require": "./dist/kwai-api.umd.cjs"
     }
   },
   "files": [
-    "dist"
+    "dist/**"
   ],
   "license": "MIT",
   "scripts": {
