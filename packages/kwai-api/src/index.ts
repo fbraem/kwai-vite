@@ -28,6 +28,7 @@ export const JsonApiData = z.object({
     z.union([JsonApiRelationship, z.array(JsonApiRelationship)])
   ).optional(),
 });
+export type JsonApiDataType = z.infer<typeof JsonApiData>;
 
 export const JsonApiDocument = z.object({
   meta: z.object({
@@ -38,6 +39,7 @@ export const JsonApiDocument = z.object({
   data: z.union([JsonApiData, z.array(JsonApiData)]),
   included: z.array(JsonApiData).optional(),
 });
+export type JsonApiDocumentType = z.infer<typeof JsonApiDocument>;
 
 interface LocalStorage {
     accessToken: Ref<string|null>,
