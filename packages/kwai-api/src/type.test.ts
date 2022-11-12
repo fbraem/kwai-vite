@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { jsonApiDocument } from './index';
+import { JsonApiDocument } from './index';
 
 describe('it can perform type checking for JSONAPI', () => {
   it('can typecheck a simple structure', () => {
@@ -14,7 +14,7 @@ describe('it can perform type checking for JSONAPI', () => {
       },
     };
 
-    const result = jsonApiDocument.safeParse(json);
+    const result = JsonApiDocument.safeParse(json);
     expect(result.success).toBeTruthy();
   });
   it('can typecheck a structure with a relationship', () => {
@@ -36,7 +36,7 @@ describe('it can perform type checking for JSONAPI', () => {
         },
       },
     };
-    const result = jsonApiDocument.safeParse(json);
+    const result = JsonApiDocument.safeParse(json);
     expect(result.success).toBeTruthy();
   });
 
@@ -59,7 +59,7 @@ describe('it can perform type checking for JSONAPI', () => {
         },
       },
     };
-    const result = jsonApiDocument.safeParse(json);
+    const result = JsonApiDocument.safeParse(json);
     expect(result.success).toBeTruthy();
   });
 
@@ -98,7 +98,7 @@ describe('it can perform type checking for JSONAPI', () => {
         },
       ],
     };
-    const result = jsonApiDocument.safeParse(json);
+    const result = JsonApiDocument.safeParse(json);
     expect(result.success).toBeTruthy();
   });
 });
