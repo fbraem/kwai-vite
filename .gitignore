@@ -5,6 +5,7 @@ dist/**
 node_modules
 /apps/author/dist/
 /apps/portal/dist/
+/packages/kwai-api/dist
 /packages/kwai-date/dist
 /packages/kwai-ui/dist
 /packages/kwai-config/src/config.toml
