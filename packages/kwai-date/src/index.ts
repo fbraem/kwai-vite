@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs, { ManipulateType, OpUnitType } from 'dayjs';
 
 // Load all necessary extensions
 import utc from 'dayjs/plugin/utc.js';
@@ -21,16 +21,40 @@ dayjs.extend(customParseFormat);
 dayjs.locale('nl');
 
 export interface DateType {
-    format(format: string): string
+  add(n: number, unit: string): Readonly<DateType>;
+  day(): number;
+  endOf(unit: string): Readonly<DateType>;
+  format(format: string): string;
+  startOf(unit: string): Readonly<DateType>;
 }
 
 function wrapDayjs(d: dayjs.Dayjs): Readonly<DateType> {
+  function add(n: number, unit: string): Readonly<DateType> {
+    return wrapDayjs(d.add(n, <ManipulateType> unit));
+  }
+
+  function day(): number {
+    return d.day();
+  }
+
+  function endOf(unit: string): Readonly<DateType> {
+    return wrapDayjs(d.endOf(<OpUnitType> unit));
+  }
+
   function format(format: string = 'YYYY-MM-DD'): string {
     return d.format(format);
   }
 
+  function startOf(unit: string): Readonly<DateType> {
+    return wrapDayjs(d.startOf(<OpUnitType> unit));
+  }
+
   return Object.freeze({
+    add,
+    day,
+    endOf,
     format,
+    startOf,
   });
 }
 
