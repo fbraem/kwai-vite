@@ -24,7 +24,7 @@ export interface DateType {
   add(n: number, unit: string): Readonly<DateType>;
   day(): number;
   endOf(unit: string): Readonly<DateType>;
-  format(format: string): string;
+  format(format?: string): string;
   startOf(unit: string): Readonly<DateType>;
 }
 
