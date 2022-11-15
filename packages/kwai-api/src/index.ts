@@ -33,9 +33,9 @@ export type JsonApiDataType = z.infer<typeof JsonApiData>;
 
 export const JsonApiDocument = z.object({
   meta: z.object({
-    count: z.number(),
-    limit: z.number(),
-    offset: z.number(),
+    count: z.number().optional(),
+    limit: z.number().optional(),
+    offset: z.number().optional(),
   }).optional(),
   data: z.union([JsonApiData, z.array(JsonApiData)]),
   included: z.array(JsonApiData).optional(),
