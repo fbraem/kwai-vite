@@ -38,13 +38,13 @@
 // eslint-disable-next-line import/no-absolute-path
 import heroUrl from '/hero.jpg';
 
-import HomeSectionApplications from '@root/components/home/HomeSectionApplications.vue';
 import { ShallowReactive, shallowReactive } from 'vue';
 import ClubIcon from '@theme/icons/ClubIcon.vue';
 import NewsIcon from '@theme/icons/NewsIcon.vue';
 import TrainingIcon from '@theme/icons/TrainingIcon.vue';
 
 import { website, portal } from '@kwai/config';
+import HomeSectionApplications from '@root/components/home/HomeSectionApplications.vue';
 import HomeSectionNews from '@root/components/home/HomeSectionNews.vue';
 import HomeSectionTrainings from '@root/components/home/HomeSectionTrainings.vue';
 import HomeSectionClub from '@root/components/home/HomeSectionClub.vue';
