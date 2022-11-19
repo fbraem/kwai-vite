@@ -66,8 +66,13 @@
           </li>
           <ApplicationList>
             <template #default="{ application }">
-              <li class="py-3 hover:text-white">
-                {{ application.title }}
+              <li
+                v-if="$router.hasRoute(`portal.${application.name}`)"
+                class="py-3 hover:text-white"
+              >
+                <router-link :to="{ name: `portal.${application.name}` }">
+                  {{ application.title }}
+                </router-link>
               </li>
             </template>
           </ApplicationList>
