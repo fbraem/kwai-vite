@@ -1,33 +1,21 @@
 <template>
-  <!-- INTRO -->
-  <section>
-    <div
-      class="relative"
-      style="height:600px;"
-    >
-      <div
-        class="absolute w-full h-full bg-center xl:bg-top bg-cover"
-        :style="{ 'background-image': 'url(' + heroUrl + ')' }"
-      >
-        <span class="w-full h-full absolute opacity-50 bg-gradient-to-br from-black to-red-600" />
-        <div class="container lg:max-w-5xl relative mx-auto h-full flex items-center">
-          <div class="max-w-md flex flex-col space-y-5 p-4">
-            <h1 class="text-4xl font-semibold text-white">
-              {{ website.title }}
-            </h1>
-            <template
-              v-for="(text, index) in portal.promotion"
-              :key="index"
-            >
-              <p class="text-white leading-8">
-                {{ text }}
-              </p>
-            </template>
-          </div>
-        </div>
+  <IntroSection :hero-image-url="heroUrl">
+    <div class="container lg:max-w-5xl relative mx-auto h-full flex items-center">
+      <div class="max-w-md flex flex-col space-y-5 p-4">
+        <h1 class="text-4xl font-semibold text-white">
+          {{ website.title }}
+        </h1>
+        <template
+          v-for="(text, index) in portal.promotion"
+          :key="index"
+        >
+          <p class="text-white leading-8">
+            {{ text }}
+          </p>
+        </template>
       </div>
     </div>
-  </section>
+  </IntroSection>
   <HomeSectionApplications :applications="listedApplications" />
   <HomeSectionNews />
   <HomeSectionTrainings />
@@ -46,6 +34,7 @@ import NewsIcon from '@theme/icons/NewsIcon.vue';
 import TrainingIcon from '@theme/icons/TrainingIcon.vue';
 
 import { website, portal } from '@kwai/config';
+import IntroSection from '@root/IntroSection.vue';
 import HomeSectionApplications from '@root/components/home/HomeSectionApplications.vue';
 import HomeSectionNews from '@root/components/home/HomeSectionNews.vue';
 import HomeSectionTrainings from '@root/components/home/HomeSectionTrainings.vue';
