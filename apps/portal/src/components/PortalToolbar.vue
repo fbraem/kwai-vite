@@ -2,7 +2,7 @@
   <header class="container mx-auto px-4">
     <div class="grid md:grid-cols-3 lg:grid-cols-4 items-center items-stretch py-4">
       <div class="md:col-span-3 lg:col-span-1 py-4">
-        <a href="#">
+        <a :href="website.url">
           <div class="flex flex-row items-center">
             <img
               :src="logoUrl"
