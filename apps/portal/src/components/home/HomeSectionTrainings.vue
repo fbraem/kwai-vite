@@ -59,7 +59,7 @@
             <div class="my-6">
               <router-link
                 class="border border-red-600 bg-red-600 hover:bg-white hover:text-red-600 text-white rounded-full py-1.5 px-3"
-                to="/trainings"
+                :to="{ 'name': 'portal.trainings' }"
               >
                 Alle trainingen
               </router-link>
