@@ -2,7 +2,7 @@
   <section>
     <div
       class="relative"
-      style="height:600px;"
+      :style="{ 'height': `${height}px` }"
     >
       <div
         class="absolute w-full h-full bg-center xl:bg-top bg-cover"
@@ -17,8 +17,14 @@
 
 <script setup lang="ts">
 interface Props {
-  heroImageUrl: string
+  heroImageUrl: string,
+  height?: number,
 }
 
-defineProps<Props>();
+withDefaults(
+  defineProps<Props>(),
+  {
+    height: 600,
+  }
+);
 </script>
