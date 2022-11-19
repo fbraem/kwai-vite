@@ -34,7 +34,7 @@ import NewsIcon from '@theme/icons/NewsIcon.vue';
 import TrainingIcon from '@theme/icons/TrainingIcon.vue';
 
 import { website, portal } from '@kwai/config';
-import IntroSection from '@root/IntroSection.vue';
+import IntroSection from '@root/components/IntroSection.vue';
 import HomeSectionApplications from '@root/components/home/HomeSectionApplications.vue';
 import HomeSectionNews from '@root/components/home/HomeSectionNews.vue';
 import HomeSectionTrainings from '@root/components/home/HomeSectionTrainings.vue';
