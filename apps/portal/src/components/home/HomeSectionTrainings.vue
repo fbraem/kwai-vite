@@ -41,10 +41,10 @@
               </div>
             </div>
             <div
-              class="bg-red-200 px-3 py-2 text-gray-800 rounded divide-y divide-red-600"
+              class="bg-gray-100 px-3 py-2 text-gray-800 rounded divide-y divide-gray-300"
             >
               <div
-                v-for="training in trainings"
+                v-for="training in trainings.slice(0, 4)"
                 :key="training.id"
                 class="flex gap-4 py-1"
               >
@@ -55,6 +55,14 @@
                   {{ training.title }}
                 </div>
               </div>
+            </div>
+            <div class="my-6">
+              <router-link
+                class="border border-red-600 bg-red-600 hover:bg-white hover:text-red-600 text-white rounded-full py-1.5 px-3"
+                to="/trainings"
+              >
+                Alle trainingen
+              </router-link>
             </div>
           </div>
         </div>
