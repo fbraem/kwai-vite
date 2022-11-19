@@ -62,7 +62,7 @@
       >
         <ul class="text-gray-200 flex flex-col lg:flex-row lg:space-x-8 lg:mt-0">
           <li class="py-3 hover:text-white">
-            <a href="http://localhost">Home</a>
+            <a :href="website.url">Home</a>
           </li>
           <ApplicationList>
             <template #default="{ application }">
