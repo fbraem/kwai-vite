@@ -39,6 +39,8 @@
 import heroUrl from '/hero.jpg';
 
 import { ShallowReactive, shallowReactive } from 'vue';
+import { useTitle } from '@vueuse/core';
+
 import ClubIcon from '@theme/icons/ClubIcon.vue';
 import NewsIcon from '@theme/icons/NewsIcon.vue';
 import TrainingIcon from '@theme/icons/TrainingIcon.vue';
@@ -52,6 +54,9 @@ import HomeSectionClub from '@root/components/home/HomeSectionClub.vue';
 interface ListedApplications {
   [key: string]: ShallowReactive<any>
 }
+
+const title = useTitle();
+title.value = website.title;
 
 const listedApplications: ListedApplications = shallowReactive({
   club: ClubIcon,
