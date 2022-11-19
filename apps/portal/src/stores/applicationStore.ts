@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import type { Ref } from 'vue';
-import { JsonApiDataType, JsonApiDocumentType, useHttp } from '@kwai/api';
+import { JsonApiDocument, useHttp } from '@kwai/api';
 import { useRequest } from 'vue-request';
 import { z } from 'zod';
 
@@ -17,6 +17,12 @@ const JsonApiApplication = z.object({
 });
 type JsonApiApplicationType = z.infer<typeof JsonApiApplication>;
 
+const JsonApiApplicationData = z.object({
+  data: z.union([JsonApiApplication, z.array(JsonApiApplication).default([])]),
+});
+const JsonApiApplicationDocument = JsonApiDocument.extend(JsonApiApplicationData.shape);
+type JsonApiApplicationDocumentType = z.infer<typeof JsonApiApplicationDocument>;
+
 interface Application {
   id: string,
   name: string,
@@ -31,15 +37,14 @@ export const useApplicationStore = defineStore(
     const application: Ref<Application|null> = ref(null);
     const applications: Ref<Application[]> = ref([]);
 
-    const toModel = (json: JsonApiDocumentType): Application | Application[] => {
-      const mapModel = (d: JsonApiDataType): Application => {
-        const application = <JsonApiApplicationType>d;
+    const toModel = (json: JsonApiApplicationDocumentType): Application | Application[] => {
+      const mapModel = (d: JsonApiApplicationType): Application => {
         return {
-          id: application.id,
-          title: application.attributes.title,
-          name: application.attributes.name,
-          short_description: application.attributes.short_description,
-          description: application.attributes.description,
+          id: d.id,
+          title: d.attributes.title,
+          name: d.attributes.name,
+          short_description: d.attributes.short_description,
+          description: d.attributes.description,
         };
       };
       if (Array.isArray(json.data)) {
@@ -49,7 +54,7 @@ export const useApplicationStore = defineStore(
     };
 
     const load = () => {
-      const { data, loading, error } = useRequest(
+      const { loading, error } = useRequest(
         () => {
           const api = useHttp()
             .url('/portal/applications');
@@ -59,14 +64,18 @@ export const useApplicationStore = defineStore(
           cacheKey: '/portal/applications',
           errorRetryCount: 5,
           refreshOnWindowFocus: false,
+          onSuccess: (data) => {
+            const result = JsonApiApplicationDocument.safeParse(data);
+            if (result.success) {
+              applications.value = <Application[]> toModel(result.data);
+            }
+          },
         }
       );
-      watch(
-        data,
-        json => {
-          applications.value = <Application[]> toModel(<JsonApiDocumentType> json);
-        }
-      );
+      return {
+        loading,
+        error,
+      };
     };
 
     return {
