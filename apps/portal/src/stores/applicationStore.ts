@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed, ComputedRef, ref } from 'vue';
 import type { Ref } from 'vue';
 import { JsonApiDocument, useHttp } from '@kwai/api';
 import { useRequest } from 'vue-request';
@@ -34,8 +34,18 @@ interface Application {
 export const useApplicationStore = defineStore(
   'applications',
   () => {
-    const application: Ref<Application|null> = ref(null);
     const applications: Ref<Application[]> = ref([]);
+
+    const activeApplicationName: Ref<string|null> = ref(null);
+    const setActiveApplication = (name: string) => {
+      activeApplicationName.value = name;
+    };
+    const activeApplication: ComputedRef<Application|null> = computed(() => {
+      if (activeApplicationName.value !== null) {
+        return applications.value.find(application => application.name === activeApplicationName.value) || null;
+      }
+      return null;
+    });
 
     const toModel = (json: JsonApiApplicationDocumentType): Application | Application[] => {
       const mapModel = (d: JsonApiApplicationType): Application => {
@@ -79,8 +89,9 @@ export const useApplicationStore = defineStore(
     };
 
     return {
-      application,
       applications,
+      setActiveApplication,
+      activeApplication,
       load,
     };
   }
