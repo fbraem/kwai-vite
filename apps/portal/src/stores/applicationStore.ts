@@ -72,6 +72,7 @@ export const useApplicationStore = defineStore(
         },
         {
           cacheKey: '/portal/applications',
+          staleTime: -1,
           errorRetryCount: 5,
           refreshOnWindowFocus: false,
           onSuccess: (data) => {
