@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia';
-import { ref, unref } from 'vue';
-import { useRequest } from 'vue-request';
-import { JsonApiDataType, JsonApiDocumentType, useHttpApi } from '@kwai/api';
+import { ref, unref, watch } from 'vue';
+import { JsonApiDataType, JsonApiDocument, JsonApiDocumentType, useHttpApi } from '@kwai/api';
 import { createDateTimeFromUTC } from '@kwai/date';
 import type { DateType } from '@kwai/date';
 import { z } from 'zod';
+import useSWRV from 'swrv';
 
 const JsonApiContent = z.object({
   locale: z.string(),
   title: z.string(),
   html_summary: z.string(),
-  html_content: z.string().optional(),
+  html_content: z.nullable(z.string()),
 });
 
 const JsonApiNewsStory = z.object({
@@ -18,22 +18,28 @@ const JsonApiNewsStory = z.object({
   type: z.literal('stories'),
   attributes: z.object({
     enabled: z.boolean(),
-    remark: z.string().optional(),
+    remark: z.nullable(z.string()),
     publish_date: z.string(),
-    end_date: z.string().optional(),
+    end_date: z.nullable(z.string()),
     timezone: z.string(),
     promotion: z.number(),
-    promotion_end_date: z.string(),
+    promotion_end_date: z.nullable(z.string()),
     contents: z.array(JsonApiContent),
   }),
 });
 type JsonApiNewsStoryType = z.infer<typeof JsonApiNewsStory>;
 
+const JsonApiNewsStoryData = z.object({
+  data: z.union([JsonApiNewsStory, z.array(JsonApiNewsStory).default([])]),
+});
+const JsonApiNewsStoryDocument = JsonApiDocument.extend(JsonApiNewsStoryData.shape);
+type JSONApiNewsStoryDocumentType = z.infer<typeof JsonApiNewsStoryData>;
+
 interface NewsStoryContent {
   locale: string,
   title: string,
   summary: string,
-  content?: string
+  content?: string | null
 }
 
 interface NewsStory {
@@ -43,7 +49,7 @@ interface NewsStory {
   contents: NewsStoryContent[]
 }
 
-const toModel = (json: JsonApiDocumentType): NewsStory | NewsStory[] => {
+const toModel = (json: JSONApiNewsStoryDocumentType): NewsStory | NewsStory[] => {
   const mapModel = (d: JsonApiDataType): NewsStory => {
     const story = <JsonApiNewsStoryType> d;
     return {
@@ -75,8 +81,13 @@ const setupNewsStore = () => {
     application = ref(0),
     promoted = ref(false),
   } = {}) => {
-    const cacheKey = unref(promoted) ? '/portal/news/' : '/portal/news/promoted';
-    const { loading, error } = useRequest(
+    const { data, isValidating, error } = useSWRV<JSONApiNewsStoryDocumentType>(
+      () => {
+        if (promoted.value) {
+          return 'portal.news.promoted';
+        }
+        return 'portal.news';
+      },
       () => {
         let api = useHttpApi().url('/news/stories');
         if (unref(promoted)) {
@@ -88,16 +99,24 @@ const setupNewsStore = () => {
         ;
       },
       {
-        cacheKey,
-        errorRetryCount: 5,
-        refreshOnWindowFocus: false,
-        onSuccess: (data) => {
-          items.value = <NewsStory[]> toModel(<JsonApiDocumentType> data);
-        },
+        revalidateOnFocus: false,
       }
     );
+
+    watch(
+      data,
+      (nv) => {
+        const result = JsonApiNewsStoryDocument.safeParse(nv);
+        if (result.success) {
+          items.value = <NewsStory[]> toModel(result.data);
+        } else {
+          console.log(result.error);
+        }
+      }
+    );
+
     return {
-      loading,
+      loading: isValidating,
       error,
     };
   };

@@ -1,9 +1,8 @@
 import { defineStore } from 'pinia';
-import { computed, ComputedRef, ref } from 'vue';
-import type { Ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { JsonApiDocument, useHttp } from '@kwai/api';
-import { useRequest } from 'vue-request';
 import { z } from 'zod';
+import useSWRV from 'swrv';
 
 const JsonApiApplication = z.object({
   id: z.string(),
@@ -34,13 +33,13 @@ interface Application {
 export const useApplicationStore = defineStore(
   'applications',
   () => {
-    const applications: Ref<Application[]> = ref([]);
+    const applications = ref<Application[]>([]);
 
-    const activeApplicationName: Ref<string|null> = ref(null);
+    const activeApplicationName = ref<string|null>(null);
     const setActiveApplication = (name: string) => {
       activeApplicationName.value = name;
     };
-    const activeApplication: ComputedRef<Application|null> = computed(() => {
+    const activeApplication = computed<Application|null>(() => {
       if (activeApplicationName.value !== null) {
         return applications.value.find(application => application.name === activeApplicationName.value) || null;
       }
@@ -64,27 +63,30 @@ export const useApplicationStore = defineStore(
     };
 
     const load = () => {
-      const { loading, error } = useRequest(
+      const { data, isValidating, error } = useSWRV<JsonApiApplicationDocumentType>(
+        'portal.applications',
         () => {
           const api = useHttp()
             .url('/portal/applications');
           return api.get().json();
         },
         {
-          cacheKey: '/portal/applications',
-          staleTime: -1,
-          errorRetryCount: 5,
-          refreshOnWindowFocus: false,
-          onSuccess: (data) => {
-            const result = JsonApiApplicationDocument.safeParse(data);
-            if (result.success) {
-              applications.value = <Application[]> toModel(result.data);
-            }
-          },
+          revalidateOnFocus: false,
         }
       );
+
+      watch(
+        data,
+        (nv) => {
+          const result = JsonApiApplicationDocument.safeParse(nv);
+          if (result.success) {
+            applications.value = <Application[]> toModel(result.data);
+          }
+        }
+      );
+
       return {
-        loading,
+        loading: isValidating,
         error,
       };
     };

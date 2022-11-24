@@ -21,8 +21,8 @@
     "@kwai/date": "^0.0.1",
     "@kwai/ui": "*",
     "pinia": "^2.0.24",
+    "swrv": "^1.0.1",
     "vue": "^3.2.45",
-    "vue-request": "^2.0.0-rc.3",
     "vue-router": "^4.1.6",
     "zod-to-ts": "^1.1.1"
   }
