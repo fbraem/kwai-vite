@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
-import { Ref, ref } from 'vue';
+import { Ref, ref, watch } from 'vue';
 import { createDateTimeFromUTC, DateType, now } from '@kwai/date';
-import { useRequest } from 'vue-request';
 import { z } from 'zod';
 import { useHttpApi, JsonApiDataType, JsonApiDocument } from '@kwai/api';
+import useSWRV from 'swrv';
 
 const JsonApiEvent = z.object({
   start_date: z.string(),
@@ -126,7 +126,8 @@ export const useTrainingStore = defineStore('portal.trainings', () => {
     offset = ref(0),
     limit = ref(0),
   } = {}) => {
-    const { loading, error } = useRequest(
+    const { data, isValidating, error } = useSWRV<JsonApiTrainingDocumentType>(
+      'portal.trainings',
       () => {
         let api = useHttpApi().url('/trainings');
         if (offset.value > 0) {
@@ -145,23 +146,23 @@ export const useTrainingStore = defineStore('portal.trainings', () => {
         ;
       },
       {
-        refreshDeps: [offset, limit, start, end],
-        cacheKey: `portal.trainings/${offset.value}/${limit.value}`,
-        errorRetryCount: 5,
-        refreshOnWindowFocus: false,
-        onSuccess: data => {
-          const result = JsonApiTrainingDocument.safeParse(data);
-          if (result.success) {
-            trainings.value = <Training[]>toModel(result.data);
-          } else {
-            console.log(result.error);
-            trainings.value = [];
-          }
-        },
+        revalidateOnFocus: false,
+      }
+    );
+
+    watch(
+      data,
+      (nv) => {
+        const result = JsonApiTrainingDocument.safeParse(nv);
+        if (result.success) {
+          trainings.value = <Training[]>toModel(result.data);
+        } else {
+          console.log(result.error);
+        }
       }
     );
     return {
-      loading,
+      loading: isValidating,
       error,
     };
   };
