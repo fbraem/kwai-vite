@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, unref, watch } from 'vue';
-import { JsonApiDataType, JsonApiDocument, JsonApiDocumentType, useHttpApi } from '@kwai/api';
+import { JsonApiDataType, JsonApiDocument, useHttpApi } from '@kwai/api';
 import { createDateTimeFromUTC } from '@kwai/date';
 import type { DateType } from '@kwai/date';
 import { z } from 'zod';
