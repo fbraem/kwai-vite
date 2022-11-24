@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import { defineStore } from 'pinia';
 import { ref, unref } from 'vue';
 import { useRequest } from 'vue-request';
@@ -66,7 +65,7 @@ const toModel = (json: JsonApiDocumentType): NewsStory | NewsStory[] => {
 };
 
 const setupNewsStore = () => {
-  const items: Ref<NewsStory[]> = ref([]);
+  const items = ref<NewsStory[]>([]);
 
   const load = ({
     offset = ref(0),
