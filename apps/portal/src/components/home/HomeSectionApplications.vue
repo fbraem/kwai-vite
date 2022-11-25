@@ -7,7 +7,7 @@
         #[`app-${applicationName}`]="{ application }"
       >
         <router-link
-          :to="`/portal/${application.name}`"
+          :to="{ name: `portal.${application.name}` }"
         >
           <div
             class="text-center text-white p-8 h-full"
