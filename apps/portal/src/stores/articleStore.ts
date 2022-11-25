@@ -55,7 +55,7 @@ export const useArticleStore = defineStore('portal.articles', () => {
 
   const load = ({
     application,
-  } : { application?: Ref<string>|ComputedRef<string|undefined>}) => {
+  } : { application?: Ref<string|null>|ComputedRef<string|undefined>}) => {
     const { data, isValidating, error } = useSWRV<JsonApiArticleDocumentType>(
       () => {
         if (application !== null) {
