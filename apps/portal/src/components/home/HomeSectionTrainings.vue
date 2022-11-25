@@ -29,30 +29,30 @@
                 </p>
               </template>
             </ApplicationList>
-            <div class="flex flex-row gap-4 items-center">
-              <h3 class="text-white text-2xl font-semibold">
-                Volgende trainingen
-              </h3>
-              <div>
-                <LoadingIcon
-                  v-show="loading"
-                  class="w-8 h-8 fill-red-600 text-gray-600"
-                />
-              </div>
-            </div>
-            <div
-              class="bg-gray-100 px-3 py-2 text-gray-800 rounded divide-y divide-gray-300"
-            >
-              <div
-                v-for="training in trainings.slice(0, 4)"
-                :key="training.id"
-                class="flex gap-4 py-1"
-              >
-                <div class="text-sm text-center font-medium">
-                  {{ training.start_date.format("DD-MM-YYYY HH:mm") }}&nbsp;-&nbsp;{{ training.end_date.format("HH:mm") }}
+            <div v-if="trainings.length > 0">
+              <div class="flex flex-row gap-4 items-center">
+                <h3 class="text-white text-2xl font-semibold">
+                  Volgende trainingen
+                </h3>
+                <div>
+                  <LoadingIcon
+                    v-show="loading"
+                    class="w-8 h-8 fill-red-600 text-gray-600"
+                  />
                 </div>
-                <div class="text-sm">
-                  {{ training.title }}
+              </div>
+              <div class="bg-gray-100 px-3 py-2 text-gray-800 rounded divide-y divide-gray-300">
+                <div
+                  v-for="training in trainings.slice(0, 4)"
+                  :key="training.id"
+                  class="flex gap-4 py-1"
+                >
+                  <div class="text-sm text-center font-medium">
+                    {{ training.start_date.format("DD-MM-YYYY HH:mm") }}&nbsp;-&nbsp;{{ training.end_date.format("HH:mm") }}
+                  </div>
+                  <div class="text-sm">
+                    {{ training.title }}
+                  </div>
                 </div>
               </div>
             </div>
