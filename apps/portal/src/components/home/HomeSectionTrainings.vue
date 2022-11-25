@@ -25,7 +25,7 @@
                 <p
                   class="text-white leading-8"
                 >
-                  {{ application.description }}
+                  {{ application.short_description }}
                 </p>
               </template>
             </ApplicationList>
