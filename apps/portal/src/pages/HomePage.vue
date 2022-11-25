@@ -9,7 +9,7 @@
           v-for="(text, index) in portal.promotion"
           :key="index"
         >
-          <p class="text-white leading-8">
+          <p class="text-white leading-8 text-xl">
             {{ text }}
           </p>
         </template>
