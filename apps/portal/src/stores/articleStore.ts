@@ -26,7 +26,7 @@ const JsonApiArticleData = z.object({
 const JsonApiArticleDocument = JsonApiDocument.extend(JsonApiArticleData.shape);
 type JsonApiArticleDocumentType = z.infer<typeof JsonApiArticleDocument>;
 
-type Article = {
+export type Article = {
   id: string,
   locale: string,
   title: string,
@@ -51,7 +51,39 @@ const toModel = (json: JsonApiArticleDocumentType): Article | Article[] => {
 };
 
 export const useArticleStore = defineStore('portal.articles', () => {
+  const article: Ref<Article|null> = ref(null);
   const articles: Ref<Article[]> = ref([]);
+
+  const get = (id: Ref<string>) => {
+    const { data, isValidating, error } = useSWRV<JsonApiArticleDocumentType>(
+      () => `portal.articles.${id.value}`,
+      () => {
+        return useHttpApi()
+          .url('/pages/')
+          .url(id.value)
+          .get()
+          .json();
+      },
+      {
+        revalidateOnFocus: false,
+      }
+    );
+
+    watch(
+      data,
+      (nv) => {
+        const result = JsonApiArticleDocument.safeParse(nv);
+        if (result.success) {
+          article.value = <Article> toModel(result.data);
+        }
+      }
+    );
+
+    return {
+      loading: isValidating,
+      error,
+    };
+  };
 
   const load = ({
     application,
@@ -96,7 +128,9 @@ export const useArticleStore = defineStore('portal.articles', () => {
   };
 
   return {
+    article,
     articles,
+    get,
     load,
   };
 });
