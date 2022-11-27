@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref, unref, watch } from 'vue';
+import { Ref, ref, watch } from 'vue';
 import { JsonApiDataType, JsonApiDocument, useHttpApi } from '@kwai/api';
 import { createDateTimeFromUTC } from '@kwai/date';
 import type { DateType } from '@kwai/date';
@@ -78,20 +78,34 @@ const setupNewsStore = () => {
     limit = ref(0),
     year = ref(0),
     month = ref(0),
-    application = ref(0),
+    application,
     promoted = ref(false),
+  } : {
+    offset?: Ref<number>,
+    limit?: Ref<number>,
+    year?: Ref<number>,
+    month?: Ref<number>,
+    application?: Ref<string>,
+    promoted?: Ref<boolean>
   } = {}) => {
     const { data, isValidating, error } = useSWRV<JSONApiNewsStoryDocumentType>(
       () => {
+        let key = 'portal.news';
         if (promoted.value) {
-          return 'portal.news.promoted';
+          key += '.promoted';
         }
-        return 'portal.news';
+        if (application) {
+          return application.value && (key + `.${application.value}`);
+        }
+        return key;
       },
       () => {
         let api = useHttpApi().url('/news/stories');
-        if (unref(promoted)) {
-          api = api.query({ 'filter[promoted]': true });
+        if (promoted.value) {
+          api = api.query({ 'filter[promoted]': promoted.value });
+        }
+        if (application && application.value) {
+          api = api.query(({ 'filter[application]': application.value }));
         }
         return api
           .get()
@@ -134,6 +148,14 @@ export const usePromotedNewsStore = defineStore('promotedNews', () => {
 
   return {
     items: store.items,
-    load: () => store.load({ promoted: ref(true) }),
+    load: ({
+      application,
+    } : {
+      application?: Ref<string>
+    } = {}) =>
+      store.load({
+        promoted: ref(true),
+        application,
+      }),
   };
 });
