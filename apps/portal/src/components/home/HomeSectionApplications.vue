@@ -1,5 +1,5 @@
 <template>
-  <section class="grid grid-cols-1 lg:grid-cols-3">
+  <section class="grid grid-cols-1 lg:grid-flow-col lg:auto-cols-fr">
     <ApplicationList :filter="applicationNames">
       <template
         v-for="(applicationName, index) in applicationNames"
