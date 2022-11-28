@@ -42,7 +42,7 @@ interface NewsStoryContent {
   content?: string | null
 }
 
-interface NewsStory {
+export interface NewsStory {
   id: string,
   enabled: boolean,
   publish_date: DateType,
