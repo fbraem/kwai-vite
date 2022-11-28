@@ -1,9 +1,9 @@
 <template>
-  <section class="bg-zinc-50 py-24">
-    <FullArticle
-      v-if="article"
-      :article="article"
-    />
+  <section
+    v-if="article"
+    class="bg-zinc-50 py-24"
+  >
+    <FullArticle :article="article" />
   </section>
 </template>
 
