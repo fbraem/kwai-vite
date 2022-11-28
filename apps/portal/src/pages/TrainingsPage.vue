@@ -42,14 +42,27 @@
   </section>
   <div id="article" />
   <router-view />
-  <section class="bg-zinc-50 py-24">
-    <div class="container mx-auto">
+  <section class="py-24">
+    <div class="container mx-auto px-4">
       <div class="grid grid-cols-1 md:grid-cols-2">
         <div>
-          Nieuws
+          <h2 class="text-4xl">
+            Belangrijk Nieuws
+          </h2>
+          <NewsList
+            v-if="applicationId"
+            :promoted="true"
+            :application="applicationId"
+          >
+            <template #default="{ story }">
+              {{ story.contents[0].title }}<br>
+            </template>
+          </NewsList>
         </div>
         <div>
-          Agenda
+          <h2 class="text-4xl">
+            Agenda
+          </h2>
         </div>
       </div>
     </div>
@@ -61,6 +74,7 @@
 import trainingImage from '/training.jpg';
 
 import IntroSection from '@root/components/IntroSection.vue';
+import NewsList from '@root/components/NewsList.vue';
 import { useArticleStore } from '@root/stores/articleStore';
 import { computed } from 'vue';
 import { useApplicationStore } from '@root/stores/applicationStore';
