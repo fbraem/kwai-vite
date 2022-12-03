@@ -69,7 +69,7 @@ type Team = {
   name: string,
 }
 
-type Training = {
+export type Training = {
   id: string,
   cancelled: boolean,
   start_date: DateType,
