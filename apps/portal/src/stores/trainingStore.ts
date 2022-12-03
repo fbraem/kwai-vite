@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { Ref, ref, watch } from 'vue';
 import { createDateTimeFromUTC, DateType, now } from '@kwai/date';
 import { z } from 'zod';
-import { useHttpApi, JsonApiDataType, JsonApiDocument } from '@kwai/api';
+import { useHttpApi, JsonApiDataType, JsonApiDocument, JsonResourceIdentifier } from '@kwai/api';
 import useSWRV from 'swrv';
 
 const JsonApiEvent = z.object({
@@ -52,6 +52,11 @@ const JsonApiTraining = z.object({
   attributes: z.object({
     event: JsonApiEvent,
     contents: z.array(JsonApiContent),
+  }),
+  relationships: z.object({
+    teams: z.object({
+      data: z.array(JsonResourceIdentifier),
+    }),
   }),
 });
 type JsonApiTrainingType = z.infer<typeof JsonApiTraining>;
