@@ -7,7 +7,7 @@ import QueryStringAddon from 'wretch/addons/queryString';
 import { api } from '@kwai/config';
 import { z } from 'zod';
 
-const JsonResourceIdentifier = z.object({
+export const JsonResourceIdentifier = z.object({
   id: z.string(),
   type: z.string(),
 });
