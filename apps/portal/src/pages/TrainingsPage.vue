@@ -42,27 +42,35 @@
   </section>
   <div id="article" />
   <router-view />
-  <section class="py-24">
-    <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-2">
-        <div>
-          <h2 class="text-4xl">
+  <section class="bg-zinc-50 py-24">
+    <div class="container mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 divide-y md:divide-y-0 md:divide-x divide-gray-300">
+        <div class="p-4">
+          <h2 class="text-center text-4xl mb-10">
             Belangrijk Nieuws
           </h2>
-          <NewsList
-            v-if="applicationId"
-            :promoted="true"
-            :application="applicationId"
-          >
-            <template #default="{ story }">
-              {{ story.contents[0].title }}<br>
-            </template>
-          </NewsList>
+          <div class="divide-y divide-gray-200">
+            <NewsList
+              v-if="applicationId"
+              :promoted="true"
+              :application="applicationId"
+            >
+              <template #default="{ story }">
+                <NewsArticleSummary :story="story" />
+              </template>
+            </NewsList>
+          </div>
         </div>
-        <div>
-          <h2 class="text-4xl">
+        <div class="p-4">
+          <h2 class="text-center text-4xl mb-2">
             Agenda
           </h2>
+          <p class="text-center text-xs text-gray-500 mb-8">
+            Een overzicht van de trainingen tijdens deze periode
+          </p>
+          <div>
+            <TrainingWeek />
+          </div>
         </div>
       </div>
     </div>
@@ -75,10 +83,12 @@ import trainingImage from '/training.jpg';
 
 import IntroSection from '@root/components/IntroSection.vue';
 import NewsList from '@root/components/NewsList.vue';
+import TrainingWeek from '@root/pages/trainings/components/TrainingWeek.vue';
 import { useArticleStore } from '@root/stores/articleStore';
 import { computed } from 'vue';
 import { useApplicationStore } from '@root/stores/applicationStore';
 import { useRouter } from 'vue-router';
+import NewsArticleSummary from '@root/components/NewsArticleSummary.vue';
 
 const applicationStore = useApplicationStore();
 applicationStore.setActiveApplication('trainings');
