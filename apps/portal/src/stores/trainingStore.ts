@@ -87,11 +87,10 @@ export type Training = {
 };
 
 const toModel = (json: JsonApiTrainingDocumentType): Training | Training[] => {
-  const mapModel = (d: JsonApiDataType): Training => {
-    const training = <JsonApiTrainingType> d;
+  const mapModel = (data: JsonApiTrainingType): Training => {
     const teams: JsonApiTeamType[] = [];
-    if (d.relationships?.teams && Array.isArray(d.relationships.teams.data)) {
-      d.relationships.teams.data.forEach(t => {
+    if (data.relationships?.teams && Array.isArray(data.relationships.teams.data)) {
+      data.relationships.teams.data.forEach(t => {
         const includedTeam = json.included?.find(
           included => included.type === 'teams' && included.id === t.id
         );
@@ -101,14 +100,14 @@ const toModel = (json: JsonApiTrainingDocumentType): Training | Training[] => {
       });
     }
     return {
-      id: training.id,
-      cancelled: training.attributes.event.cancelled,
-      start_date: createDateTimeFromUTC(training.attributes.event.start_date, training.attributes.event.timezone),
-      end_date: createDateTimeFromUTC(training.attributes.event.end_date, training.attributes.event.timezone),
-      location: training.attributes.event.location,
-      title: training.attributes.contents[0].title,
-      summary: training.attributes.contents[0].html_summary,
-      content: training.attributes.contents[0].html_content,
+      id: data.id,
+      cancelled: data.attributes.event.cancelled,
+      start_date: createDateTimeFromUTC(data.attributes.event.start_date, data.attributes.event.timezone),
+      end_date: createDateTimeFromUTC(data.attributes.event.end_date, data.attributes.event.timezone),
+      location: data.attributes.event.location,
+      title: data.attributes.contents[0].title,
+      summary: data.attributes.contents[0].html_summary,
+      content: data.attributes.contents[0].html_content,
       teams: teams.map(team => ({
         id: team.id,
         name: team.attributes.name,
