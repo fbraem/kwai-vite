@@ -28,8 +28,8 @@
   </div>
   <div class="text-xs text-gray-800 text-center">
     Trainingen van
-    <span class="font-semibold">{{ start.format('DD-MM-YYYY') }}</span>
-    tot <span class="font-semibold">{{ end.format('DD-MM-YYYY') }}</span>
+    <span class="font-semibold">{{ period.start.format('DD-MM-YYYY') }}</span>
+    tot <span class="font-semibold">{{ period.end.format('DD-MM-YYYY') }}</span>
   </div>
   <div
     v-if="!loading && trainings.length === 0"
@@ -74,8 +74,7 @@ import TrainingDay from '@root/pages/trainings/components/TrainingDay.vue';
 
 const store = useTrainingStore();
 
-const start = computed(() => store.start);
-const end = computed(() => store.end);
+const period = computed(() => store.period);
 
 const prev = () => store.changePeriod(-1);
 const next = () => store.changePeriod(1);

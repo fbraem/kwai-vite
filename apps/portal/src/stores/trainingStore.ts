@@ -124,16 +124,18 @@ const toModel = (json: JsonApiTrainingDocumentType): Training | Training[] => {
 export const useTrainingStore = defineStore('portal.trainings', () => {
   const trainings: Ref<Training[]> = ref([]);
 
-  const start = ref(now());
-  const end = ref(now().add(1, 'week'));
+  const period = ref({
+    start: now(),
+    end: now().add(1, 'week'),
+  });
 
   const changePeriod = (n: number, unit: string = 'week') => {
-    start.value = start.value.add(n, unit);
-    end.value = end.value.add(n, unit);
+    period.value.start = period.value.start.add(n, unit);
+    period.value.end = period.value.end.add(n, unit);
   };
   const resetPeriod = (unit: string = 'week') => {
-    start.value = now();
-    end.value = now().endOf(unit);
+    period.value.start = now();
+    period.value.end = now().add(1, unit);
   };
 
   const load = ({
@@ -142,9 +144,7 @@ export const useTrainingStore = defineStore('portal.trainings', () => {
   } = {}) => {
     const { data, isValidating, error } = useSWRV<JsonApiTrainingDocumentType>(
       () => {
-        return start.value &&
-          end.value &&
-          `portal.trainings.${start.value.format('YYYY-MM-DD')}.${end.value.format('YYYY-MM-DD')}}`;
+        return `portal.trainings.${period.value.start.format('YYYY-MM-DD')}.${period.value.end.format('YYYY-MM-DD')}}`;
       },
       () => {
         let api = useHttpApi().url('/trainings');
@@ -155,8 +155,8 @@ export const useTrainingStore = defineStore('portal.trainings', () => {
           api = api.query({ 'page[limit]': limit.value });
         }
         api = api.query({
-          'filter[start]': start.value.format(),
-          'filter[end]': end.value.format(),
+          'filter[start]': period.value.start.format(),
+          'filter[end]': period.value.end.format(),
         });
         return api
           .get()
@@ -186,8 +186,7 @@ export const useTrainingStore = defineStore('portal.trainings', () => {
   };
 
   return {
-    start,
-    end,
+    period,
     changePeriod,
     resetPeriod,
     trainings,
