@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { Ref, ref, watch } from 'vue';
 import { createDateTimeFromUTC, DateType, now } from '@kwai/date';
 import { z } from 'zod';
-import { useHttpApi, JsonApiDataType, JsonApiDocument, JsonResourceIdentifier } from '@kwai/api';
+import { useHttpApi, JsonApiDocument, JsonResourceIdentifier } from '@kwai/api';
 import useSWRV from 'swrv';
 
 const JsonApiEvent = z.object({
