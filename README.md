@@ -1,4 +1,7 @@
 # kwai-vite
+
+> Kwai-vite is now part of [kwai](https://codeberg.org/zumuta/kwai).
+
 Kwai-vite is part of the Kwai system. The ultimate goal of Kwai is to manage
 a (sports)club. The focus is currently on judo sport (Kwai means Japanese), but
 one day it will be possible to add other sports.
